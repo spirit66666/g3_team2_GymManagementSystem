@@ -1,6 +1,8 @@
 <template>
+
+<router-view></router-view>
   <el-container id="container">
-      <el-header style="width: 100%" height="100px">
+      <el-header style="width: 100%" height="120px">
         <Header :items="navItems" v-on:selected="changeSelected"></Header>
       </el-header>
 
@@ -17,6 +19,7 @@
   </template>
   <script>
 
+  import router from "@/tools/Router";
   import Header from "./AppHeader.vue";
   import Body from "./AppBody.vue";
   import FM from "../../tools/FileManager.js"
@@ -33,7 +36,7 @@
     data() {
       return {
 
-        desc: "GYm管理系统",
+        desc: "这是一个基于Vue的GYm管理系统",
         navItems: FM.getAllTopic().map((item,ind)=>{
             return {
                 index:ind,
@@ -44,6 +47,16 @@
       };
     },
     mounted() {
+        FM.getPostContent('HTML专题','文本标签').then((res)=>{
+            console.log(res)
+
+          router.beforeEach((to, from, next) => {
+            // 在跳转到新页面前执行一些操作
+            // 可以在这里销毁当前页面
+
+            next(); // 确保继续导航
+          })
+        })
     },
     methods: {
         changeSelected(index) {

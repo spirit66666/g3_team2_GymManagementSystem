@@ -64,7 +64,7 @@ export default {
           next(); // 确保继续导航
         })
 
-        this.$router.replace('/AppHome')
+        this.$router.replace('/')
       },
         logout() {
           router.beforeEach((to, from, next) => {

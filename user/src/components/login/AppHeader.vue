@@ -10,40 +10,44 @@
         >
           <el-menu-item index="0">
             <img
-                style="width: 80px ; height: 60px; margin-right: 20px"
+                style="width: 80px"
                 src="~@/assets/logo.png"
                 alt="Element logo"
             />
           </el-menu-item>
-          <h1 id="title"  style="margin: 0; padding: 0">GYM</h1>
           <div class="flex-grow" />
+          <el-menu-item index="0"
+                        @select="selectItem">Processing Center</el-menu-item>
           <el-sub-menu index="2"
                        @select="selectItem1">
-            <template #title>个人信息</template>
-            <el-menu-item @click="login">登录</el-menu-item>
-            <el-menu-item @click="regist1">注册</el-menu-item>
-
+            <template #title>Workspace</template>
+            <el-menu-item index="goods/0">item one</el-menu-item>
+            <el-menu-item index="goods/0">item two</el-menu-item>
+            <el-menu-item index="/goods/0">item three</el-menu-item>
           </el-sub-menu>
         </el-menu>
 
       </el-header>
 
-      <el-main style="margin: 40px; padding: 0">
+      <el-main style="margin: 0; padding: 0">
+
+
 
         <el-menu class="container"
         @select="selectItem1"
         >
-            <el-menu-item index="/AppHome/zhuye/0">首页</el-menu-item>
-          <el-menu-item index="/AppHome/reservations/0">预约</el-menu-item>
-          <el-menu-item index="/AppHome/zhuye/1">更多信息</el-menu-item>
-          <el-menu-item index="/AppHome/reservations/1">4</el-menu-item>
+            <el-menu-item index="zhuye">4</el-menu-item>
 
           <div >
             <div class="input">
+            <el-button  @click="login">登录</el-button>
+            </div>
 
+            <div class="input">
+              <el-button  @click="regist1">注册</el-button>
 
               <el-avatar style="float:right; margin-right: 20px" @click="login">
-                <img src="~@/assets/logo.png" alt="Element logo" />
+                <img src="~@/assets/logo.png" />
               </el-avatar>
             </div>
           </div>
@@ -109,7 +113,7 @@
     align-items: center;
 
     mode:"horizontal";
-    background-color: pink;
+    background-color:#e8e7e3;
     text-color:blue;
   }
 
