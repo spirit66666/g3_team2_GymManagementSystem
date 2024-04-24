@@ -14,6 +14,5 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
 app.use(ElementPlus)
-app.mixin({mounted(){console.log("123")}})
 app.use(Router)
 app.mount('#app')
