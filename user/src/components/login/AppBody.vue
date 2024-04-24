@@ -2,10 +2,8 @@
 
 
     <el-container style="height: 100%">
-      <el-aside width="200px" style="background-color: #f1f1f1">
-
-      </el-aside>
-      <el-main>
+      <el-main style="padding:0; margin:50px">
+        <router-view></router-view>
 
 
 
