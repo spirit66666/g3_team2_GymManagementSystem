@@ -1,13 +1,11 @@
 package org.gym.servet.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 
-@TableName(value = "user")
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
