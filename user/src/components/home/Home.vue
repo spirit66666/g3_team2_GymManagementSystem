@@ -4,7 +4,7 @@
             <el-container id="top">
                 <img style="width:25px;height:25px;margin:auto;margin-right:0;" src="~@/assets/logo.png"/>
  
-                <div style="margin:auto;margin-left:10px;color:#ffffff;font-size:17px">
+                <div style="margin:auto;margin-left:10px;color:deeppink;font-size:17px">
                    GYM 后台管理
                 </div>
             </el-container>

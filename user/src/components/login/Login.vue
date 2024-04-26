@@ -10,13 +10,14 @@
             <el-input v-model="password" prefix-icon="el-icon-lock" placeholder="请输入密码" auto-complete="new-password" show-password></el-input>
         </div>
         <div class="input">
-            <el-button @click="login" style="width:500px" type="primary" >登录</el-button>
+            <el-button @click="login" style="width:500px" type="primary"  >登录</el-button>
 
         </div>
       <div class="input">
       <el-button @click="register1" style="width:500px" type="primary" >注册</el-button>
         </div>
 
+      <div v-if="showError" class="error-message">Invalid username or password</div>
     </div>
 
 
@@ -36,7 +37,8 @@ export default {
     data() {
         return {
             name:"",
-            password:""
+            password:"",
+          showError: false
         }
     },
     mounted () {
@@ -50,14 +52,20 @@ export default {
     },
     methods: {
         login() {
+          if (this.username !== 1 || this.password !== 1) {
+            this.showError = true;  // 显示错误提示框
+          } else {
+            // 登录成功的逻辑
             ElMessage({
-                message:'登录成功', 
-                type:'success', 
-                duration:150
+              message:'登录成功',
+              type:'success',
+              duration:150
             })
             setTimeout(() => {
               this.$router.push('/Home');
             }, 1500);
+        }
+
         },
       register1() {
           this.$router.push('/Appregister');
@@ -72,6 +80,10 @@ export default {
     height: 100%;
     width: 100%;
     position: absolute;
+}
+.error-message {
+  color: red;
+  margin-top: 5px;
 }
 
 #title {

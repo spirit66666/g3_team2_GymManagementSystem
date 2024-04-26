@@ -36,13 +36,13 @@
             <el-menu-item index="/AppHome/zhuye/0">首页</el-menu-item>
           <el-menu-item index="/AppHome/reservations/0">预约</el-menu-item>
           <el-menu-item index="/AppHome/zhuye/1">更多信息</el-menu-item>
-          <el-menu-item index="/AppHome/reservations/1">4</el-menu-item>
+          <el-menu-item index="/AppHome/form">4</el-menu-item>
 
           <div >
             <div class="input">
 
 
-              <el-avatar style="float:right; margin-right: 20px" @click="login">
+              <el-avatar style="float:right; margin-right: 20px" @click="adminlogin">
                 <img src="~@/assets/logo.png" alt="Element logo" />
               </el-avatar>
             </div>
@@ -66,6 +66,12 @@
     props: ["items"],
 
     methods: {
+      adminlogin() {
+
+
+
+        router.replace('/adminlogin')
+      },
       regist1() {
 
 

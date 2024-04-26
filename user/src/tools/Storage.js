@@ -1,48 +1,19 @@
-import { createStore } from 'vuex'
 
-const Store = createStore({
-    state() {
-        return {
-            userName: "",
-            userPassword: "",
-        }
+import Vuex from 'vuex'
+
+
+//创建VueX对象
+const store = new Vuex.Store({
+    state:{
+        //存放的键值对就是所要管理的状态
+        name:''
     },
-
     mutations: {
-        clearUserInfo(state) {
-            state.userName = "";
-        },
-        registUserInfo(state, {name, password}) {
-            state.userName = name;
-            state.password = password;
-        },
-        GetterExample(state) {
-            console.log(state.userName)
-        },
-        setUsername(state, username) {
-            state.username = username;
+        updateUserName (state, account) {
+            state.name = account
         }
-    },
-    actions: {
-
-    },
-    getters1: {
-        getUsername: state => state.username
-
-
-    },
-
-
+    }
 })
-const moduleA = {
-    namespaced: true,
-    state: {
-        count: 0
-    },
-    mutations: {
-        increment(state) {
-            state.count++
-        }
-}}
-Store.registerModule('moduleA', moduleA)
-export default Store;
+
+export default store
+

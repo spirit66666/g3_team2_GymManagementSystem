@@ -1,19 +1,18 @@
 package org.gym.servet;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.gym.servet.entity.user;
+import org.gym.servet.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.gym.servet.entity.user;
 import org.gym.servet.getmapper.mapper;
 
 import java.util.List;
 
+@ResponseBody
 @SpringBootApplication
 @RestController
 public class ServetApplication {
@@ -28,8 +27,8 @@ public class ServetApplication {
 
 
     @GetMapping("/")
-    public List<user> hello() {
-        user user = new user();
+    public List<User> hello() {
+        User user = new User();
 
         return mapper.findAll();
     }

@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class user {
-    private String name;
-    private String pwd;
-    private String email;
-    private String phone;
+public class LoginDTO {
+    private String loginName;
+    private String password;
+    //省略getter、setter
 }
+
