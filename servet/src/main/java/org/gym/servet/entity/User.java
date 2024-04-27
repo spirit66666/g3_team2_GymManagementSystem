@@ -1,19 +1,17 @@
 package org.gym.servet.entity;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.*;
 
 @Data
-
+@TableName("gym_user")
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    private Integer id;
-    private String loginName;
-    private String userName;
+
+    private Long id;
+    private String username;
     private String password;
-    private String sex;
-    private String email;
-    private String address;
+
+
 }
+

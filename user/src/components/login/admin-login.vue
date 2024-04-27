@@ -1,94 +1,78 @@
 <template>
-  <body id="login-page">
-  <el-form class="login-container" label-position="left" label-width="0px">
-    <h3 class="login_title">系统登录</h3>
-    <el-form-item>
-      <el-input
-          type="text"
-          v-model="loginForm.loginName"
-          auto-complete="off"
-          placeholder="账号"
-      ></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-input
-          type="password"
-          v-model="loginForm.password"
-          auto-complete="off"
-          placeholder="密码"
-      ></el-input>
-    </el-form-item>
-    <el-form-item style="width: 100%">
-      <el-button
-          type="primary"
-          style="width: 100%;  border: none"
-      >登录</el-button
-      >
-    </el-form-item>
-  </el-form>
-  </body>
+  <div>
+    <h2>注册页面</h2>
+    <form @submit.prevent="registerUser">
+      <label for="username">用户名:</label>
+      <input type="text" id="username" v-model="registerUsername">
+      <label for="password">密码:</label>
+      <input type="password" id="password" v-model="registerPassword">
+      <button type="submit">注册</button>
+    </form>
+
+    <h2>登陆页面</h2>
+    <form @submit.prevent="loginUser">
+      <label for="loginUsername">用户名:</label>
+      <input type="text" id="loginUsername" v-model="loginUsername">
+      <label for="loginPassword">密码:</label>
+      <input type="password" id="loginPassword" v-model="loginPassword">
+      <button type="submit">登陆</button>
+    </form>
+
+
+    <h2 prop="username"></h2>
+    <ul>
+      <li v-for="user in users" :key="user.id">{{ loginUsername  }}</li>
+    </ul>
+
+    <el-table :data="tableData" border>
+      <el-table-column prop="id" label="ID"></el-table-column>
+      <el-table-column prop="username" label="用户名"></el-table-column>
+      <el-table-column prop="password" label="密码"></el-table-column>
+    </el-table>
+  </div>
+
+
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-  name: "Login",
   data() {
     return {
-      loginForm: {
-        loginName: "",
-        password: "",
-      },
-      responseResult: [],
+      tableData: [],
+      registerUsername: '',
+      registerPassword: '',
+      loginUsername: '',
+      loginPassword: ''
     };
   },
   methods: {
-    methods: {
-      login () {
-        this.$axios
-            .post('/login', {
-              loginName: this.loginForm.loginName,
-              password: this.loginForm.password
-            })
-            .then(successResponse => {
-              if (successResponse.data.code === 200) {
-                this.$router.replace({path: '/'})
-              }
-            })
-            .catch(failResponse => {
-            })
-      }
+    registerUser() {
+      axios.post('http://localhost:9990/us', {
+        username: this.registerUsername,
+        password: this.registerPassword
+      })
+          .then(response => {
+            console.log(response.data);
+            console.log('注册成功');
+            this.registerUsername = response.data.username;
+            // 注册成功处理逻辑
+          })
+          .catch(error => {
+            console.error(error);
+            console.log('注册失败');
+            // 注册失败处理逻辑
+          });
     },
-
-  },
+    loginUser() {
+      this.$http.get('/us').then(response => {
+            console.log(response.data);
+            // 登陆成功处理逻辑
+            console.log('登陆成功');
+            this.tableData = response.data;
+          })
+    }
+  }
 };
 </script>
-
-<style scoped>
-#login-page {
-  height: 100%;
-  width: 100%;
-  background-size: cover;
-  position: fixed;
-}
-body {
-  margin: 0px;
-}
-.login-container {
-  border-radius: 15px;
-  background-clip: padding-box;
-  margin: 90px auto;
-  width: 350px;
-  padding: 35px 35px 15px 35px;
-  background: #fff;
-  border: 1px solid #eaeaea;
-  box-shadow: 0 0 25px #cac6c6;
-}
-
-.login_title {
-  margin: 0px auto 40px auto;
-  text-align: center;
-  color: #505458;
-}
-</style>
-
-

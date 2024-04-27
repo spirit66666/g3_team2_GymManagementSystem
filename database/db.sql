@@ -11,3 +11,22 @@ CREATE TABLE `user`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+DROP TABLE IF EXISTS `register`;
+CREATE TABLE register (
+                          id INT AUTO_INCREMENT PRIMARY KEY,
+                          name VARCHAR(255) NOT NULL,
+                          pwd VARCHAR(255) NOT NULL,
+                          phone VARCHAR(20) NOT NULL
+);
+
+drop table if exists `gym_user`;
+create table `gym_user`
+(
+    `id`         int unsigned auto_increment,
+    `username` varchar(16) not null,
+    `password` varchar(32) not null,
+    primary key (`id`)
+) engine = InnoDB
+  default charset = utf8mb4;

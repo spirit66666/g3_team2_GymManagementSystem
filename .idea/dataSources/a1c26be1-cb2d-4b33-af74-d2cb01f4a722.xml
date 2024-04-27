@@ -1015,118 +1015,177 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     <schema id="294" parent="1" name="dreamhome">
       <CollationName>utf8mb4_bin</CollationName>
     </schema>
-    <schema id="295" parent="1" name="db_jsf">
-      <CollationName>utf8mb3_general_ci</CollationName>
-    </schema>
-    <schema id="296" parent="1" name="demo">
+    <schema id="295" parent="1" name="demo">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-04-25.14:03:35</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-04-27.04:00:12</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="297" parent="1" name="db_xiaoyuanshiwu">
-      <CollationName>utf8mb3_general_ci</CollationName>
-    </schema>
-    <user id="298" parent="1" name="mysql.infoschema">
+    <user id="296" parent="1" name="mysql.infoschema">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <user id="299" parent="1" name="mysql.session">
+    <user id="297" parent="1" name="mysql.session">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <user id="300" parent="1" name="mysql.sys">
+    <user id="298" parent="1" name="mysql.sys">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <user id="301" parent="1" name="root">
+    <user id="299" parent="1" name="root">
       <Host>localhost</Host>
     </user>
-    <table id="302" parent="296" name="name">
+    <table id="300" parent="295" name="gym_user">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="303" parent="296" name="user">
+    <table id="301" parent="295" name="name">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="302" parent="295" name="register">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="303" parent="295" name="user">
       <Engine>InnoDB</Engine>
       <Options>row_format
 DYNAMIC</Options>
       <CollationName>utf8mb3_general_ci</CollationName>
     </table>
-    <column id="304" parent="302" name="name">
-      <DasType>varchar(16)|0s</DasType>
+    <column id="304" parent="300" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>int unsigned|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="305" parent="302" name="pwd">
-      <DasType>varchar(32)|0s</DasType>
+    <column id="305" parent="300" name="username">
+      <DasType>varchar(16)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="306" parent="302" name="phone">
-      <DasType>int|0s</DasType>
+    <column id="306" parent="300" name="password">
+      <DasType>varchar(32)|0s</DasType>
+      <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="307" parent="302" name="email">
-      <DasType>varchar(255)|0s</DasType>
-      <Position>4</Position>
-    </column>
-    <index id="308" parent="302" name="PRIMARY">
-      <ColNames>name</ColNames>
+    <index id="307" parent="300" name="PRIMARY">
+      <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="309" parent="302" name="PRIMARY">
+    <key id="308" parent="300" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="310" parent="303" name="id">
+    <column id="309" parent="301" name="name">
+      <DasType>varchar(16)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="310" parent="301" name="pwd">
+      <DasType>varchar(32)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="311" parent="301" name="phone">
+      <DasType>int|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="312" parent="301" name="email">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <index id="313" parent="301" name="PRIMARY">
+      <ColNames>name</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="314" parent="301" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="315" parent="302" name="id">
       <AutoIncrement>1</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="311" parent="303" name="login_name">
+    <column id="316" parent="302" name="name">
+      <DasType>varchar(255)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="317" parent="302" name="pwd">
+      <DasType>varchar(255)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="318" parent="302" name="phone">
+      <DasType>varchar(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <index id="319" parent="302" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="320" parent="302" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="321" parent="303" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>int|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="322" parent="303" name="login_name">
       <Comment>登录名</Comment>
       <DasType>varchar(64)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="312" parent="303" name="user_name">
+    <column id="323" parent="303" name="user_name">
       <Comment>用户名</Comment>
       <DasType>varchar(64)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="313" parent="303" name="password">
+    <column id="324" parent="303" name="password">
       <Comment>密码</Comment>
       <DasType>varchar(64)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="314" parent="303" name="sex">
+    <column id="325" parent="303" name="sex">
       <Comment>性别</Comment>
       <DasType>varchar(8)|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="315" parent="303" name="email">
+    <column id="326" parent="303" name="email">
       <Comment>邮箱</Comment>
       <DasType>varchar(32)|0s</DasType>
       <Position>6</Position>
     </column>
-    <column id="316" parent="303" name="address">
+    <column id="327" parent="303" name="address">
       <Comment>地址</Comment>
       <DasType>varchar(128)|0s</DasType>
       <Position>7</Position>
     </column>
-    <index id="317" parent="303" name="PRIMARY">
+    <index id="328" parent="303" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="318" parent="303" name="PRIMARY">
+    <key id="329" parent="303" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
