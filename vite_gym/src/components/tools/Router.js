@@ -19,7 +19,16 @@ const Router = createRouter({
                     name:"addfacility"
 
 
-        },]
+        },
+
+                {
+                    path:'facility',
+                    component: () => import('../../components/admin/facility.vue'),
+                    name:"facility"
+
+
+                },
+            ]
         },
         {
             path:'/AppHome'

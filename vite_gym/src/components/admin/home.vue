@@ -13,7 +13,7 @@ export default {
         next(); // 确保继续导航
       })
 
-      this.$router.replace('/AppHome')
+      this.$router.replace('/AppHome/first_page')
     },
     logout() {
       router.beforeEach((to, from, next) => {
@@ -36,7 +36,7 @@ export default {
   <el-container id="container">
     <el-aside width="250px">
       <el-container id="top">
-        <img style="width:25px;height:25px;margin:auto;margin-right:0;" src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1116676390,3155953133&fm=26&gp=0.jpg"/>
+        <img style="width:25px;height:25px;margin:auto;margin-right:0;" src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"/>
 
         <div style="margin:auto;margin-left:10px;color:deeppink;font-size:17px">
           GYM 后台管理
@@ -62,9 +62,9 @@ export default {
             <i class="el-icon-s-shop"></i>
             <span>设施管理</span>
           </template>
-          <el-menu-item index="/home/goods/0">4</el-menu-item>
+          <el-menu-item index="/home/facility">4</el-menu-item>
 
-          <el-menu-item index="/home/goods/2">3</el-menu-item>
+          <el-menu-item index="/home/facility">3</el-menu-item>
         </el-sub-menu>
       </el-menu>
     </el-aside>
