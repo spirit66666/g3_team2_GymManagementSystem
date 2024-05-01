@@ -13,6 +13,7 @@ import java.util.List;
 @ResponseBody
 @SpringBootApplication
 @RestController
+//allow frontend to access backend
 @CrossOrigin
 public class ServetApplication {
 

@@ -3,7 +3,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
 @Data
-@TableName("gym_user")
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {

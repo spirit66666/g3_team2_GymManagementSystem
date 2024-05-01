@@ -30,3 +30,4 @@ create table `gym_user`
     primary key (`id`)
 ) engine = InnoDB
   default charset = utf8mb4;
+
