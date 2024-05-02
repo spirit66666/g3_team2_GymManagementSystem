@@ -63,7 +63,7 @@ export default {
             if (response.data.find(user => user.username === this.loginUsername && user.password === this.loginPassword)) {
 
               console.log('登陆成功');
-              this.$router.push('/Home');
+              this.$router.push('/home');
               // 登陆成功处理逻辑
             } else {
               console.log('登陆失败');

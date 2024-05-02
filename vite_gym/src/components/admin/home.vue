@@ -45,11 +45,11 @@ export default {
       <el-menu
           :default-active="$route.path"
           style="height:100%"
-          background-color="#545c64"
-          text-color="#fff"
-          active-text-color="#ffd04b"
+          background-color= pink
+          text-color="black"
+          active-text-color="red"
           @select="selectItem">
-        <el-sub-menu index="1">
+        <el-sub-menu index="1" text-color= blue>
           <template #title>
             <i class="el-icon-s-order"></i>
             <span>设施管理</span>
@@ -89,6 +89,7 @@ export default {
   height: 100%;
   width:100%;
   position: absolute;
+
 }
 #top {
   background-color:#545c64;
