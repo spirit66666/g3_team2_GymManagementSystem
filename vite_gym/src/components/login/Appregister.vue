@@ -8,6 +8,7 @@
         <input v-model="item.model" class="input" :type="item.type" />
         <div class="tip" v-if="index === 2">请确认密码程度需要大于6位</div>
       </div>
+
       <div class="subContainer">
         <div class="setting">偏好设置</div>
         <input v-model="receiveMsg" class="checkbox" type="checkbox" /><label class="label">接收更新邮件</label>
@@ -38,6 +39,18 @@ export default {
           type:"text",
           model:""
         },{
+          title:"密码",
+          required:true,
+          type:"password",
+          model:""
+        }
+        ,{
+          title:"密码",
+          required:true,
+          type:"password",
+          model:""
+        }
+        ,{
           title:"密码",
           required:true,
           type:"password",

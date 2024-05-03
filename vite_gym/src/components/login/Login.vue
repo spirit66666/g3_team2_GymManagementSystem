@@ -50,12 +50,13 @@ export default {
         }
     },
     methods: {
-        login() { this.$http.get('/us').then(response => {
+        login() {
+          this.$http.get('/us').then(response => {
 
-          if (response.data.find(user => user.username === this.loginUsername && user.password === this.loginPassword)) {
+          if (response.data.find(user => user.username === this.name && user.password === this.password)) {
 
             console.log('登陆成功');
-            this.$router.push('/Home');
+            this.$router.push('/home');
             // 登陆成功处理逻辑
           } else {
             console.log('登陆失败');

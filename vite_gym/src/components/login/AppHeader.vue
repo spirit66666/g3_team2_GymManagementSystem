@@ -15,7 +15,8 @@
                 alt="Element logo"
             />
           </el-menu-item>
-          <h1 id="title"  style="margin: 0; padding: 0">GYM</h1>
+          <h1 id="title"  style="margin: 0; padding: 0" @click="regist1">GYM</h1>
+
           <div class="flex-grow" />
           <el-sub-menu index="2"
                        @select="selectItem1">
