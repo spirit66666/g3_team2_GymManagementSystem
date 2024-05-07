@@ -13,9 +13,6 @@
             <el-button @click="login" style="width:500px" type="primary"  >登录</el-button>
 
         </div>
-      <div class="input">
-      <el-button @click="register1" style="width:500px" type="primary" >注册</el-button>
-        </div>
 
       <div v-if="showError" class="error-message">Invalid username or password</div>
     </div>
@@ -26,6 +23,8 @@
 <script>
 
 
+import { h } from 'vue'
+import { ElMessage } from 'element-plus'
 
 export default {
     name:"login",
@@ -56,7 +55,16 @@ export default {
           if (response.data.find(user => user.username === this.name && user.password === this.password)) {
 
             console.log('登陆成功');
-            this.$router.push('/home');
+            ElMessage({
+              message: h('p', { style: 'line-height: 1; font-size: 14px' }, [
+                h('span', null, '用户'),
+                h('i', { style: 'color: teal' }, this.name,'已经登陆成功'),
+              ]),
+            })
+            setTimeout(() => {
+
+              this.$router.push('/home');
+            }, 400)
             // 登陆成功处理逻辑
           } else {
             console.log('登陆失败');

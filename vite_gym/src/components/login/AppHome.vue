@@ -9,7 +9,7 @@
 
       </el-main>
       <el-footer>
-        <div id="footer">{{ desc }}</div>
+        <div id="footer" @click="currentTopic">{{ desc }}</div>
       </el-footer>
 
     </el-container>
@@ -32,13 +32,15 @@
     data() {
       return {
 
-        desc: "GYm管理系统",
-        currentTopicIndex:0
+        desc: "关于我们 | 联系我们 | 隐私政策 | 法律声明",
       };
     },
     mounted() {
     },
     methods: {
+      currentTopic() {
+        this.$router.push("/home");
+      }
     },
     computed : {
     }

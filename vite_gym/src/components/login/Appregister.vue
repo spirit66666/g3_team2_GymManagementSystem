@@ -3,17 +3,26 @@
   <div class="container" id="Application">
     <div class="container">
       <h1 class="title">创建你的账号</h1>
-      <div v-for="(item, index) in fields" class="inputContainer">
-        <div class="field">{{item.title}} <span v-if="item.required" style="color: red;">*</span></div>
-        <input v-model="item.model" class="input" :type="item.type" />
-        <div class="tip" v-if="index === 2">请确认密码程度需要大于6位</div>
-      </div>
 
-      <div class="subContainer">
-        <div class="setting">偏好设置</div>
-        <input v-model="receiveMsg" class="checkbox" type="checkbox" /><label class="label">接收更新邮件</label>
+      <div  class="inputContainer">
+        <div class="field">
+          <label for="username">用户名</label>
+          <input class="input" type="text" placeholder="请输入用户名" id="username" v-model="registerUsername" />
+
+
+        </div>
+        <div class="field">
+          <label for="username">密码</label>
+          <input class="input" type="password" placeholder="请输入密码" id="password" v-model="registerPassword" />
+
+
+
+        </div>
+
+
+
       </div>
-      <button @click="createAccount" class="btn">创建账号</button>
+      <button @click="registerUser" class="btn">创建账号</button>
 
     </div>
   </div>
@@ -22,41 +31,17 @@
 
 
 <script>
+
 import {ElMessage} from "element-plus";
+import {h} from "vue";
 
 export default {
   data() {
     return {
-      fields:[
-        {
-          title:"用户名",
-          required:true,
-          type:"text",
-          model:""
-        },{
-          title:"学号",
-          required:false,
-          type:"text",
-          model:""
-        },{
-          title:"密码",
-          required:true,
-          type:"password",
-          model:""
-        }
-        ,{
-          title:"密码",
-          required:true,
-          type:"password",
-          model:""
-        }
-        ,{
-          title:"密码",
-          required:true,
-          type:"password",
-          model:""
-        }
-      ],
+
+      registerUsername: "",
+      registerPassword: "",
+
       receiveMsg:false
     }
   },
@@ -87,37 +72,24 @@ export default {
     }
   },
   methods:{
-    emailCheck() {
-      var verify = /^\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/;
-      if (!verify.test(this.email)) {
-        return false
-      } else {
-        return true
-      }
-    },
-    createAccount() {
-      if (this.name.length == 0) {
-        alert("请输入学号")
-        return
-      } else if (this.password.length <= 6) {
-        alert("密码设置需要大于6位字符")
-        return
-      } else if (this.email.length > 0 && !this.emailCheck(this.email)) {
-        alert("请输入正确的邮箱")
-        return
-      }
-      alert("注册成功")
-      ElMessage({
-        message:'注册成功',
-        type:'success',
-        duration:150
-      })
-      console.log(`name:${this.name}\npassword:${this.password}\nemail:${this.email}\nreceiveMsg:${this.receiveMsg}`)
+    registerUser() {
+      this.$http.post('/post?username='+this.registerUsername+'&password='+this.registerPassword).then(response => {
 
-      setTimeout(() => {
-        this.$router.push({name:"home"})
-      }, 1500);
-    }
+        console.log(response);
+
+        ElMessage({
+          message: h('p', { style: 'line-height: 1; font-size: 14px' }, [
+            h('span', null, '用户'),
+            h('i', { style: 'color: teal' }, this.registerUsername,'已经注册成功'),
+          ]),
+        })
+
+        setTimeout(() => {
+
+          this.$router.push('/login');
+        }, 400)
+      })
+    },
   }
 
 }
