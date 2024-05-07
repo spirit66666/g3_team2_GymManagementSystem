@@ -1,6 +1,7 @@
 <script>
 
 import router from "../../components/tools/Router.js";
+import Store from "../store/store.js";
 export default {
   name: "home",
 
@@ -13,6 +14,8 @@ export default {
         next(); // 确保继续导航
       })
 
+
+      console.log(Store.state.username);
       this.$router.replace('/AppHome/first_page')
     },
     logout() {
@@ -26,6 +29,9 @@ export default {
       this.$router.replace('/login')
     },
     selectItem(index) {
+
+      console.log(index);
+      console.log(Store.state.username);
       this.$router.push(index)
     }
   },

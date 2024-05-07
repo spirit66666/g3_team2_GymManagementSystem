@@ -20,7 +20,7 @@
           <div class="flex-grow" />
           <el-sub-menu index="2"
                        @select="selectItem1">
-            <template #title>个人信息</template>
+            <template #title>{{this.username}}个人信息</template>
             <el-menu-item @click="login">登录</el-menu-item>
             <el-menu-item @click="regist1">注册</el-menu-item>
 
@@ -40,8 +40,8 @@
           <el-menu-item index="/home/addfacility">预约</el-menu-item>
 
           <div >
-            <div class="input">
 
+            <div class="input">
 
               <el-avatar style="float:right; margin-right: 20px" @click="adminlogin">
                 <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif" alt="Element logo" />
@@ -59,26 +59,28 @@
   
   <script>
 
+  import Store from '../../components/store/store.js'
   import router from "../../components/tools/Router.js";
 
   export default {
     name: "AppHeader",
     props: ["items"],
+    data() {
+      return {
+
+       username: Store.state.username,
+
+      };
+    },
 
     methods: {
       adminlogin() {
 
-
-
         router.replace('/adminlogin')
       },
       regist1() {
-
-
-
         router.replace('/Appregister')
       },
-
 
         selectItem(index) {
             this.$emit(index)

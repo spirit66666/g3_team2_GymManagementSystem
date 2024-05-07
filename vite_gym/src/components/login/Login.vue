@@ -22,7 +22,7 @@
 
 <script>
 
-
+import Store from '../../components/store/store.js'
 import { h } from 'vue'
 import { ElMessage } from 'element-plus'
 
@@ -61,6 +61,9 @@ export default {
                 h('i', { style: 'color: teal' }, this.name,'已经登陆成功'),
               ]),
             })
+            Store.commit('setUsername', this.name);
+            console.log(Store.state.username);
+            // 登陆成功提示
             setTimeout(() => {
 
               this.$router.push('/home');
