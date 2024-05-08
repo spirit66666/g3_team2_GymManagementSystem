@@ -5,11 +5,18 @@ const store = createStore({
     return {
         username:"",
         userPassword:"",
+        LoggedIn: "登陆"
     }
 },
     mutations: {
-        setUsername(state, username) {
-            state.username = username}
+        setUsername(state, username, userPassword) {
+            state.username = username
+            state.userPassword = userPassword
+
+        },
+        setLoggedIn(state, loggedIn) {
+            state.LoggedIn = loggedIn
+        }
     }
     }
 )

@@ -34,6 +34,7 @@ export default {
   },
     data() {
         return {
+          tuichu:"退出登陆",
             name:"",
             password:"",
           showError: false
@@ -61,12 +62,15 @@ export default {
                 h('i', { style: 'color: teal' }, this.name,'已经登陆成功'),
               ]),
             })
-            Store.commit('setUsername', this.name);
+
+
+            Store.commit('setUsername', this.name,this.password);
+            Store.commit('setLoggedIn', this.tuichu);
             console.log(Store.state.username);
             // 登陆成功提示
             setTimeout(() => {
 
-              this.$router.push('/home');
+              this.$router.push('/');
             }, 400)
             // 登陆成功处理逻辑
           } else {
