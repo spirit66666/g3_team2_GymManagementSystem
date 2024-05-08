@@ -111,7 +111,6 @@
 
     </el-row>
   </div>
-
   <div>
     <el-config-provider >
 
@@ -158,20 +157,15 @@
 
 <script lang="ts" setup>
 import { computed, ref ,reactive ,watch } from 'vue'
-
 import { ElRow, ElCol, ElFormItem, ElSelect, ElOption, ElDatePicker, ElTable, ElTableColumn } from 'element-plus';
-
 const value = ref('')
 import { ElButton, ElDrawer,ElMessageBox} from 'element-plus'
 import { CircleCloseFilled } from '@element-plus/icons-vue'
-
 let timer
-
 interface TimeSlot {
   value: string;
   label: string;
 }
-
 interface ScheduleData {
   time: string;
   status: string;

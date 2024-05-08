@@ -16,22 +16,16 @@
             />
           </el-menu-item>
           <h1 id="title"  style="margin: 0; padding: 0" @click="regist1">GYM</h1>
-
           <div class="flex-grow" />
-
           <el-sub-menu index="2"
                        @select="selectItem1">
             <template #title>{{this.username}}个人信息</template>
             <el-menu-item  @click="login">{{tuichu}}</el-menu-item>
-            <el-menu-item @click="regist1">注册</el-menu-item>
-
+            <el-menu-item @click="regist1" >注册</el-menu-item>
           </el-sub-menu>
         </el-menu>
-
       </el-header>
-
       <el-main style="margin: 40px; padding: 0">
-
         <el-menu class="container"
         @select="selectItem1"
         >
@@ -51,11 +45,8 @@
           </div>
 
         </el-menu>
-
       </el-main>
-
     </el-container>
-
   </template>
   
   <script>
@@ -68,43 +59,33 @@
     props: ["items"],
     data() {
       return {
-
         tuichu: Store.state.LoggedIn,
        username: Store.state.username,
         password: Store.state.userPassword,
-
       };
     },
     created() {
-
 
     },
     components : {
       Login: () => import("../../components/login/Login.vue"),
     },
     mounted() {
-
     },
-
     methods: {
       loadData()
       {
       },
       adminlogin() {
-
         router.replace('/adminlogin')
       },
       regist1() {
         router.replace('/Appregister')
       },
-
-        selectItem(index) {
+      selectItem(index) {
             this.$emit(index)
         },
-      login() {	 this.RouteState = false;
-        this.$nextTick(()=>{
-          this.RouteState = true;
-        });
+      login() {
         router.replace('/login')
       },
       selectItem1(index) {

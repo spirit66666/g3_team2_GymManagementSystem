@@ -5,7 +5,7 @@ const store = createStore({
     return {
         username:"",
         userPassword:"",
-        LoggedIn: "登陆"
+        LoggedIn: "登陆",
     }
 },
     mutations: {

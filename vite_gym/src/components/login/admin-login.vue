@@ -86,6 +86,8 @@ export default {
     loginUser() {
       this.$http.put('/fetch').then(response => {
         this.tableData = response.data;
+
+        console.log(this.tableData);
             if (response.data.find(user => user.username === this.loginUsername && user.password === this.loginPassword)) {
 
               console.log('登陆成功');

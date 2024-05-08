@@ -1,16 +1,10 @@
 <script>
 export default {
   name: "first_page",
-
   data() {
     return {
-      msg: "Welcome to Vue.js",
       items: [
         { url: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif' },
-        { url: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png' },
-        { url: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png' },
-        { url: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png' },
-        { url: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png' },
       ]
     }
   }}
@@ -19,10 +13,10 @@ export default {
 
 <template>
   <el-carousel :interval="4000" type="card" height="400px">
-    <el-carousel-item v-for="item in items" :key="item">
+    <el-carousel-item v-for="item in 7" >
       <img :src="items[0].url" style="width: 100%; height: 100%;" />
-      <img :src="items[1].url" style="width: 100%; height: 100%;" />
     </el-carousel-item>
+
   </el-carousel>
 </template>
 

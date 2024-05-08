@@ -84,58 +84,54 @@
 
 
   <div>
+
     <div class="m-4">
-      <p>场馆名称</p>
-      <el-select
+      <el-text class="mx-1" type="primary">场馆名称:  </el-text>
+      <el-link :underline="false" v-for="item in facility.length-1" >{{facility[item].name}}</el-link>
+    </div>
+    <div class="m-4">
+
+
+      <el-text class="mx-1" type="primary">场馆名称:  </el-text>
+      <el-link :underline="false" v-for="item in facility.length-1" >{{facility[item].name}}</el-link>
+    </div>
+
+    <div class="m-4">
+
+
+      <el-text class="mx-1" type="danger">选择日期:   </el-text>
+      <el-date-picker
           v-model="value1"
-          multiple
-          placeholder="Select"
-          style="width: 240px"
-      >
-        <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-        />
-      </el-select>
+          type="date"
+          placeholder="Pick a day"
+      />
     </div>
+
     <div class="m-4">
-      <p>项目选择</p>
-      <el-select
-          v-model="value2"
-          multiple
-          collapse-tags
-          placeholder="Select"
-          style="width: 240px"
-      >
-        <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-        />
-      </el-select>
+
+
+      <el-text class="mx-1" type="primary">预约状态:  </el-text>
+      <el-link :underline="false" v-for="item in facility.length-1" >{{facility[item].name}}</el-link>
     </div>
-    <el-config-provider >
 
-      <el-table :data="filterTableData" style="width: 100%"
-                :row-class-name="tableRowClassName"
-                :default-page-size=1
+
+    <el-config-provider class="m-4"  >
+
+      <el-table :data="scheduleData" style="width: 100%"
+                height="200"
+                border
+                :cell-style="cellStyl"
       >
 
-        <el-table-column label="Image">
-          <template #default="scope">
-            <el-image
-                :src="scope.row.image"
-                alt="Image"
-                fit="cover"
-                style="width: 80px; height: 80px;"
+        <el-table-column label="Date" prop="timeRange" />
+
+        <el-table-column
+            v-for="(item, index) in scheduleData"
+            :key="index"
+
+            :label="item.name"
             />
-          </template>
-        </el-table-column>
-        <el-table-column label="Date" prop="date" />
-        <el-table-column label="Name" prop="name" />
+
         <el-table-column align="right">
           <template #header>
             <el-input v-model="search" size="small" placeholder="Type to search" />
@@ -163,38 +159,109 @@
 <script lang="ts" setup>
 import { computed, ref ,reactive } from 'vue'
 
+const cellStyle = ({ row, column, rowIndex, columnIndex }) => {
+  let warningColor = false;
+  let alarmingColor = false;
+  Object.keys(row).forEach((key) => {
+    // column.property为每项绑定的prop,
+    // 与之前的prop="address.value"不同，prop="address"方便key与prop对应
+    // console.log(key,column,column.property);
+    if (row[key].state == 1 && key == column.property) {
+      if (rowIndex === rowIndex && columnIndex === columnIndex) {
+        warningColor = true;
+      }
+    } else if (row[key].state == 2 && key == column.property) {
+      if (rowIndex === rowIndex && columnIndex === columnIndex) {
+        alarmingColor = true;
+      }
+    }
+  });
+  if (warningColor) {
+    return "success-row";
+  }
+  //多加一个颜色的需求再正常不过了
+  if (alarmingColor) {
+    return "alarm-row";
+  }
+  return "";
+};
+const cellStyl= ({ row, column, rowIndex, columnIndex })=> {
+
+  if (rowIndex === 1|| columnIndex === 2) {
+    return { "background":"green",
+      "color":"red"}
+  }
+
+  if (columnIndex === 1  || columnIndex === 2 || columnIndex === 3) {
+    return { "background":"red",
+      "color":"red"}
+  }
+
+}
+
+
+
 const value = ref('')
 import { ElButton, ElDrawer,ElMessageBox} from 'element-plus'
 import { CircleCloseFilled } from '@element-plus/icons-vue'
 
 let timer
+interface data {
+  name: string
+  value: string
+  disabled: boolean
+}
+const state = reactive({
+  checkNumber: "",  // 存储选中的
+})
 
+
+
+interface ScheduleItem {
+  id: number;
+  name: string
+  // other properties...
+  timeRange: string;
+}
+const scheduleData: ScheduleItem[] = [
+  { id: 1, timeRange: "8:00-9:00",name:"羽毛球" },
+  { id: 1, timeRange: "8:00-9:00",name:"羽毛球" },
+  { id: 1, timeRange: "8:00-9:00",name:"羽毛球" },
+
+  { id: 1, timeRange: "8:00-9:00",name:"羽毛球" },
+
+  { id: 1, timeRange: "8:00-9:00",name:"羽毛球" },
+];
 const value1 = ref('')
-const value2 = ref([])
-const options = [
+const dialogFormVisible = ref(false)
+const facility: data[] = [
+
   {
-    value: 'c',
-    label: 'Option1',
+    name: 'Facility1',
+    value: 'Facility1',
+    disabled: false,
   },
   {
-    value: 'Option2',
-    label: 'Option2',
+    name: 'Facility2',
+    value: 'Facility2',
+    disabled: false,
   },
   {
-    value: 'Option3',
-    label: 'Option3',
+    name: 'Facility3',
+    value: 'Facility3',
+    disabled: false,
   },
   {
-    value: 'Option4',
-    label: 'Option4',
+    name: 'Facility4',
+    value: 'Facility4',
+    disabled: false,
   },
   {
-    value: 'Option5',
-    label: 'Option5',
+    name: 'Facility5',
+    value: 'Facility5',
+    disabled: false,
   },
 ]
-const dialogFormVisible = ref(false)
-
 const formLabelWidth = '140px'
 const form = reactive({
   name: '',
@@ -339,6 +406,9 @@ const tableRowClassName = ({
 </script>
 
 <style>
+.el-link {
+  margin-right: 8px;
+}
 .el-table .warning-row {
   --el-table-tr-bg-color: var(--el-color-warning-light-9);
 }
@@ -357,5 +427,8 @@ const tableRowClassName = ({
 .demo-datetime-picker .block {
   padding: 30px 0;
   text-align: center;
+}
+.m-4 {
+  height: 50px;
 }
 </style>
