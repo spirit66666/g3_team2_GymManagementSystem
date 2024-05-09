@@ -1,6 +1,4 @@
 <template>
-
-
   <el-drawer
       v-model="dialog"
       title="I have a nested form inside!"
@@ -50,8 +48,6 @@
     </template>
     This is drawer content.
   </el-drawer>
-
-
   <el-dialog v-model="dialogFormVisible" title="Shipping address" width="500">
     <el-time-select
         v-model="value"
@@ -81,7 +77,6 @@
       </div>
     </template>
   </el-dialog>
-
 
   <div>
 
@@ -115,14 +110,14 @@
     </div>
 
 
-    <el-config-provider class="m-4"  >
+  </div>
 
+    <el-config-provider class="m-4"  >
       <el-table :data="scheduleData" style="width: 100%"
                 height="200"
                 border
-                :cell-style="cellStyl"
+                :cell-style="cellStyle"
       >
-
         <el-table-column label="Date" prop="timeRange" />
 
         <el-table-column
@@ -130,7 +125,13 @@
             :key="index"
 
             :label="item.name"
-            />
+            >
+          <template #default="scope">
+            <el-button type="text" @click="cellclick(scope.row, scope.column)">
+              {{ canreserve }}
+            </el-button>
+          </template>
+        </el-table-column>
 
         <el-table-column align="right">
           <template #header>
@@ -151,90 +152,16 @@
           </template>
         </el-table-column>
       </el-table>
+
       <el-pagination :total=tableData.length  />
     </el-config-provider>
-  </div>
 </template>
 
 <script lang="ts" setup>
 import { computed, ref ,reactive } from 'vue'
 
-const cellStyle = ({ row, column, rowIndex, columnIndex }) => {
-  let warningColor = false;
-  let alarmingColor = false;
-  Object.keys(row).forEach((key) => {
-    // column.property为每项绑定的prop,
-    // 与之前的prop="address.value"不同，prop="address"方便key与prop对应
-    // console.log(key,column,column.property);
-    if (row[key].state == 1 && key == column.property) {
-      if (rowIndex === rowIndex && columnIndex === columnIndex) {
-        warningColor = true;
-      }
-    } else if (row[key].state == 2 && key == column.property) {
-      if (rowIndex === rowIndex && columnIndex === columnIndex) {
-        alarmingColor = true;
-      }
-    }
-  });
-  if (warningColor) {
-    return "success-row";
-  }
-  //多加一个颜色的需求再正常不过了
-  if (alarmingColor) {
-    return "alarm-row";
-  }
-  return "";
-};
-const cellStyl= ({ row, column, rowIndex, columnIndex })=> {
-
-  if (rowIndex === 1|| columnIndex === 2) {
-
-
-    return { "background":"green",
-      "color":"red"}
-  }
-
-  if (columnIndex === 1  || columnIndex === 2 || columnIndex === 3) {
-    return { "background":"red",
-      "color":"red"}
-  }
-
-}
-
-
-
-const value = ref('')
-import { ElButton, ElDrawer,ElMessageBox} from 'element-plus'
-import { CircleCloseFilled } from '@element-plus/icons-vue'
-
-let timer
-interface data {
-  name: string
-  value: string
-  disabled: boolean
-}
-const state = reactive({
-  checkNumber: "",  // 存储选中的
-})
-
-
-
-interface ScheduleItem {
-  id: number;
-  name: string
-  // other properties...
-  timeRange: string;
-}
-const scheduleData: ScheduleItem[] = [
-  { id: 1, timeRange: "8:00-9:00",name:"羽毛球" },
-  { id: 1, timeRange: "8:00-9:00",name:"羽毛球" },
-  { id: 1, timeRange: "8:00-9:00",name:"羽毛球" },
-
-  { id: 1, timeRange: "8:00-9:00",name:"羽毛球" },
-
-  { id: 1, timeRange: "8:00-9:00",name:"羽毛球" },
-];
 const value1 = ref('')
+//ref要用value
 const dialogFormVisible = ref(false)
 const facility: data[] = [
 
@@ -276,6 +203,63 @@ const form = reactive({
   desc: '',
 })
 const loading = ref(false)
+let canreserve = ref('可以预约')
+let warningColor = false;
+let alarmingColor = false;
+
+const cellclick = (row, column) => {
+  console.log(row, column)
+
+  if(warningColor==true){
+    dialogFormVisible.value = true;
+  }
+}
+const cellStyle = ({ row, column, rowIndex, columnIndex }) => {
+
+      if (columnIndex !==0||columnIndex !== 1) {
+        warningColor = true;
+      }
+      if (columnIndex !==0||columnIndex !== 1) {
+        alarmingColor = true;
+
+    }
+
+  if (warningColor) {
+    return  { "background":"green",
+      "color":"black"};
+  }
+  if (alarmingColor) {
+    return { "background":"red",
+      "color":"red"};
+  }
+};
+
+const value = ref('')
+import { ElButton, ElDrawer,ElMessageBox} from 'element-plus'
+import { CircleCloseFilled } from '@element-plus/icons-vue'
+
+let timer
+interface data {
+  name: string
+  value: string
+  disabled: boolean
+}
+
+interface ScheduleItem {
+  id: number;
+  name: string
+  // other properties...
+  timeRange: string;
+}
+const scheduleData: ScheduleItem[] = [
+  { id: 1, timeRange: "8:00-9:00",name:"羽毛球" },
+  { id: 2, timeRange: "9:00-9:00",name:"羽毛球2" },
+  { id: 3, timeRange: "10:00-9:00",name:"羽毛球3" },
+
+  { id: 1, timeRange: "11:00-9:00",name:"羽毛球4" },
+
+  { id: 1, timeRange: "8:00-9:00",name:"羽毛球5" },
+];
 
 
 const onClick = () => {
@@ -286,7 +270,6 @@ const onClick = () => {
   }, 400)
 }
 
-const centerDialogVisible = ref(false)
 const handleClose = (done) => {
   if (loading.value) {
     return
@@ -314,7 +297,6 @@ const cancelForm = () => {
 }
 const dialog = ref(false)
 const visible = ref(false)
-const drawer = ref(false)
 interface User {
   date: string
   name: string
@@ -329,16 +311,6 @@ const filterTableData = computed(() =>
             data.name.toLowerCase().includes(search.value.toLowerCase())
     )
 )
-const handleEdit = (index: number, row: User) => {
-  tableData.push({
-    date: "",
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles'
-  })
-}
-const handleDelete = (index: number, row: User) => {
-  tableData.splice(index, 1)
-}
 
 const tableData: User[] = [
   {
@@ -391,20 +363,6 @@ const tableData: User[] = [
   },
 ]
 
-const tableRowClassName = ({
-                             row,
-                             rowIndex,
-                           }: {
-  row: User
-  rowIndex: number
-}) => {
-  if (rowIndex === 1) {
-    return 'warning-row'
-  } else if (rowIndex === 3) {
-    return 'success-row'
-  }
-  return ''
-}
 </script>
 
 <style>
