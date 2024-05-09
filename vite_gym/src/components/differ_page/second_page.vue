@@ -188,6 +188,8 @@ const cellStyle = ({ row, column, rowIndex, columnIndex }) => {
 const cellStyl= ({ row, column, rowIndex, columnIndex })=> {
 
   if (rowIndex === 1|| columnIndex === 2) {
+
+
     return { "background":"green",
       "color":"red"}
   }

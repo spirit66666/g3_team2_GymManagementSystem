@@ -1,12 +1,11 @@
 <template>
-    <el-container style="margin: 0; padding: 0">
+    <el-container >
       <el-header style="margin: 0; padding: 0">
         <el-menu
-            :default-active="activeIndex"
             class="el-menu-demo"
             mode="horizontal"
             :ellipsis="false"
-            @select="handleSelect"
+
         >
           <el-menu-item index="0">
             <img
@@ -16,36 +15,39 @@
             />
           </el-menu-item>
           <h1 id="title"  style="margin: 0; padding: 0" @click="regist1">GYM</h1>
-          <div class="flex-grow" />
+
+            <el-menu class="container"
+                     @select="selectItem1"
+            >
+              <el-menu-item index="/AppHome/first_page">首页</el-menu-item>
+              <el-menu-item index="/AppHome/second_page">预约</el-menu-item>
+              <el-menu-item index="/home/addfacility">更多信息</el-menu-item>
+
+              <div >
+
+                <div class="input">
+
+                  <el-avatar style="float:right; margin-right: 20px" @click="adminlogin">
+                    <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif" alt="Element logo" />
+                  </el-avatar>
+                </div>
+              </div>
+
+            </el-menu>
           <el-sub-menu index="2"
+                       class="flex-grow"
                        @select="selectItem1">
-            <template #title>{{this.username}}个人信息</template>
+            <template #title>          {{this.username}}个人信息</template>
             <el-menu-item  @click="login">{{tuichu}}</el-menu-item>
             <el-menu-item @click="regist1" >注册</el-menu-item>
           </el-sub-menu>
+
         </el-menu>
       </el-header>
-      <el-main style="margin: 40px; padding: 0">
-        <el-menu class="container"
-        @select="selectItem1"
-        >
-            <el-menu-item index="/AppHome/first_page">首页</el-menu-item>
-          <el-menu-item index="/AppHome/second_page">预约</el-menu-item>
-          <el-menu-item index="/AppHome/first_page">更多信息</el-menu-item>
-          <el-menu-item index="/home/addfacility">预约</el-menu-item>
 
-          <div >
 
-            <div class="input">
 
-              <el-avatar style="float:right; margin-right: 20px" @click="adminlogin">
-                <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif" alt="Element logo" />
-              </el-avatar>
-            </div>
-          </div>
 
-        </el-menu>
-      </el-main>
     </el-container>
   </template>
   
@@ -97,13 +99,17 @@
   </script>
   <style scoped>
   #title {
-    color: deeppink;
+    color: black;
     font-size: 40px;
     font-weight: bold;
     font-family: Georgia, "Times New Roman", Times, serif;
   }
   .flex-grow {
-    flex-grow: 1;
+    flex-grow: 5;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: right;
   }
   #text {
     font-size: 20px;
@@ -114,8 +120,11 @@
     align-items: center;
 
     mode:"horizontal";
-    background-color: pink;
-    text-color:blue;
+    background-color: white;
+    text-color:black;
+    font-size: 30px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
   }
 
   .left {
