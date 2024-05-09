@@ -55,22 +55,28 @@ export default {
           text-color="black"
           active-text-color="red"
           @select="selectItem">
+
+        <el-sub-menu index="0" text-color= blue>
+          <template #title>
+            <i class="el-icon-s-order"></i>
+            <span>用户管理</span>
+          </template>
+          <el-menu-item index="/home/manageuser">用户管理</el-menu-item>
+        </el-sub-menu>
         <el-sub-menu index="1" text-color= blue>
           <template #title>
             <i class="el-icon-s-order"></i>
             <span>设施管理</span>
           </template>
-          <el-menu-item index="/home/addfacility">2</el-menu-item>
-          <el-menu-item index="/home/addfacility">1</el-menu-item>
+          <el-menu-item index="/home/addfacility">设施管理</el-menu-item>
         </el-sub-menu>
         <el-sub-menu index="2">
           <template #title>
             <i class="el-icon-s-shop"></i>
-            <span>设施管理</span>
+            <span>设施添加</span>
           </template>
-          <el-menu-item index="/home/facility">4</el-menu-item>
+          <el-menu-item index="/home/facility">设施添加</el-menu-item>
 
-          <el-menu-item index="/home/facility">3</el-menu-item>
         </el-sub-menu>
       </el-menu>
     </el-aside>

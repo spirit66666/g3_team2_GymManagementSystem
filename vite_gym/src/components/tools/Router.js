@@ -28,6 +28,11 @@ const Router = createRouter({
 
 
                 },
+                {
+                    path:'manageuser',
+                    component: () => import('../../components/admin/manageuser.vue'),
+                    name:"manageuser"
+                }
             ]
         },
         {

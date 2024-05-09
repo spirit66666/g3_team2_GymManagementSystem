@@ -203,35 +203,39 @@ const form = reactive({
   desc: '',
 })
 const loading = ref(false)
-let canreserve = ref('可以预约')
+let canreserve = ref('')
 let warningColor = false;
 let alarmingColor = false;
 
-const cellclick = (row, column) => {
-  console.log(row, column)
+const cellclick = () => {
 
   if(warningColor==true){
     dialogFormVisible.value = true;
   }
 }
-const cellStyle = ({ row, column, rowIndex, columnIndex }) => {
+const cellStyle = ({  row, column, rowIndex, columnIndex }) => {
 
-      if (columnIndex !==0||columnIndex !== 1) {
+  console.log(rowIndex, columnIndex)
+      if ( rowIndex === 1 || columnIndex === 1) {
+        canreserve.value = '可以预约'
         warningColor = true;
       }
-      if (columnIndex !==0||columnIndex !== 1) {
+       if ( rowIndex === 2) {
         alarmingColor = true;
 
+         canreserve.value = '不能预约'
     }
 
   if (warningColor) {
     return  { "background":"green",
       "color":"black"};
   }
-  if (alarmingColor) {
+  else if (alarmingColor) {
     return { "background":"red",
-      "color":"red"};
+      "color":"black"};
   }
+
+  return { "background-color": "white" };
 };
 
 const value = ref('')

@@ -1,3 +1,5 @@
+CREATE DATABASE IF NOT EXISTS `db_gym`;
+USE `db_gym`;
 
 DROP TABLE IF EXISTS `register`;
 CREATE TABLE register (
