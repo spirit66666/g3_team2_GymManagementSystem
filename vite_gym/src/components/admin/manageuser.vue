@@ -2,8 +2,7 @@
 
 
     <el-config-provider >
-      <el-pagination
-      />
+
       <el-table :data="tableData">
         <el-table-column prop="id" label="ID"></el-table-column>
         <el-table-column prop="username" label="用户名"></el-table-column>
@@ -59,28 +58,6 @@ export default {
 
 
       });
-    },
-    registerUser() {
-      this.$http.post('/post?username='+this.registerUsername+'&password='+this.registerPassword).then(response => {
-
-        console.log(response);
-      })
-    },
-    loginUser() {
-      this.$http.put('/fetch').then(response => {
-        this.tableData = response.data;
-
-        console.log(this.tableData);
-        if (response.data.find(user => user.username === this.loginUsername && user.password === this.loginPassword)) {
-
-          console.log('登陆成功');
-          this.$router.push('/home');
-          // 登陆成功处理逻辑
-        } else {
-          console.log('登陆失败');
-          // 登陆失败处理逻辑
-        }
-      })
     },
     handleCurrentChange(currentPage) {
       console.log(currentPage);

@@ -1,88 +1,89 @@
 <template>
-  <el-table-v2
-      :columns="columns"
-      :data="data"
-      :row-class="rowClass"
-      :width="700"
-      :height="400"
-  />
+  <el-table :data="tableData" border style="width: 100%">
+    <el-table-column prop="date" label="Date" width="180" />
+    <el-table-column prop="name" label="Name" width="180" />
+    <el-table-column prop="address" label="Address" />
+  </el-table>
+
+  <el-config-provider >
+
+    <el-table :data="tableData2">
+      <el-table-column prop="id" label="ID"></el-table-column>
+      <el-table-column prop="username" label="用户名"></el-table-column>
+      <el-table-column prop="password" label="密码"></el-table-column>
+
+    </el-table>
+
+    <el-pagination  :total="total"
+                    :page-size="pageSize"
+                    :current-page="pageNumber"
+                    @current-change="handleCurrentChange"
+                    @size-change="handleSizeChange"
+                    :page-sizes="[1, 2, 3, 4]"
+
+
+                    layout="total, sizes, prev, pager, next, jumper"
+    />
+  </el-config-provider>
+
 </template>
 
-<script lang="tsx" setup>
-import { ref } from 'vue'
-import dayjs from 'dayjs'
-import {
-  ElButton,
-  ElIcon,
-  ElTag,
-  ElTooltip,
-  TableV2FixedDir,
-} from 'element-plus'
-import { Timer } from '@element-plus/icons-vue'
+<script lang="ts" setup>
+import {ref, onMounted, getCurrentInstance} from 'vue'
 
-import type { Column, RowClassNameGetter } from 'element-plus'
-
-let id = 0
-
-const dataGenerator = () => ({
-  id: `random-id-${++id}`,
-  name: 'Tom',
-  date: '2020-10-1',
-})
-
-const columns: Column<any>[] = [
+const { proxy }: any = getCurrentInstance();
+const tableData = [
   {
-    key: 'date',
-    title: 'Date',
-    dataKey: 'date',
-    width: 150,
-    fixed: TableV2FixedDir.LEFT,
-    cellRenderer: ({ cellData: date }) => (
-        <ElTooltip content={dayjs(date).format('YYYY/MM/DD')}>
-          {
-            <span class="flex items-center">
-            <ElIcon class="mr-3">
-              <Timer />
-            </ElIcon>
-              {dayjs(date).format('YYYY/MM/DD')}
-          </span>
-          }
-        </ElTooltip>
-    ),
+    date: '2016-05-03',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles',
   },
   {
-    key: 'name',
-    title: 'Name',
-    dataKey: 'name',
-    width: 150,
-    align: 'center',
-    cellRenderer: ({ cellData: name }) => <ElTag>{name}</ElTag>,
+    date: '2016-05-02',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles',
   },
   {
-    key: 'operations',
-    title: 'Operations',
-    cellRenderer: () => (
-        <>
-          <ElButton size="small">Edit</ElButton>
-          <ElButton size="small" type="danger">
-            Delete
-          </ElButton>
-        </>
-    ),
-    width: 150,
-    align: 'center',
-    flexGrow: 1,
+    date: '2016-05-04',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-01',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles',
   },
 ]
+const tableData2 = ref([])
+const pageNumber = ref(1)
+const pageSize = ref(2)
+const total = ref(0)
 
-const data = ref(Array.from({ length: 200 }).map(dataGenerator))
+onMounted(() => {
+  fetchData()
+})
+const fetchData= () => {
+  fetch("http://localhost:9990/page?pageNumber=" + pageNumber.value + "&pageSize="+ pageSize.value)
+      .then(response => response.json()).then(response => {
 
-const rowClass = ({ rowIndex }: Parameters<RowClassNameGetter<any>>[0]) => {
-  if (rowIndex % 10 === 5) {
-    return 'bg-red-100'
-  } else if (rowIndex % 10 === 0) {
-    return 'bg-blue-200'
-  }
-  return ''
+    console.log(response);
+    total.value = response.total;
+
+    tableData2.value = response.data;
+console.log(tableData2.value);
+
+  });
+}
+
+const handleCurrentChange = (currentPage) => {
+  console.log(currentPage);
+  pageNumber.value = currentPage
+  fetchData()
+}
+const handleSizeChange = (size) => {
+  pageSize.value = size
+  fetchData()
 }
 </script>
+
+

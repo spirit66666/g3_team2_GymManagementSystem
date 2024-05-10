@@ -1,5 +1,5 @@
 <template>
-  <h2>注册页面</h2>
+  <h2>管理员注册页面</h2>
   <form @submit.prevent="registerUser">
     <label for="username">用户名:</label>
     <input type="text" id="username" v-model="registerUsername">
@@ -7,7 +7,7 @@
     <input type="password" id="password" v-model="registerPassword">
     <button type="submit">注册</button>
   </form>
-  <h2>登陆页面</h2>
+  <h2>管理员登陆页面</h2>
   <form @submit.prevent="loginUser">
     <label for="loginUsername">用户名:</label>
     <input type="text" id="loginUsername" v-model="loginUsername">
@@ -15,31 +15,6 @@
     <input type="password" id="loginPassword" v-model="loginPassword">
     <button type="submit">登陆</button>
   </form>
-  <div>
-
-
-    <el-config-provider >
-      <el-pagination
-      />
-    <el-table :data="tableData">
-      <el-table-column prop="id" label="ID"></el-table-column>
-      <el-table-column prop="username" label="用户名"></el-table-column>
-      <el-table-column prop="password" label="密码"></el-table-column>
-
-    </el-table>
-
-      <el-pagination  :total="total"
-                      :page-size="pageSize"
-                      :current-page="pageNumber"
-                      @current-change="handleCurrentChange"
-                      @size-change="handleSizeChange"
-                      :page-sizes="[1, 2, 3, 4]"
-
-
-                     layout="total, sizes, prev, pager, next, jumper"
-                   />
-        </el-config-provider>
-  </div>
 
 
 </template>

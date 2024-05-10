@@ -38,6 +38,7 @@
       </div>
     </div>
   </el-drawer>
+
   <el-drawer v-model="visible" :show-close="false">
     <template #header="{ close, titleId, titleClass }">
       <h4 :id="titleId" :class="titleClass">This is a custom header!</h4>
@@ -48,6 +49,7 @@
     </template>
     This is drawer content.
   </el-drawer>
+
   <el-dialog v-model="dialogFormVisible" title="Shipping address" width="500">
     <el-time-select
         v-model="value"
@@ -71,7 +73,7 @@
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">
+        <el-button type="primary" @click="confirm">
           Confirm
         </el-button>
       </div>
@@ -158,8 +160,13 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref ,reactive } from 'vue'
+import { computed, ref ,reactive , onMounted ,onBeforeUpdate,onUpdated ,getCurrentInstance} from 'vue'
 
+
+const { proxy }: any = getCurrentInstance();
+onBeforeUpdate(() => {
+
+})
 const value1 = ref('')
 //ref要用value
 const dialogFormVisible = ref(false)
@@ -223,12 +230,50 @@ const scheduleData: ScheduleItem[] = [
   { id: 1, timeRange: "8:00-9:00",name:"羽毛球5" },
 ];
 
-const cellclick = () => {
+onMounted(() => {
+
+  fetch('https://jsonplaceholder.typicode.com/posts')
+      .then((response) => response.json())
+      .then((data) => {
+            console.log(data)
+            scheduleData.values = data.map((item) => {
+              return {
+                id: item.id,
+                name: item.title,
+                timeRange: item.body,
+              }
+            })
+          }
+      )
+
+})
+
+const confirm = () => {
+  dialogFormVisible.value = false;
+  proxy.$http.get('/us')
+     .then((response) => {
+        console.log(response.data)
+        ElMessageBox.alert('Submitted successfully!')
+      })
+     .catch((error) => {
+       console.log(error)
+       ElMessageBox.alert('Submission failed!')
+
+       // handle error
+
+     })
+}
+const cellclick = (row, column) => {
 
   if(warningColor.value==true){
     dialogFormVisible.value = true;
   }
 }
+
+onUpdated(() => {
+
+
+})
 const cellStyle = ({  row, column, rowIndex, columnIndex }) => {
 console.log(warningColor.value)
       if ( columnIndex === 1&& row.id >= 2) {
@@ -254,6 +299,7 @@ const value = ref('')
 import { ElButton, ElDrawer,ElMessageBox} from 'element-plus'
 import { CircleCloseFilled } from '@element-plus/icons-vue'
 
+
 let timer
 interface data {
   name: string
@@ -269,7 +315,6 @@ const onClick = () => {
     dialog.value = false
   }, 400)
 }
-
 const handleClose = (done) => {
   if (loading.value) {
     return

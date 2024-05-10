@@ -20,6 +20,22 @@
         </div>
 
 
+        <div class="field">
+          <label for="username">手机号</label>
+          <input class="input" type="password" placeholder="请输入手机" id="password" v-model="registerphone" />
+
+
+
+        </div>
+
+        <div class="field">
+          <label for="username">邮箱</label>
+          <input class="input" type="password" placeholder="请输入邮箱" id="password" v-model="registeremail" />
+
+
+
+        </div>
+
 
       </div>
       <button @click="registerUser" class="btn">创建账号</button>
@@ -42,6 +58,8 @@ export default {
       registerUsername: "",
       registerPassword: "",
 
+      registerphone: "",
+      registeremail: "",
       receiveMsg:false
     }
   },
@@ -73,9 +91,11 @@ export default {
   },
   methods:{
     registerUser() {
-      this.$http.post('/post?username='+this.registerUsername+'&password='+this.registerPassword).then(response => {
+      this.$http.post('/post?userName='+this.registerUsername+'&password='+this.registerPassword+'&phone='+this.registerphone+'&email='+this.registeremail).then(response => {
 
         console.log(response);
+
+
 
         ElMessage({
           message: h('p', { style: 'line-height: 1; font-size: 14px' }, [

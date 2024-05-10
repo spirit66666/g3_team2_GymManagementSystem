@@ -9,6 +9,7 @@
         <div class="input">
             <el-input v-model="password" placeholder="请输入密码" auto-complete="new-password" show-password></el-input>
         </div>
+
         <div class="input">
             <el-button @click="login" style="width:500px" type="primary"  >登录</el-button>
         </div>
