@@ -203,51 +203,9 @@ const form = reactive({
   desc: '',
 })
 const loading = ref(false)
-let canreserve = ref('')
-let warningColor = false;
-let alarmingColor = false;
-
-const cellclick = () => {
-
-  if(warningColor==true){
-    dialogFormVisible.value = true;
-  }
-}
-const cellStyle = ({  row, column, rowIndex, columnIndex }) => {
-
-  console.log(rowIndex, columnIndex)
-      if ( rowIndex === 1 || columnIndex === 1) {
-        canreserve.value = '可以预约'
-        warningColor = true;
-      }
-       if ( rowIndex === 2) {
-        alarmingColor = true;
-
-         canreserve.value = '不能预约'
-    }
-
-  if (warningColor) {
-    return  { "background":"green",
-      "color":"black"};
-  }
-  else if (alarmingColor) {
-    return { "background":"red",
-      "color":"black"};
-  }
-
-  return { "background-color": "white" };
-};
-
-const value = ref('')
-import { ElButton, ElDrawer,ElMessageBox} from 'element-plus'
-import { CircleCloseFilled } from '@element-plus/icons-vue'
-
-let timer
-interface data {
-  name: string
-  value: string
-  disabled: boolean
-}
+const canreserve = ref('')
+const warningColor = ref(false);
+const alarmingColor = ref(false);
 
 interface ScheduleItem {
   id: number;
@@ -260,10 +218,48 @@ const scheduleData: ScheduleItem[] = [
   { id: 2, timeRange: "9:00-9:00",name:"羽毛球2" },
   { id: 3, timeRange: "10:00-9:00",name:"羽毛球3" },
 
-  { id: 1, timeRange: "11:00-9:00",name:"羽毛球4" },
+  { id: 4, timeRange: "11:00-9:00",name:"羽毛球4" },
 
   { id: 1, timeRange: "8:00-9:00",name:"羽毛球5" },
 ];
+
+const cellclick = () => {
+
+  if(warningColor.value==true){
+    dialogFormVisible.value = true;
+  }
+}
+const cellStyle = ({  row, column, rowIndex, columnIndex }) => {
+console.log(warningColor.value)
+      if ( columnIndex === 1&& row.id >= 2) {
+        canreserve.value = '可以预约'
+        warningColor.value = true;
+
+
+        return { backgroundColor: "green" };
+      }
+      else if (rowIndex === 1) {
+        warningColor.value = false;
+        alarmingColor.value = true;
+
+         canreserve.value = '不能预约'
+
+        return { backgroundColor: "red" };
+    }
+
+
+};
+
+const value = ref('')
+import { ElButton, ElDrawer,ElMessageBox} from 'element-plus'
+import { CircleCloseFilled } from '@element-plus/icons-vue'
+
+let timer
+interface data {
+  name: string
+  value: string
+  disabled: boolean
+}
 
 
 const onClick = () => {

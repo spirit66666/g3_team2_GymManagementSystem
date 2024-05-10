@@ -56,6 +56,13 @@ const Router = createRouter({
                     component: () => import('../../components/differ_page/second_page.vue'),
                     name:"second_page"
                 },
+                {
+                    path:'third_page',
+
+
+                    component: () => import('../../components/differ_page/third_page.vue'),
+                    name:"third_page"
+                },
 
             ]
 

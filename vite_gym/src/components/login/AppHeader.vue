@@ -21,6 +21,8 @@
             >
               <el-menu-item index="/AppHome/first_page">首页</el-menu-item>
               <el-menu-item index="/AppHome/second_page">预约</el-menu-item>
+
+              <el-menu-item index="/AppHome/third_page">我的预约</el-menu-item>
               <el-menu-item index="/home/addfacility">更多信息</el-menu-item>
 
               <div >

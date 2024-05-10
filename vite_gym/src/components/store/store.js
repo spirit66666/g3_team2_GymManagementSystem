@@ -6,6 +6,8 @@ const store = createStore({
         username:"",
         userPassword:"",
         LoggedIn: "登陆",
+
+        warningColor:  true,
     }
 },
     mutations: {
