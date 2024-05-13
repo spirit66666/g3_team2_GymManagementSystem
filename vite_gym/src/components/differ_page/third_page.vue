@@ -70,7 +70,6 @@ const fetchData= () => {
     total.value = response.total;
 
     tableData2.value = response.data;
-console.log(tableData2.value);
 
   });
 }

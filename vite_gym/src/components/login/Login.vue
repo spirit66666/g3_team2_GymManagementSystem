@@ -53,12 +53,10 @@ export default {
                 h('i', { style: 'color: teal' }, this.name,'已经登陆成功'),
               ]),
             })
-            console.log(Store.state.IsRegister)
             Store.commit('setUsername', this.name,this.password);
             Store.commit('setLoggedIn', "退出登陆");
             console.log(Store.state.username);
 
-            console.log(Store.state.IsRegister)
             // 登陆成功提示
             setTimeout(() => {
               this.$router.push('/');
