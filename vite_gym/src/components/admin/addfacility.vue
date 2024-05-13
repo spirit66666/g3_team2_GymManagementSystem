@@ -156,7 +156,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref ,reactive ,watch } from 'vue'
+import {computed, ref, reactive, watch, onMounted} from 'vue'
 import { ElRow, ElCol, ElFormItem, ElSelect, ElOption, ElDatePicker, ElTable, ElTableColumn } from 'element-plus';
 const value = ref('')
 import { ElButton, ElDrawer,ElMessageBox} from 'element-plus'
@@ -184,15 +184,46 @@ const sports = [
 ];
 
 const date = ref(null);
-const timeSlots = [
+const timeSlots = ref([
   { value: '08:00-09:00', label: '8:00-9:00', status: 'available' },
   { value: '09:00-10:00', label: '9:00-10:00', status: 'available' },
   // Add more time slots here
-];
+]);
 
+onMounted(() => {
+
+  fetch('https://jsonplaceholder.typicode.com/posts')
+      .then((response) => response.json())
+      .then((data) => {
+            console.log(data)
+            tableData.values = data.map((item) => {
+              return {
+                id: item.id,
+                name: item.title,
+                timeRange: item.body,
+              }
+            })
+          }
+      )
+
+})
 const fetchData = async (selectedDate) => {
   // Simulate API call to fetch schedule data based on selectedDate, venue, and sport
   // Assign fetched data to tableData
+
+  fetch('https://jsonplaceholder.typicode.com/posts')
+      .then((response) => response.json())
+      .then((data) => {
+            console.log(data)
+            tableData.values = data.map((item) => {
+              return {
+                id: item.id,
+                name: item.title,
+                timeRange: item.body,
+              }
+            })
+          }
+      )
 };
 
 const bookSlot = (slot) => {

@@ -9,6 +9,7 @@
         <div class="input">
             <el-input v-model="password" placeholder="请输入密码" auto-complete="new-password" show-password></el-input>
         </div>
+
         <div class="input">
             <el-button @click="login" style="width:500px" type="primary"  >登录</el-button>
         </div>
@@ -52,12 +53,10 @@ export default {
                 h('i', { style: 'color: teal' }, this.name,'已经登陆成功'),
               ]),
             })
-            console.log(Store.state.IsRegister)
             Store.commit('setUsername', this.name,this.password);
             Store.commit('setLoggedIn', "退出登陆");
             console.log(Store.state.username);
 
-            console.log(Store.state.IsRegister)
             // 登陆成功提示
             setTimeout(() => {
               this.$router.push('/');

@@ -14,16 +14,16 @@
                 alt="Element logo"
             />
           </el-menu-item>
-          <h1 id="title"  style="margin: 0; padding: 0" @click="regist1">GYM</h1>
+            <h1 id="title"  style="margin: 0; padding: 0" @click="regist1">GYM</h1>
 
             <el-menu class="container"
                      @select="selectItem1"
             >
               <el-menu-item index="/AppHome/first_page">首页</el-menu-item>
-              <el-menu-item index="/AppHome/second_page">预约</el-menu-item>
+              <el-menu-item index="/AppHome/yuyue">预约</el-menu-item>
 
               <el-menu-item index="/AppHome/third_page">我的预约</el-menu-item>
-              <el-menu-item index="/home/addfacility">更多信息</el-menu-item>
+              <el-menu-item index="/AppHome/second_page">更多信息</el-menu-item>
 
               <div >
 
@@ -37,10 +37,15 @@
 
             </el-menu>
           <el-sub-menu index="2"
+                       v-model="username"
                        class="flex-grow"
                        @select="selectItem1">
-            <template #title>          {{this.username}}个人信息</template>
-            <el-menu-item  @click="login">{{tuichu}}</el-menu-item>
+            <template #title>
+              {{this.username}}个人信息</template>
+            <el-menu-item  @click="login"
+
+                           v-model="tuichu"
+            >{{tuichu}}</el-menu-item>
             <el-menu-item @click="regist1" >注册</el-menu-item>
           </el-sub-menu>
 
@@ -53,6 +58,8 @@
 
   import Store from '../../components/store/store.js'
   import router from "../../components/tools/Router.js";
+  import {ElMessage} from "element-plus";
+  import {h} from "vue";
 
   export default {
     name: "AppHeader",
@@ -72,6 +79,25 @@
     },
     mounted() {
     },
+    computed: {
+      LoggedIn() {
+        console.log("LoggedIn", Store.state.LoggedIn);
+        return Store.state.LoggedIn;
+
+      },
+
+      username() {
+        console.log("username", Store.state.username);
+
+        return Store.state.username;
+
+      }
+
+    },
+    watch: {
+
+
+    },
     methods: {
       loadData()
       {
@@ -86,11 +112,27 @@
             this.$emit(index)
         },
       login() {
-        router.replace('/login')
+        if(Store.state.LoggedIn === "退出登陆"){
+          ElMessage({
+            message: h('p', { style: 'line-height: 1; font-size: 14px' }, [
+              h('span', null, '用户'),
+              h('i', { style: 'color: teal' }, Store.state.username,'已经退出登陆'),
+            ]),
+          })
+
+          location.reload();
+          Store.commit('setUsername', "","");
+          Store.commit('setLoggedIn', "登陆");
+
+
+          router.replace('/')}
+        else{
+        router.replace('/login')}
       },
       selectItem1(index) {
         router.push(index)
-      }
+      },
+
     }
 
   };

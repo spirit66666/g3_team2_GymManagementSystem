@@ -64,6 +64,11 @@ const Router = createRouter({
                     name:"third_page"
                 },
 
+                {
+                    path:'yuyue',
+                    component: () => import('../../components/differ_page/yuyue.vue'),
+                    name:"yuyue"
+                }
             ]
 
 
