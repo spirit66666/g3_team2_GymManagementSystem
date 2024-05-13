@@ -14,6 +14,7 @@ export default {
       formLabelWidth :  '140px',
       loading: false,
       value: '',
+      dialogFormVisible: false,
       dialog: false,
       facility:  [
         {
@@ -90,8 +91,18 @@ export default {
       remark: ''
     };
   },
-  methods: {
+  onBeforeUpdate() {
+    console.log('before update');
+  },
 
+  onUpdated() {
+
+    console.log('updated');
+
+  },
+  computed: {
+  },
+  methods: {
     changWeek(item, index) {
       // Implement changWeek method logic here
       // Example:
@@ -107,29 +118,30 @@ export default {
     changTime(item, index) {
       // Implement changTime method logic here
       // Example:
+      if(Store.state.username===""){
 
-      if(Store.state.username===""){ this.visible = true}
+        this.visible = true}
+      else{
       this.appointForm.time = item.time;
       this.timeArr.forEach(item => {
         item.status = 0;
 
       });
-      item.status = 2;
+      item.status = 1;
+        this.dialogFormVisible = true;}
     },
 
     fetchData() {
-      fetch("http://localhost:9990/facilityName"+facility.values.name )
+      fetch("http://localhost:9990/facilityName" )
           .then(response => response.json()).then(response => {
 
-        facility.values = response.data;
         console.log(response);
 
       })
       },
 
     confirm  ()  {
-      dialogFormVisible.value = false;
-      proxy.$http.get('/us')
+      this.$http.get('/us')
           .then((response) => {
             console.log(response.data)
             ElMessageBox.alert('Submitted successfully!')
@@ -141,88 +153,44 @@ export default {
             // handle error
 
           })
+
+      this.dialogFormVisible = false;
     }
 ,
 
   }
+  ,
+
+  onMounted() {
+    console.log('mounted');
+    this.fetchData();
+  },
+
+  created() {
+    console.log('created');
+  },
 };
 </script>
 <template>
 
-
-  <el-drawer
-      v-model="dialog"
-      title="I have a nested form inside!"
-      :before-close="handleClose"
-      direction="ltr"
-      class="demo-drawer"
-  >
-    <div class="demo-drawer__content">
-
-      <el-time-select
-          v-model="value"
-          style="width: 240px"
-          start="08:30"
-          step="00:15"
-          end="18:30"
-          placeholder="Select time"
-      />
-      <el-form :model="form">
-        <el-form-item label="Name" :label-width="formLabelWidth">
-          <el-input v-model="form.name" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="Area" :label-width="formLabelWidth">
-          <el-select
-              v-model="form.region"
-              placeholder="Please select activity area"
-          >
-            <el-option label="Area1" value="shanghai" />
-            <el-option label="Area2" value="beijing" />
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <div class="demo-drawer__footer">
-        <el-button @click="cancelForm">Cancel</el-button>
-        <el-button type="primary" :loading="loading" @click="onClick">
-          {{ loading ? 'Submitting ...' : 'Submit' }}
-        </el-button>
-      </div>
-    </div>
-  </el-drawer>
-
-
-  <el-dialog v-model="dialogFormVisible" title="Shipping address" width="500">
-    <el-time-select
-        v-model="value"
-        style="width: 240px"
-        start="08:30"
-        step="00:15"
-        end="18:30"
-        placeholder="Select time"
-    />
-    <el-form :model="form">
-      <el-form-item label="Promotion name" :label-width="formLabelWidth">
-        <el-input v-model="form.name" autocomplete="off" />
-      </el-form-item>
-      <el-form-item label="Zones" :label-width="formLabelWidth">
-        <el-select v-model="form.region" placeholder="Please select a zone">
-          <el-option label="Zone No.1" value="shanghai" />
-          <el-option label="Zone No.2" value="beijing" />
-        </el-select>
-      </el-form-item>
-    </el-form>
+  <el-dialog v-model="dialogFormVisible" title="请核对你的信息" width="500">
+    <h3>请确认你的预约信息</h3>
+    <h3>你选择的场馆为：{{facility[0].name}}</h3>
+    <h3>你选择的日期为：{{appointForm.date}}</h3>
+    <h3>你选择的时间为：{{appointForm.time}}</h3>
+    <h3>{{timeArr.time}}</h3>
     <template #footer>
       <div class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">Cancel</el-button>
+        <el-button @click="dialogFormVisible = false">返回</el-button>
+
         <el-button type="primary" @click="confirm">
-          Confirm
+          确认
         </el-button>
       </div>
     </template>
   </el-dialog>
 
   <div>
-
     <div class="m-4">
       <el-text class="mx-1" type="primary">场馆名称:  </el-text>
       <el-link :underline="false" v-for="item in facility.length-1"
@@ -230,8 +198,6 @@ export default {
                @click="selectFacility(item,facility[item].name)">{{facility[item].name}}</el-link>
     </div>
     <div class="m-4">
-
-
       <el-text class="mx-1" type="primary">项目名称:  </el-text>
       <el-link :underline="false" v-for="item in facility.length-1"
 
@@ -239,10 +205,7 @@ export default {
                @click="selectFacility(item,facility[item].name)"
       >{{facility[item].name}}</el-link>
     </div>
-
     <div class="m-4">
-
-
       <el-text class="mx-1" type="danger">选择日期:   </el-text>
       <el-date-picker
           v-model="value1"
@@ -250,7 +213,6 @@ export default {
           placeholder="Pick a day"
       />
     </div>
-
     <div class="m-4">
 
 
@@ -259,7 +221,6 @@ export default {
                v-model:facility="facility[item].value"
                @click="selectFacility(item,facility[item].value)">{{facility[item].disabled}}</el-link>
     </div>
-
     <div >
     <span v-for="(item,index) in timeList" :key="index">
        <span style="padding-left: 5px">
@@ -267,12 +228,11 @@ export default {
                       @click="selectTime(index,item.time)">{{item.time}}</el-button>
         </span>
       <!--每5个一行-->
-        <span v-if="(index+1)%5==0">
+        <span v-if="(index+1)%5===0">
           <br>
         </span>
     </span>
     </div>
-
   </div>
 
 

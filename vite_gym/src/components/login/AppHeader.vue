@@ -120,7 +120,7 @@
             ]),
           })
 
-
+          location.reload();
           Store.commit('setUsername', "","");
           Store.commit('setLoggedIn', "登陆");
 
