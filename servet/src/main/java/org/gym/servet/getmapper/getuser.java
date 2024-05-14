@@ -11,15 +11,12 @@ import java.util.List;
 @Mapper
 public interface getuser{
     @Select("SELECT * FROM gym_user")
-     public List<User> find();
+      List<User> find();
 
 
 
     @Select("SELECT * FROM gym_user limit #{pageNumber},#{pageSize}")
     List<User> selectPage(Integer pageNumber, Integer pageSize);
-
-
-
 
     @Select("SELECT COUNT(*) FROM gym_user")
     Integer count();
