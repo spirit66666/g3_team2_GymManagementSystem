@@ -49,8 +49,7 @@ public class ServetApplication {
     @PutMapping("/fetch")
     public List<User> getUsers12() {
 
-        List<User> users = getuser.find();
-        return users ;
+        return getuser.find();
     }
 
     @PostMapping("/post")

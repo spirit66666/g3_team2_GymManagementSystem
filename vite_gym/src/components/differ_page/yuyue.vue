@@ -2,12 +2,58 @@
 import {ElButton, ElDrawer, ElMessageBox} from "element-plus";
 import {CircleCloseFilled} from "@element-plus/icons-vue";
 import { computed, ref ,reactive , onMounted ,onBeforeUpdate,onUpdated ,getCurrentInstance} from 'vue'
-
 import Store from '../../components/store/store.js'
+
 export default {
   components: {CircleCloseFilled, ElDrawer, ElButton},
   data() {
     return {
+      appointForm1:{},//预约
+      isAppoint1:false,//
+      appointAreaId:'',//预约的路演厅id
+      appointAreaName:'',//预约的路演厅name
+      remark1:'',//备注
+      appointTimeArr:[],//预约选中时间数组
+      title: ["日", "一", "二", "三", "四", "五", "六"],
+      timeArr1:[
+          { status: 0 },
+          { status: 0 },
+          { status: 0 },
+          { status: 0 },
+
+        { status: 0 },
+        { status: 0 },
+        { status: 0 },
+        { status: 0 },
+
+        { status: 0 },
+        { status: 0 },
+        { status: 0 },
+        { status: 0 },
+
+        { status: 0 },
+        { status: 0 },
+        { status: 0 },
+        { status: 0 },
+        { status: 0 },
+        { status: 0 },
+
+        { status: 0 },
+        { status: 0 },
+        { status: 0 },
+        { status: 0 },
+        { status: 0 },
+
+        { status: 0 },
+          { status: 0 },
+      ],
+      dateNow:'',//预约年月
+      timeStart:'',//预约开始日期
+      timeEnd:'',//预约结束日期
+      currentDay: new Date().getDate(),
+      currentMonth: new Date().getMonth(),
+      currentYear: new Date().getFullYear(),
+
       proxy: getCurrentInstance(),
       visible: false,
       value1: '',
@@ -96,11 +142,31 @@ export default {
   },
 
   onUpdated() {
-
     console.log('updated');
 
   },
   computed: {
+    // 获取中文的月份    显示：8月
+    currentMonthChinese() {
+      return new Date(this.currentYear, this.currentMonth).toLocaleString(
+          "default",{ month: "short" }
+      );
+    },
+    currentDays() {
+      // Date中的月份是从0开始的
+      return new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
+    },
+    prevDays() {
+      // 获取上个月的最后一行的日期
+      let data = new Date(this.currentYear, this.currentMonth, 0).getDate();
+      let num = new Date(this.currentYear, this.currentMonth, 1).getDay();
+      const days = [];
+      while (num > 0) {
+        days.push(data--);
+        num--;
+      }
+      return days.sort();
+    },
   },
   methods: {
     changWeek(item, index) {
@@ -155,9 +221,174 @@ export default {
           })
 
       this.dialogFormVisible = false;
-    }
-,
+    },
 
+
+    /* 以下日历相关*/
+    //日历点击事件
+    changTime1(val,index){
+      if(this.appointTimeArr.length<2){
+        this.timeArr1[index].status=3;
+        this.appointTimeArr.push(index);
+        if(this.appointTimeArr.length===1){
+          this.timeStart=this.appointTimeArr[0];
+          this.timeEnd=this.appointTimeArr[0];
+        }else if(this.appointTimeArr.length===2){
+          if(this.appointTimeArr[0]===this.appointTimeArr[1]){
+            this.timeArr1[this.appointTimeArr[0]].status=0;
+            this.appointTimeArr=[];
+          }else{
+            this.appointTimeArr=this.appointTimeArr.sort(function(a,b){return a-b});
+            let len=this.appointTimeArr[1]-this.appointTimeArr[0];
+            for(let i=0;i<len;i++){
+              if(this.timeArr1[this.appointTimeArr[0]+i].status===1){
+                this.$message.warning("已预约过的时间不允许预约！")
+                this.timeStart='';
+                this.timeEnd='';
+                break
+              }else{
+                this.timeArr1[this.appointTimeArr[0]+i].status=3;
+                this.timeStart=this.timeArr1[this.appointTimeArr[0]].time;
+                this.timeEnd=this.timeArr1[this.appointTimeArr[1]].time;
+              }
+            }
+
+          }
+        }
+      }else if(this.appointTimeArr.length === 3){
+        for(let i=0;i<this.timeArr1.length;i++){
+          if(this.timeArr1[i].status===3){
+            this.timeArr1[i].status=0;
+          }
+        }
+        this.appointTimeArr=[];
+        this.appointTimeArr.push(index);
+        this.timeArr1[index].status=3;
+      }
+    },
+    //点击左侧箭头
+    prev() {
+      // 点击上个月，若是0月则年份-1
+      // 0是1月  11是12月
+      if (this.currentMonth === 0) {
+        this.currentYear -= 1;
+        this.currentMonth = 11;
+      } else {
+        this.currentMonth--;
+      }
+      let date=this.currentYear+'-'+(this.currentMonth+1);
+      let formData={
+        appointAreaId:this.appointAreaId,
+        startTime:this.getFirst(date)+' '+"00:00:00",
+        endTime:this.getLast(date)+' '+"23:59:59"
+      }
+      this.dateNow=date;
+      this.getAppointed(formData)
+    },
+    //点击右侧箭头
+    next() {
+      if (this.currentMonth === 11) {
+        this.currentYear++;
+        this.currentMonth = 0;
+      } else {
+        this.currentMonth++;
+      }
+      let date=this.currentYear+'-'+(this.currentMonth+1);
+      let formData={
+        appointAreaId:this.appointAreaId,
+        startTime:this.getFirst(date)+' '+"00:00:00",
+        endTime:this.getLast(date)+' '+"23:59:59"
+      }
+      this.dateNow=date;
+      this.getAppointed(formData)
+    },
+    /* 以上日历相关*/
+    getYM(time){
+      let date = new Date(time)
+      return date.getFullYear() + '-' +
+          (date.getMonth() + 1)
+    },
+    getFirst(time){
+      let date = new Date(time)
+      return date.getFullYear() + '-' +
+          (date.getMonth() + 1) + '-' +
+          date.getDate()
+    },
+    getLast(time){
+      var y = new Date(time).getFullYear(); //获取年份
+      var m = new Date(time).getMonth() + 1; //获取月份
+      var d = new Date(y, m, 0).getDate(); //获取当月最后一日
+      let Str=y + '-' +m + '-' + d
+      return Str
+    },
+    //获取时间数组
+    getAppointed(formData){
+      appointTime(formData).then(res=>{
+        this.timeArr1=res.data.data;
+        if(res.data.code===200){
+          this.timeArr1=res.data.data;
+        }
+      })
+    },
+    //预约
+    addAppoint(val){
+      this.isAppoint1=true;
+      this.appointAreaId=val.appointAreaId;
+      this.appointAreaName=val.appointAreaName;
+      this.positionId=val.positionId;
+      this.positionName=val.positionName;
+      let formData={
+        appointAreaId:val.appointAreaId,
+        startTime:this.getFirst(this.getYM(new Date()))+' '+'00:00:00',
+        endTime:this.getLast(this.getYM(new Date()))+' '+'23:59:59'
+      }
+      this.dateNow=this.getYM(new Date());
+      this.getAppointed(formData);
+    },
+    saveAppoint(){
+      if(this.timeStart!==''&&this.timeEnd!=''){
+        this.appointForm.appointAreaId=this.appointAreaId;
+        this.appointForm.appointAreaName=this.appointAreaName;
+        this.appointForm.positionId=this.positionId;
+        this.appointForm.positionName=this.positionName;
+        this.appointForm.remark1=this.remark1;
+        this.appointForm.startTime=this.timeStart+' '+"00:00:00";
+        this.appointForm.endTime=this.timeEnd+' '+"23:59:59";
+        appoint(this.appointForm).then(res=>{
+          if(res.data.code===200){
+            this.$message.success(res.data.message)
+            this.remark1='';
+            this.currentDay=new Date().getDate();
+            this.currentMonth=new Date().getMonth();
+            this.currentYear=new Date().getFullYear();
+            this.isAppoint1=false;
+            this.isMeeting=false
+            this.getList();
+          }else{
+            this.$message.error(res.data.message)
+          }
+        })
+      }else{
+        this.$message.error("请选择预约时间")
+        for(let i=0;i<this.timeArr1.length;i++){
+          if(this.timeArr1[i].status===3){
+            this.timeArr1[i].status=0
+          }
+        }
+      }
+    },
+    closeAppoint(){
+      this.isAppoint1=false
+      this.remark1='';
+      for(let i=0;i<this.timeArr1.length;i++){
+        if(this.timeArr1[i].status===3){
+          this.timeArr1[i].status=0;
+        }
+      }
+      this.currentDay=new Date().getDate();
+      this.currentMonth=new Date().getMonth();
+      this.currentYear=new Date().getFullYear();
+    },
   }
   ,
 
@@ -166,12 +397,47 @@ export default {
     this.fetchData();
   },
 
-  created() {
-    console.log('created');
-  },
 };
 </script>
+
+
 <template>
+  <el-dialog title="预约"  v-model="isAppoint1" width="40%" :before-close="closeAppoint">
+    <el-form label-width="120px" :model="appointForm1">
+      <div class="calender">
+        <div class="calender_title">
+          <div class="arrow arrow-left" @click="prev()"><</div>
+          <div class="data">{{ currentYear }}-{{ currentMonthChinese }}</div>
+          <div class="arrow arrow-right" @click="next()">></div>
+        </div>
+        <div class="calender_content">
+          <div class="row title">
+            <span class="title_span" v-for="item in title" :key="item">{{item}}</span>
+          </div>
+          <div class="row content">
+            <span style="margin-bottom:5px;width:60px;margin-left:10px;" class="button_no" v-for="(item,index) in prevDays" :key="index+'a'"></span>
+            <el-button class="content_button" v-for="(item,index) in timeArr1" :key="index" @click="changTime1(item,index)" :type="item.status===0?'':item.status===1?'danger':item.status===2?'info':'primary'" :disabled="item.status===1||item.status===2">{{index+1 }}</el-button>
+          </div>
+        </div>
+      </div>
+      <div class="button_wrap">
+        <div style="display:flex;"><div style="background-color:#C8C9CC;width:40px;height:20px;margin-right:10px;"></div><div>不可预约</div></div>
+        <div style="display:flex;"><div style="background-color:#ffa4a4;width:40px;height:20px;margin-right:10px;"></div><div>已有预约</div></div>
+        <div style="display:flex;"><div style="background-color:#3EA7F1;width:40px;height:20px;margin-right:10px;"></div><div>当前预约</div></div>
+      </div>
+      <el-row style="width:500px;margin:0 auto;">
+        <el-col>
+          <el-form-item label="备注：" label-width="60px">
+            <el-input placeholder="请输入" v-model="remark1" clearable></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+    </el-form>
+    <div slot="footer" class="dialog-footer" >
+      <el-button @click="closeAppoint">取消</el-button>
+      <el-button type="primary" @click="saveAppoint" style="margin-left:20px;">确定</el-button>
+    </div>
+  </el-dialog>
 
   <el-dialog v-model="dialogFormVisible" title="请核对你的信息" width="500">
     <h3>请确认你的预约信息</h3>
@@ -211,7 +477,9 @@ export default {
           v-model="value1"
           type="date"
           placeholder="Pick a day"
+          @click="isAppoint1=true"
       />
+      <el-button type="primary" @click="isAppoint1=true">预约</el-button>
     </div>
     <div class="m-4">
 
@@ -279,7 +547,94 @@ export default {
 </template>
 
 <style scoped>
+.button_wrap{
+  margin: 0 auto;
+  width: 480px;
+  display: flex;
+  font-size: 18px;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.button_no{
+  display: inline-block;
+  line-height: 1;
+  white-space: nowrap;
+  background: #FFFFFF;
+  color: #606266;
+  -webkit-appearance: none;
+  text-align: center;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  outline: none;
+  margin: 0;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+  font-weight: 400;
+  padding: 12px 20px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+.calender {
+  width: 500px;
+  height: 300px;
+  margin: 0 auto;
 
+}
+
+.calender_title {
+  display: flex;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+}
+.arrow {
+  width: 50px;
+  height: 100%;
+}
+.data {
+  font-size: 20px;
+}
+.title_span {
+  width: calc(100% / 7);
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+}
+.row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.prevDay {
+  color: #fff;
+  background-color: #eee;
+}
+
+.content_span {
+  width: calc(100% / 7);
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+}
+.content_button{
+  margin-bottom:5px;
+  width:60px;
+  margin-left:10px;
+}
+
+.calender_content {
+  width: 100%;
+  height: 250px;
+}
+.content {
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
 .my-header {
   display: flex;
   flex-direction: row;
