@@ -1,7 +1,17 @@
 package org.gym.servet.getmapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Select;
+import org.gym.servet.entity.User;
 import org.gym.servet.entity.gym;
 
+import java.util.List;
+
 public interface gymrmapper extends BaseMapper<gym> {
+
+    @Select("SELECT * FROM gym limit #{pageNumber},#{pageSize}")
+    List<gym> selectPage(Integer pageNumber, Integer pageSize);
+
+    @Select("SELECT COUNT(*) FROM gym")
+    Integer count();
 }

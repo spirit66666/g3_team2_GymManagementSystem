@@ -1,5 +1,6 @@
 package org.gym.servet.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.gym.servet.entity.User;
 import org.gym.servet.getmapper.getuser;
 import org.gym.servet.service.userservice;
@@ -26,7 +27,7 @@ public class usercontrol {
     private userservice userservice;
 
 
-    @GetMapping("/page")
+    @GetMapping("/pageuser")
     public Map<String, Object> findPage(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
         pageNumber = (pageNumber - 1)*pageSize;
         Integer total = getuser.count();
@@ -48,10 +49,15 @@ public class usercontrol {
 
     @PostMapping("/postuser")
     public int addUser(User user) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
 
         return getuser.insert(user);
     }
 
 
+    @DeleteMapping("/deleteuser/{id}")
+    public int deleteUser(@PathVariable("id") Integer id) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        return getuser.delete(wrapper.eq("id",id));}
 
 }
