@@ -8,12 +8,10 @@ import org.apache.ibatis.annotations.Update;
 import org.gym.servet.entity.User;
 import org.gym.servet.entity.facility;
 
+import java.io.Serializable;
 import java.util.List;
 
 public interface getuser extends BaseMapper<User> {
-
-      List<User> find();
-
 
 
     @Select("SELECT * FROM user limit #{pageNumber},#{pageSize}")
@@ -22,6 +20,5 @@ public interface getuser extends BaseMapper<User> {
     @Select("SELECT COUNT(*) FROM user")
     Integer count();
 
-    void insertUser(User user);
 
 }

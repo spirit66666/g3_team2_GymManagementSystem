@@ -34,36 +34,23 @@ public class usercontrol {
         Map<String, Object> map = new HashMap<>();
         map.put("data", data);
         map.put("total", total);
-
         return map;
 
+    }
+
+    @GetMapping("/getusers")
+    public List<User> getUsers() {
+
+        return getuser.selectList(null);
 
     }
 
-    @GetMapping("/us")
-    public List<User> getUsers1() {
+    @PostMapping("/postuser")
+    public int addUser(User user) {
 
-        return getuser.find();
-
+        return getuser.insert(user);
     }
 
-    @PutMapping("/fetch")
-    public List<User> getUsers12() {
-
-        return getuser.find();
-    }
-
-    @PostMapping("/post")
-    public User addUser(User user) {
-        getuser.insertUser(user);
-        return user;
-    }
-
-    @PostMapping("/update")
-    public boolean save(@RequestBody User user) {
-
-        return userservice.saveuser(user);
-    }
 
 
 }

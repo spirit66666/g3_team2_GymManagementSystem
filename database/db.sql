@@ -6,7 +6,7 @@ USE `db_gym`;
 drop table if exists `user`;
 create table `user`
 (
-    `userID` int unsigned auto_increment,
+    `userID` int auto_increment,
     `userName` varchar(16) not null,
     `passWord` varchar(32) not null,
     `mobilePhone` int(11) unique,

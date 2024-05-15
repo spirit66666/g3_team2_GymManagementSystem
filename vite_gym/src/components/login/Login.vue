@@ -44,8 +44,8 @@ export default {
     },
     methods: {
         login() {
-          this.$http.get('/us').then(response => {
-          if (response.data.find(user => user.username === this.name && user.password === this.password)) {
+          this.$http.get('/getusers').then(response => {
+          if (response.data.find(user => user.userName === this.name && user.passWord === this.password)) {
             console.log('登陆成功');
             ElMessage({
               message: h('p', { style: 'line-height: 1; font-size: 14px' }, [

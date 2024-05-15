@@ -4,9 +4,11 @@
     <el-config-provider >
 
       <el-table :data="tableData">
-        <el-table-column prop="id" label="ID"></el-table-column>
-        <el-table-column prop="username" label="用户名"></el-table-column>
-        <el-table-column prop="password" label="密码"></el-table-column>
+        <el-table-column prop="userID" label="ID"></el-table-column>
+        <el-table-column prop="userName" label="用户名"></el-table-column>
+        <el-table-column prop="passWord" label="密码"></el-table-column>
+        <el-table-column prop="email" label="邮箱"></el-table-column>
+        <el-table-column prop="mobilePhone" label="手机号"></el-table-column>
 
       </el-table>
 
