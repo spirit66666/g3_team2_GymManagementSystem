@@ -38,6 +38,7 @@ public class usercontrol {
 
     }
 
+
     @GetMapping("/getusers")
     public List<User> getUsers() {
 

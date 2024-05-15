@@ -16,13 +16,5 @@ import org.springframework.web.bind.annotation.RestController;
 public class reservecontrol {
 
 
-    @Autowired
-        private reserve reserve;
-
-    @GetMapping("/reserve")
-    public String reserve() {
-        return "";
-    }
-
 
 }

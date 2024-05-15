@@ -114,23 +114,14 @@
   <div>
     <el-config-provider >
 
-      <el-table :data="filterTableData" style="width: 100%"
+      <el-table :data="data" style="width: 100%"
                 :row-class-name="tableRowClassName"
                 :default-page-size=1
       >
 
-        <el-table-column label="Image">
-          <template #default="scope">
-            <el-image
-                :src="scope.row.image"
-                alt="Image"
-                fit="cover"
-                style="width: 80px; height: 80px;"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column label="Date" prop="date" />
-        <el-table-column label="Name" prop="name" />
+
+        <el-table-column label="gymID" prop="gymID" />
+        <el-table-column label="gymName" prop="gymName" />
         <el-table-column align="right">
           <template #header>
             <el-input v-model="search" size="small" placeholder="Type to search" />
@@ -161,48 +152,20 @@ import { ElRow, ElCol, ElFormItem, ElSelect, ElOption, ElDatePicker, ElTable, El
 const value = ref('')
 import { ElButton, ElDrawer,ElMessageBox} from 'element-plus'
 import { CircleCloseFilled } from '@element-plus/icons-vue'
-let timer
+const data = ref([]);
 interface TimeSlot {
   value: string;
   label: string;
 }
-interface ScheduleData {
-  time: string;
-  status: string;
-  // Add more properties for each time slot (羽1, 羽2, etc.)
-}
-const venues = [
-  { value: 'complex', label: '综合体育馆' },
-  { value: 'pingpong', label: '乒羽馆' },
-  { value: 'swimming', label: '游泳场' },
-];
-
-const sports = [
-  { value: 'badminton', label: '羽毛球' },
-  { value: 'pingpong', label: '乒乓球' },
-  // Add more sports options here
-];
 
 const date = ref(null);
-const timeSlots = ref([
-  { value: '08:00-09:00', label: '8:00-9:00', status: 'available' },
-  { value: '09:00-10:00', label: '9:00-10:00', status: 'available' },
-  // Add more time slots here
-]);
 
 onMounted(() => {
 
-  fetch('https://jsonplaceholder.typicode.com/posts')
-      .then((response) => response.json())
-      .then((data) => {
-            console.log(data)
-            tableData.values = data.map((item) => {
-              return {
-                id: item.id,
-                name: item.title,
-                timeRange: item.body,
-              }
-            })
+  fetch('http://localhost:9990/getgym').then((response) => response.json()).then((datas) => {
+
+    console.log(datas);
+        data.value=datas;
           }
       )
 
