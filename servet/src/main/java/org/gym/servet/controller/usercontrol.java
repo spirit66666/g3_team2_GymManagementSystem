@@ -2,6 +2,7 @@ package org.gym.servet.controller;
 
 import org.gym.servet.entity.User;
 import org.gym.servet.getmapper.getuser;
+import org.gym.servet.service.userservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,10 @@ import java.util.Map;
 public class usercontrol {
 
     @Autowired
-    org.gym.servet.getmapper.getuser getuser;
+     private getuser getuser;
 
+    @Autowired
+    private userservice userservice;
 
 
     @GetMapping("/page")
@@ -40,8 +43,7 @@ public class usercontrol {
     @GetMapping("/us")
     public List<User> getUsers1() {
 
-        List<User> users = getuser.find();
-        return users ;
+        return getuser.find();
 
     }
 
@@ -56,5 +58,12 @@ public class usercontrol {
         getuser.insertUser(user);
         return user;
     }
+
+    @PostMapping("/update")
+    public boolean save(@RequestBody User user) {
+
+        return userservice.saveuser(user);
+    }
+
 
 }

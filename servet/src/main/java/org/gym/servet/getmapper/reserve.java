@@ -1,14 +1,15 @@
 package org.gym.servet.getmapper;
 
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.gym.servet.entity.User;
 import org.gym.servet.entity.facility;
 
+import java.io.Serializable;
 import java.util.List;
 
-@Mapper
-public interface reserve {
-    @Select("SELECT * FROM reserve WHERE reserveID = #{id}")
-    List<facility> getReserveById(int id);
+public interface reserve  {
+
 }
