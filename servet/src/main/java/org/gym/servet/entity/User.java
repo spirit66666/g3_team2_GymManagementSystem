@@ -1,5 +1,4 @@
 package org.gym.servet.entity;
-import com.baomidou.mybatisplus.annotation.TableName;
 import jakarta.persistence.GeneratedValue;
 import lombok.*;
 
