@@ -14,12 +14,6 @@
       <el-form-item label="gymAddress">
         <el-input v-model="addFacilityData.gymAddress" />
       </el-form-item>
-      <el-form-item label="gymPhone">
-        <el-input v-model="addFacilityData.gymPhone" />
-      </el-form-item>
-      <el-form-item label="gymEmail">
-        <el-input v-model="addFacilityData.gymEmail" />
-      </el-form-item>
 
     </el-form>
     <template #footer>
@@ -161,8 +155,6 @@ const dialogForm = (row) => {
     gymID: row.gymID.value,
     gymName: row.gymName.value,
     gymAddress: row.gymAddress.value,
-    gymPhone: row.gymPhone.value,
-    gymEmail: row.gymEmail.value,
   }).then((response) => {
     console.log(response.data);
     ElMessageBox.alert('修改成功');
@@ -181,8 +173,8 @@ const data = ref([
 const addFacility = () => {
   dialog.value = true
   axios.post("http://localhost:9990/addgym", {
-    gymName: "test",
-    gymAddress: "test",
+    gymName: addFacilityData.gymName,
+    gymAddress: addFacilityData.gymAddress,
   }).then((response) => {
     console.log(response.data);
     ElMessageBox.alert('添加成功');

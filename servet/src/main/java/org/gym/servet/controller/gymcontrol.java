@@ -30,8 +30,6 @@ public class gymcontrol {
 
         updateWrapper.set("gymName", gym.getGymName());
         updateWrapper.set("gymAddress", gym.getGymAddress());
-        updateWrapper.set("gymPhone", gym.getGymPhone());
-        updateWrapper.set("gymEmail", gym.getGymEmail());
         return gymmapper.update(updateWrapper);
     }
 

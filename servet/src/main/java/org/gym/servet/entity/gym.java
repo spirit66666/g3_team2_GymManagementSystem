@@ -22,9 +22,5 @@ public class gym {
     private String gymName;
     @TableField(value = "gymAddress")
     private String gymAddress;
-    @TableField(value = "gymPhone")
-    private String gymPhone;
-    @TableField(value = "gymEmail")
-    private String gymEmail;
 
 }
