@@ -8,51 +8,6 @@ export default {
   components: {CircleCloseFilled, ElDrawer, ElButton},
   data() {
     return {
-      appointForm1:{},//预约
-      isAppoint1:false,//
-      appointAreaId:'',//预约的路演厅id
-      appointAreaName:'',//预约的路演厅name
-      remark1:'',//备注
-      appointTimeArr:[],//预约选中时间数组
-      title: ["日", "一", "二", "三", "四", "五", "六"],
-      timeArr1:[
-          { status: 0 },
-          { status: 0 },
-          { status: 0 },
-          { status: 0 },
-
-        { status: 0 },
-        { status: 0 },
-        { status: 0 },
-        { status: 0 },
-
-        { status: 0 },
-        { status: 0 },
-        { status: 0 },
-        { status: 0 },
-
-        { status: 0 },
-        { status: 0 },
-        { status: 0 },
-        { status: 0 },
-        { status: 0 },
-        { status: 0 },
-
-        { status: 0 },
-        { status: 0 },
-        { status: 0 },
-        { status: 0 },
-        { status: 0 },
-
-        { status: 0 },
-          { status: 0 },
-      ],
-      dateNow:'',//预约年月
-      timeStart:'',//预约开始日期
-      timeEnd:'',//预约结束日期
-      currentDay: new Date().getDate(),
-      currentMonth: new Date().getMonth(),
-      currentYear: new Date().getFullYear(),
 
       proxy: getCurrentInstance(),
       visible: false,
@@ -110,53 +65,41 @@ export default {
         { time: '23:00 PM', status: 0 },
 
       ],
-      remark: ''
+      remark: '',
+      timeList: [],
+       dateArray :[]
     };
   },
-  onBeforeUpdate() {
-    console.log('before update');
-  },
-
-  onUpdated() {
-    console.log('updated');
-
-  },
-
   created() {
-    console.log('mounted');
+    console.log('created');
     this.fetchData();
   },
   computed: {
-    // 获取中文的月份    显示：8月
-    currentMonthChinese() {
-      return new Date(this.currentYear, this.currentMonth).toLocaleString(
-          "default",{ month: "short" }
-      );
-    },
-    currentDays() {
-      // Date中的月份是从0开始的
-      return new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
-    },
-    prevDays() {
-      // 获取上个月的最后一行的日期
-      let data = new Date(this.currentYear, this.currentMonth, 0).getDate();
-      let num = new Date(this.currentYear, this.currentMonth, 1).getDay();
-      const days = [];
-      while (num > 0) {
-        days.push(data--);
-        num--;
+    aa () {
+      var myDate = new Date() // 获取今天日期
+      myDate.setDate(myDate.getDate() - 6)
+
+      var dateTemp
+      var flag = 1
+      for (var i = 0; i < 7; i++) {
+        dateTemp = (myDate.getMonth() + 1) + '-' + myDate.getDate()
+        this.dateArray.push(dateTemp)
+        myDate.setDate(myDate.getDate() + flag)
       }
-      return days.sort();
+
+      console.log('123456+', this.dateArray)
+
+      return this.dateArray;
     },
+
   },
   methods: {
     changWeek(item, index) {
-      // Implement changWeek method logic here
-      // Example:
+      console.log(this.value1.toLocaleDateString());
 
       if(Store.state.username===""){ this.visible = true}
-      this.appointForm.date = item.date;
-      this.week.forEach(item => {
+      this.appointForm.date = item;
+      this.dateArray.forEach(item => {
         item.is_active = 0;
 
       });
@@ -206,173 +149,8 @@ export default {
     },
 
 
-    /* 以下日历相关*/
-    //日历点击事件
-    changTime1(val,index){
-      if(this.appointTimeArr.length<2){
-        this.timeArr1[index].status=3;
-        this.appointTimeArr.push(index);
-        if(this.appointTimeArr.length===1){
-          this.timeStart=this.appointTimeArr[0];
-          this.timeEnd=this.appointTimeArr[0];
-        }else if(this.appointTimeArr.length===2){
-          if(this.appointTimeArr[0]===this.appointTimeArr[1]){
-            this.timeArr1[this.appointTimeArr[0]].status=0;
-            this.appointTimeArr=[];
-          }else{
-            this.appointTimeArr=this.appointTimeArr.sort(function(a,b){return a-b});
-            let len=this.appointTimeArr[1]-this.appointTimeArr[0];
-            for(let i=0;i<len;i++){
-              if(this.timeArr1[this.appointTimeArr[0]+i].status===1){
-                this.$message.warning("已预约过的时间不允许预约！")
-                this.timeStart='';
-                this.timeEnd='';
-                break
-              }else{
-                this.timeArr1[this.appointTimeArr[0]+i].status=3;
-                this.timeStart=this.timeArr1[this.appointTimeArr[0]].time;
-                this.timeEnd=this.timeArr1[this.appointTimeArr[1]].time;
-              }
-            }
 
-          }
-        }
-      }else if(this.appointTimeArr.length === 3){
-        for(let i=0;i<this.timeArr1.length;i++){
-          if(this.timeArr1[i].status===3){
-            this.timeArr1[i].status=0;
-          }
-        }
-        this.appointTimeArr=[];
-        this.appointTimeArr.push(index);
-        this.timeArr1[index].status=3;
-      }
-    },
-    //点击左侧箭头
-    prev() {
-      // 点击上个月，若是0月则年份-1
-      // 0是1月  11是12月
-      if (this.currentMonth === 0) {
-        this.currentYear -= 1;
-        this.currentMonth = 11;
-      } else {
-        this.currentMonth--;
-      }
-      let date=this.currentYear+'-'+(this.currentMonth+1);
-      let formData={
-        appointAreaId:this.appointAreaId,
-        startTime:this.getFirst(date)+' '+"00:00:00",
-        endTime:this.getLast(date)+' '+"23:59:59"
-      }
-      this.dateNow=date;
-      this.getAppointed(formData)
-    },
-    //点击右侧箭头
-    next() {
-      if (this.currentMonth === 11) {
-        this.currentYear++;
-        this.currentMonth = 0;
-      } else {
-        this.currentMonth++;
-      }
-      let date=this.currentYear+'-'+(this.currentMonth+1);
-      let formData={
-        appointAreaId:this.appointAreaId,
-        startTime:this.getFirst(date)+' '+"00:00:00",
-        endTime:this.getLast(date)+' '+"23:59:59"
-      }
-      this.dateNow=date;
-      this.getAppointed(formData)
-    },
-    /* 以上日历相关*/
-    getYM(time){
-      let date = new Date(time)
-      return date.getFullYear() + '-' +
-          (date.getMonth() + 1)
-    },
-    getFirst(time){
-      let date = new Date(time)
-      return date.getFullYear() + '-' +
-          (date.getMonth() + 1) + '-' +
-          date.getDate()
-    },
-    getLast(time){
-      var y = new Date(time).getFullYear(); //获取年份
-      var m = new Date(time).getMonth() + 1; //获取月份
-      var d = new Date(y, m, 0).getDate(); //获取当月最后一日
-      let Str=y + '-' +m + '-' + d
-      return Str
-    },
-    //获取时间数组
-    getAppointed(formData){
-      appointTime(formData).then(res=>{
-        this.timeArr1=res.data.data;
-        if(res.data.code===200){
-          this.timeArr1=res.data.data;
-        }
-      })
-    },
-    //预约
-    addAppoint(val){
-      this.isAppoint1=true;
-      this.appointAreaId=val.appointAreaId;
-      this.appointAreaName=val.appointAreaName;
-      this.positionId=val.positionId;
-      this.positionName=val.positionName;
-      let formData={
-        appointAreaId:val.appointAreaId,
-        startTime:this.getFirst(this.getYM(new Date()))+' '+'00:00:00',
-        endTime:this.getLast(this.getYM(new Date()))+' '+'23:59:59'
-      }
-      this.dateNow=this.getYM(new Date());
-      this.getAppointed(formData);
-    },
-    saveAppoint(){
-      if(this.timeStart!==''&&this.timeEnd!=''){
-        this.appointForm.appointAreaId=this.appointAreaId;
-        this.appointForm.appointAreaName=this.appointAreaName;
-        this.appointForm.positionId=this.positionId;
-        this.appointForm.positionName=this.positionName;
-        this.appointForm.remark1=this.remark1;
-        this.appointForm.startTime=this.timeStart+' '+"00:00:00";
-        this.appointForm.endTime=this.timeEnd+' '+"23:59:59";
-        appoint(this.appointForm).then(res=>{
-          if(res.data.code===200){
-            this.$message.success(res.data.message)
-            this.remark1='';
-            this.currentDay=new Date().getDate();
-            this.currentMonth=new Date().getMonth();
-            this.currentYear=new Date().getFullYear();
-            this.isAppoint1=false;
-            this.isMeeting=false
-            this.getList();
-          }else{
-            this.$message.error(res.data.message)
-          }
-        })
-      }else{
-        this.$message.error("请选择预约时间")
-        for(let i=0;i<this.timeArr1.length;i++){
-          if(this.timeArr1[i].status===3){
-            this.timeArr1[i].status=0
-          }
-        }
-      }
-    },
-    closeAppoint(){
-      this.isAppoint1=false
-      this.remark1='';
-      for(let i=0;i<this.timeArr1.length;i++){
-        if(this.timeArr1[i].status===3){
-          this.timeArr1[i].status=0;
-        }
-      }
-      this.currentDay=new Date().getDate();
-      this.currentMonth=new Date().getMonth();
-      this.currentYear=new Date().getFullYear();
-    },
-  }
-  ,
+  },
 
 
 };
@@ -444,60 +222,54 @@ export default {
     <div class="m-4">
       <el-text class="mx-1" type="primary">项目名称:  </el-text>
       <el-link :underline="false" v-for="item in facility.length-1"
-
-               v-model="facility[item].name"
-               @click="selectFacility(item,facility[item].name)"
+               v-model="facility[item].facilityName"
+               @click="selectFacility(item,facility[item].facilityName)"
       >{{facility[item].name}}</el-link>
     </div>
     <div class="m-4">
-      <el-text class="mx-1" type="danger">选择日期:   </el-text>
-      <el-date-picker
-          v-model="value1"
-          type="date"
-          placeholder="Pick a day"
-          @click="isAppoint1=true"
-      />
-      <el-button type="primary" @click="isAppoint1=true">预约</el-button>
-    </div>
-    <div class="m-4">
-
-
       <el-text class="mx-1" type="primary">场馆:  </el-text>
       <el-link :underline="false" v-for="item in facility.length-1"
                v-model:facility="facility[item].value"
                @click="selectFacility(item,facility[item].value)">{{facility[item].disabled}}</el-link>
     </div>
-    <div >
-    <span v-for="(item,index) in timeList" :key="index">
-       <span style="padding-left: 5px">
-          <el-button  style="width: 80px" :type="item.type" :disabled="item.flag"
-                      @click="selectTime(index,item.time)">{{item.time}}</el-button>
-        </span>
-      <!--每5个一行-->
-        <span v-if="(index+1)%5===0">
-          <br>
-        </span>
-    </span>
-    </div>
+
   </div>
 
 
 
   <el-form label-width="120px" :model="appointForm">
     <div style="margin:20px;">
+
+      <h1 v-for="(item,index) in aa" :key="index" ></h1>
       <div style="display:flex;justify-content:space-between;">
-            <span v-for="(item,index) in week" :key="index" :class="{'top_style':item.is_active===0,'top_active':item.is_active===1}" @click="changWeek(item,index)">
-              <div style="height:25px;line-height:20px;">{{item.month}}-{{item.date}}</div>
-              <div style="height:25px;line-height:20px;">{{item.day}}</div>
+
+            <span v-for="(item,index) in dateArray" :key="index" :class="{'top_style':item.is_active===0,'top_active':item.is_active===1}" @click="changWeek(item,index)">
+
+              <div style="height:25px;line-height:20px;">{{item}}</div>
             </span>
       </div>
+
+
       <div style="display:flex;margin:20px 50px;font-size:18px;justify-content:space-between;">
         <div style="display:flex;"><div style="background-color:#C8C9CC;width:40px;height:20px;margin-right:10px;"></div><div>不可预约</div></div>
         <div style="display:flex;"><div style="background-color:#ffa4a4;width:40px;height:20px;margin-right:10px;"></div><div>已有预约</div></div>
         <div style="display:flex;"><div style="background-color:#3EA7F1;width:40px;height:20px;margin-right:10px;"></div><div>当前预约</div></div>
       </div>
-      <div style="margin:20px 50px;height:250px" class="button_wrap">
-        <el-button v-for="(item,index) in timeArr" :key="index" @click="changTime(item,index)" :type="item.status===0?'':item.status===1?'danger':item.status===2?'info':'primary'" :disabled="item.status===1||item.status===2" class="button_style">{{item.time}}</el-button>
+
+
+
+      <div style="margin:20px 50px;height:250px">
+        <span v-for="(item,index) in timeArr" :key="index">
+           <span >
+        <el-button  @click="changTime(item,index)" :type="item.status===0?'':item.status===1?'danger':item.status===2?'info':'primary'" :disabled="item.status===1||item.status===2" >{{item.time}}
+        </el-button>
+             </span>
+          <span v-if="(index+1)%5===0">
+
+            <br>
+          </span>
+        </span>
+
       </div>
     </div>
     <el-row :gutter="20">

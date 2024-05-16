@@ -38,6 +38,7 @@ export default {
         this.password = ""
     },
     computed: {
+
         disabled(){
             return this.name.length === 0 || this.password.length === 0;
         }

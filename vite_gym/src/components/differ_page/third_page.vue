@@ -1,16 +1,14 @@
 <template>
-  <el-table :data="tableData" border style="width: 100%">
-    <el-table-column prop="date" label="Date" width="180" />
-    <el-table-column prop="name" label="Name" width="180" />
-    <el-table-column prop="address" label="Address" />
-  </el-table>
 
   <el-config-provider >
 
-    <el-table :data="tableData2">
+    <el-table :data="alreadyTableData">
       <el-table-column prop="id" label="ID"></el-table-column>
       <el-table-column prop="username" label="用户名"></el-table-column>
-      <el-table-column prop="password" label="密码"></el-table-column>
+      <el-table-column prop="password" label="场馆名字"></el-table-column>
+      <el-table-column prop="email" label="预约时间"></el-table-column>
+
+      <el-table-column prop="phone" label="预约状态"></el-table-column>
 
     </el-table>
 
@@ -32,7 +30,7 @@
 import {ref, onMounted, getCurrentInstance} from 'vue'
 
 const { proxy }: any = getCurrentInstance();
-const tableData = [
+const alreadyTableData = [
   {
     date: '2016-05-03',
     name: 'Tom',
