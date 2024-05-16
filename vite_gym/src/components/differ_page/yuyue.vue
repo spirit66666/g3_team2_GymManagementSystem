@@ -64,36 +64,12 @@ export default {
       dialog: false,
       facility:  [
         {
-          name: 'Facility1',
+          facilityID: 1,
+          facilityName: '音响设备',
+          facilityNum: 1,
+          remainNum: 1,
+        }
 
-          value: 'Facility1',
-          disabled: false,
-          'type': '',
-        },
-        {
-          name: 'Facility2',
-          value: 'Facility2',
-          disabled: false,
-          'type': '',
-        },
-        {
-          name: 'Facility3',
-          value: 'Facility3',
-          disabled: false,
-          'type': '',
-        },
-        {
-          name: 'Facility4',
-          value: 'Facility4',
-          disabled: false,
-          'type': '',
-        },
-        {
-          name: 'Facility5',
-          value: 'Facility5',
-          disabled: false,
-          'type': '',
-        },
       ],
       isAppoint: false,
       appointForm: {
@@ -144,6 +120,11 @@ export default {
   onUpdated() {
     console.log('updated');
 
+  },
+
+  created() {
+    console.log('mounted');
+    this.fetchData();
   },
   computed: {
     // 获取中文的月份    显示：8月
@@ -198,10 +179,11 @@ export default {
     },
 
     fetchData() {
-      fetch("http://localhost:9990/facilityName" )
+      fetch("http://localhost:9990/getfacility" )
           .then(response => response.json()).then(response => {
 
-        console.log(response);
+        this.facility=response;
+        console.log(this.facility);
 
       })
       },
@@ -392,10 +374,6 @@ export default {
   }
   ,
 
-  onMounted() {
-    console.log('mounted');
-    this.fetchData();
-  },
 
 };
 </script>
@@ -441,7 +419,7 @@ export default {
 
   <el-dialog v-model="dialogFormVisible" title="请核对你的信息" width="500">
     <h3>请确认你的预约信息</h3>
-    <h3>你选择的场馆为：{{facility[0].name}}</h3>
+    <h3>你选择的场馆为：{{facility.facilityName}}</h3>
     <h3>你选择的日期为：{{appointForm.date}}</h3>
     <h3>你选择的时间为：{{appointForm.time}}</h3>
     <h3>{{timeArr.time}}</h3>
@@ -460,8 +438,8 @@ export default {
     <div class="m-4">
       <el-text class="mx-1" type="primary">场馆名称:  </el-text>
       <el-link :underline="false" v-for="item in facility.length-1"
-               v-model:facility="facility[item].name"
-               @click="selectFacility(item,facility[item].name)">{{facility[item].name}}</el-link>
+               v-model:facility="facility[item].facilityName"
+               @click="selectFacility(item,facility[item].facilityName)">{{facility[item].facilityName}}</el-link>
     </div>
     <div class="m-4">
       <el-text class="mx-1" type="primary">项目名称:  </el-text>
