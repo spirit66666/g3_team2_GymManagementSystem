@@ -26,4 +26,5 @@ public class gym {
     private String gymPhone;
     @TableField(value = "gymEmail")
     private String gymEmail;
+
 }

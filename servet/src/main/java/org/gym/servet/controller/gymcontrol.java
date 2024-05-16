@@ -1,6 +1,7 @@
 package org.gym.servet.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.gym.servet.entity.User;
 import org.gym.servet.entity.gym;
 import org.gym.servet.getmapper.gymrmapper;
@@ -22,6 +23,27 @@ public class gymcontrol {
     private gymrmapper gymmapper;
 
 
+    @PostMapping("/updategym")
+    public int updategym(@RequestBody gym gym) {
+        UpdateWrapper<gym> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.eq("gymID", gym.getGymID());
+
+        updateWrapper.set("gymName", gym.getGymName());
+        updateWrapper.set("gymAddress", gym.getGymAddress());
+        updateWrapper.set("gymPhone", gym.getGymPhone());
+        updateWrapper.set("gymEmail", gym.getGymEmail());
+        return gymmapper.update(updateWrapper);
+    }
+
+    @PostMapping("/addgym")
+    public void addgym(@RequestBody gym gym) {
+        gymmapper.insert(gym);
+    }
+
+    @DeleteMapping("/deletegym/{gymID}")
+    public int  deletegym(@PathVariable("gymID") String gymID) {
+       return gymmapper.deleteById(gymID);
+    }
 
 
     @GetMapping("/pagegym")

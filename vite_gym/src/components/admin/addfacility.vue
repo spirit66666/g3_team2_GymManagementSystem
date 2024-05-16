@@ -3,21 +3,32 @@
 
   <el-drawer
       v-model="dialog"
-      title="I have a nested form inside!"
-      :before-close="handleClose"
+      title="增加场馆"
       direction="ltr"
       class="demo-drawer"
   >
-    <div class="demo-drawer__content">
+    <el-form ref="form" :model="addFacilityData" label-position="left" label-width="100px">
+      <el-form-item label="gymName">
+        <el-input v-model="addFacilityData.gymName" />
+      </el-form-item>
+      <el-form-item label="gymAddress">
+        <el-input v-model="addFacilityData.gymAddress" />
+      </el-form-item>
+      <el-form-item label="gymPhone">
+        <el-input v-model="addFacilityData.gymPhone" />
+      </el-form-item>
+      <el-form-item label="gymEmail">
+        <el-input v-model="addFacilityData.gymEmail" />
+      </el-form-item>
 
-      <div class="demo-drawer__footer">
-        <el-button @click="cancelForm">Cancel</el-button>
-        <el-button type="primary" :loading="loading" @click="onClick">
-          {{ loading ? 'Submitting ...' : 'Submit' }}
-        </el-button>
+    </el-form>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="addFacility">确认</el-button>
       </div>
-    </div>
+    </template>
   </el-drawer>
+
   <el-drawer v-model="visible" :show-close="false">
     <template #header="{ close, titleId, titleClass }">
       <h4 :id="titleId" :class="titleClass">This is a custom header!</h4>
@@ -28,6 +39,9 @@
     </template>
     This is drawer content.
   </el-drawer>
+
+
+  <el-button type="primary" @click="dialog = true">增加场馆</el-button>
 
 
   <el-dialog v-model="dialogFormVisible" title="Shipping address" width="500">
@@ -92,6 +106,22 @@
 
 <script lang="ts" setup>
 
+import axios from "axios";
+
+interface addFacilityData {
+  gymName: string
+  gymAddress: string
+  gymPhone: string
+  gymEmail: string
+}
+const addFacilityData = reactive<addFacilityData>({
+  gymName: '',
+  gymAddress: '',
+  gymPhone: '',
+  gymEmail: '',
+})
+
+
 interface rowData {
   gymID: number
   gymName: string
@@ -100,8 +130,10 @@ interface rowData {
   gymEmail: string
 }
 const rowdata = ref<rowData>()
-import {computed, ref, reactive, watch, onMounted} from 'vue'
+import {computed, ref, reactive, watch, onMounted, getCurrentInstance} from 'vue'
 import { ElRow, ElCol, ElFormItem, ElSelect, ElOption, ElDatePicker, ElTable, ElTableColumn } from 'element-plus';
+
+const { proxy }: any = getCurrentInstance();
 const value = ref('')
 const total = ref(0)
 const pageSize = ref(3)
@@ -123,14 +155,42 @@ const dialogForm = (row) => {
   console.log(row);
   rowdata.value = row;
   dialogFormVisible.value = true;
+  console.log(dialogFormVisible.value);
+
+  axios.post("http://localhost:9990/updategym" , {
+    gymID: row.gymID.value,
+    gymName: row.gymName.value,
+    gymAddress: row.gymAddress.value,
+    gymPhone: row.gymPhone.value,
+    gymEmail: row.gymEmail.value,
+  }).then((response) => {
+    console.log(response.data);
+    ElMessageBox.alert('修改成功');
+  });
+
 }
 
+const dialog = ref(false)
 import { ElButton, ElDrawer,ElMessageBox} from 'element-plus'
 import { CircleCloseFilled } from '@element-plus/icons-vue'
 const data = ref([
 
 ]);
 
+
+const addFacility = () => {
+  dialog.value = true
+  axios.post("http://localhost:9990/addgym", {
+    gymName: "test",
+    gymAddress: "test",
+  }).then((response) => {
+    console.log(response.data);
+    ElMessageBox.alert('添加成功');
+    dialog.value = false;
+    fetchData();
+}
+)
+}
 
 onMounted(() => {
 
@@ -156,13 +216,6 @@ const dialogFormVisible = ref(false)
 const loading = ref(false)
 
 
-const onClick = () => {
-  loading.value = true
-  setTimeout(() => {
-    loading.value = false
-    dialog.value = false
-  }, 400)
-}
 var timer
 const handleClose = (done) => {
   if (loading.value) {
@@ -184,12 +237,6 @@ const handleClose = (done) => {
       })
 }
 
-const cancelForm = () => {
-  loading.value = false
-  dialog.value = false
-  clearTimeout(timer)
-}
-const dialog = ref(false)
 const visible = ref(false)
 interface User {
   date: string

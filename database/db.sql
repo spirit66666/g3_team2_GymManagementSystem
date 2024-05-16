@@ -85,17 +85,17 @@ create table `facility`
 
     primary key (`facilityID`),
     foreign key (`gymID`) references `gym` (`gymID`)
-) engine = InnoDB
-  default charset = utf8mb4;
+ ) engine = InnoDB
+   default charset = utf8mb4;
 
-insert into `facility` (`facilityName`, `facilityDescription`, `facilityNum`, `remainNum`, `gymID`)
-values ('瑜伽', '瑜伽馆', 10, 10, 1),
-       ('健身房', '健身房', 10, 10, 2),
-       ('游泳馆', '游泳馆', 10, 10, 3),
-       ('舞蹈室', '舞蹈室', 10, 10, 4),
-       ('健身器材', '健身器材', 10, 10, 5);
+ insert into `facility` (`facilityName`, `facilityDescription`, `facilityNum`, `remainNum`, `gymID`)
+ values ('瑜伽', '瑜伽馆', 10, 10, 1),
+        ('健身房', '健身房', 10, 10, 2),
+        ('游泳馆', '游泳馆', 10, 10, 3),
+        ('舞蹈室', '舞蹈室', 10, 10, 4),
+        ('健身器材', '健身器材', 10, 10, 5);
 
-/*创建 reservations 表*/
+ /*创建 reservations 表*/
 drop table if exists `reservations`;
 create table `reservations`
 (
