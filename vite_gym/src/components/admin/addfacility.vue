@@ -38,19 +38,22 @@
   <el-button type="primary" @click="dialog = true">增加场馆</el-button>
 
 
-  <el-dialog v-model="dialogFormVisible" title="Shipping address" width="500">
+  <el-dialog v-model="dialogFormVisible" title="修改场馆" width="500">
+    <el-form ref="form" :model="rowdata" label-position="left" label-width="100px">
+      <el-form-item label="gymID">
+        <el-input v-model="rowdata.gymID" disabled />
+      </el-form-item>
+      <el-form-item label="gymName">
+        <el-input v-model="rowdata.gymName" />
+      </el-form-item>
+      <el-form-item label="gymAddress">
+        <el-input v-model="rowdata.gymAddress" />
+      </el-form-item>
 
-    <h1>{{rowdata.gymName}}</h1>
-
-    <el-form-item label="Activity form">
-      <el-input v-model="rowdata.gymName" type="textarea" />
-    </el-form-item>
+    </el-form>
     <template #footer>
       <div class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">
-          Confirm
-        </el-button>
+        <el-button @click="updateFacilityData">修改</el-button>
       </div>
     </template>
   </el-dialog>
@@ -71,7 +74,7 @@
             <el-input v-model="search" size="small" placeholder="Type to search" />
           </template>
           <template #default="scope">
-            <el-button size="small" plain @click="dialogForm(scope.row)">
+            <el-button size="small" plain @click="updateFacility(scope.row)">
               修改
             </el-button>
             <el-button
@@ -105,30 +108,23 @@ import axios from "axios";
 interface addFacilityData {
   gymName: string
   gymAddress: string
-  gymPhone: string
-  gymEmail: string
 }
 const addFacilityData = reactive<addFacilityData>({
   gymName: '',
   gymAddress: '',
-  gymPhone: '',
-  gymEmail: '',
 })
-
-
-interface rowData {
+interface rowdata {
   gymID: number
   gymName: string
   gymAddress: string
-  gymPhone: string
-  gymEmail: string
 }
-const rowdata = ref<rowData>()
+const rowdata = reactive<rowdata>({
+  gymID: 0,
+  gymName: '',
+  gymAddress: '',
+})
 import {computed, ref, reactive, watch, onMounted, getCurrentInstance} from 'vue'
 import { ElRow, ElCol, ElFormItem, ElSelect, ElOption, ElDatePicker, ElTable, ElTableColumn } from 'element-plus';
-
-const { proxy }: any = getCurrentInstance();
-const value = ref('')
 const total = ref(0)
 const pageSize = ref(3)
 const pageNumber = ref(1)
@@ -145,19 +141,23 @@ const handleSizeChange = (pageSize) => {
   pageSize.value = pageSize;
   fetchData();
 }
-const dialogForm = (row) => {
-  console.log(row);
-  rowdata.value = row;
+const updateFacility = (row) => {
   dialogFormVisible.value = true;
-  console.log(dialogFormVisible.value);
+  rowdata.gymID = row.gymID;
+  rowdata.gymName = row.gymName;
+  rowdata.gymAddress = row.gymAddress;
 
+}
+const updateFacilityData = () => {
   axios.post("http://localhost:9990/updategym" , {
-    gymID: row.gymID.value,
-    gymName: row.gymName.value,
-    gymAddress: row.gymAddress.value,
+    gymID: rowdata.gymID,
+    gymName: rowdata.gymName,
+    gymAddress: rowdata.gymAddress,
   }).then((response) => {
     console.log(response.data);
+    dialogFormVisible.value = false;
     ElMessageBox.alert('修改成功');
+    fetchData();
   });
 
 }
@@ -171,7 +171,7 @@ const data = ref([
 
 
 const addFacility = () => {
-  dialog.value = true
+
   axios.post("http://localhost:9990/addgym", {
     gymName: addFacilityData.gymName,
     gymAddress: addFacilityData.gymAddress,
@@ -185,7 +185,6 @@ const addFacility = () => {
 }
 
 onMounted(() => {
-
   fetchData();
 
 })
@@ -201,33 +200,7 @@ const fetchData = () => {
   });
 };
 
-
-
 const dialogFormVisible = ref(false)
-
-const loading = ref(false)
-
-
-var timer
-const handleClose = (done) => {
-  if (loading.value) {
-    return
-  }
-  ElMessageBox.confirm('Do you want to submit?')
-      .then(() => {
-        loading.value = true
-         timer = setTimeout(() => {
-          done()
-          // 动画关闭需要一定的时间
-          setTimeout(() => {
-            loading.value = false
-          }, 400)
-        }, 200)
-      })
-      .catch(() => {
-        // catch error
-      })
-}
 
 const visible = ref(false)
 interface User {

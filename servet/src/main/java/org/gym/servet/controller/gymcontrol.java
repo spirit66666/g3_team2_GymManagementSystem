@@ -27,7 +27,6 @@ public class gymcontrol {
     public int updategym(@RequestBody gym gym) {
         UpdateWrapper<gym> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("gymID", gym.getGymID());
-
         updateWrapper.set("gymName", gym.getGymName());
         updateWrapper.set("gymAddress", gym.getGymAddress());
         return gymmapper.update(updateWrapper);
