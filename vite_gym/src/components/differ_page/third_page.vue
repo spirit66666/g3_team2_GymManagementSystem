@@ -3,12 +3,12 @@
   <el-config-provider >
 
     <el-table :data="alreadyTableData">
-      <el-table-column prop="id" label="ID"></el-table-column>
-      <el-table-column prop="username" label="用户名"></el-table-column>
-      <el-table-column prop="password" label="场馆名字"></el-table-column>
-      <el-table-column prop="email" label="预约时间"></el-table-column>
+      <el-table-column prop="reserveID" label="预约ID"></el-table-column>
+      <el-table-column prop="userID" label="用户名"></el-table-column>
+      <el-table-column prop="" label="场馆名字"></el-table-column>
+      <el-table-column prop="reserveTime" label="预约时间"></el-table-column>
 
-      <el-table-column prop="phone" label="预约状态"></el-table-column>
+      <el-table-column prop="reserveDate" label="预约日期"></el-table-column>
 
     </el-table>
 
@@ -30,28 +30,7 @@
 import {ref, onMounted, getCurrentInstance} from 'vue'
 
 const { proxy }: any = getCurrentInstance();
-const alreadyTableData = [
-  {
-    date: '2016-05-03',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-02',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-04',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-]
+const alreadyTableData = ref([])
 const tableData2 = ref([])
 const pageNumber = ref(1)
 const pageSize = ref(2)
@@ -61,6 +40,16 @@ onMounted(() => {
   fetchData()
 })
 const fetchData= () => {
+
+  fetch("http://localhost:9990/getreserve")
+
+      .then(response => response.json()).then(response => {
+        console.log(response);
+
+        alreadyTableData.value = response;
+      });
+
+
   fetch("http://localhost:9990/page?pageNumber=" + pageNumber.value + "&pageSize="+ pageSize.value)
       .then(response => response.json()).then(response => {
 

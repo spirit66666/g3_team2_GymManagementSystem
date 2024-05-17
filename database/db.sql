@@ -6,7 +6,7 @@ USE `db_gym`;
 drop table if exists `user`;
 create table `user`
 (
-    `userID` int auto_increment,
+    `userID` int unsigned auto_increment,
     `userName` varchar(16) not null,
     `passWord` varchar(32) not null,
     `mobilePhone` int(11) unique,
@@ -61,9 +61,9 @@ create table `reserve`
     `reserveID` int unsigned auto_increment,
     `userID` int unsigned not null,
     `reserveDate` date not null,
-    `reserveTime` time not null,
-    `reserveNum` int unsigned not null,
-    `reserveStatus` int unsigned not null,
+    `reserveTime` varchar(32) not null,
+    `reserveNum` int unsigned ,
+    `reserveStatus` int unsigned ,
     `reserveNote` varchar(255),
 
     primary key (`reserveID`),

@@ -1,12 +1,13 @@
 package org.gym.servet.controller;
 
-import org.gym.servet.getmapper.reserve;
+import org.gym.servet.entity.gym;
+import org.gym.servet.entity.reserve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.gym.servet.getmapper.reservemapper;
+
+import java.util.List;
 
 @ResponseBody
 @SpringBootApplication
@@ -15,6 +16,23 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class reservecontrol {
 
+
+    @Autowired
+
+    private reservemapper reservemapper;
+
+
+    @GetMapping("/getreserve")
+    public List<reserve> getreservemapper() {
+
+        return reservemapper.selectList(null);
+
+    }
+
+    @PostMapping("/addreserve")
+    public void addreservemapper(@RequestBody reserve reserve) {
+        reservemapper.insert(reserve);
+    }
 
 
 }

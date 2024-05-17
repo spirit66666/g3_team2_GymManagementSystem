@@ -28,8 +28,6 @@ export default {
       ],
       isAppoint: false,
       appointForm: {
-        // Define properties for the appointForm model here
-        // Example:
         date: '',
         time: ''
       },
@@ -67,7 +65,9 @@ export default {
       ],
       remark: '',
       timeList: [],
-       dateArray :[]
+
+       dateArray :[] ,
+       is_active: []
     };
   },
   created() {
@@ -82,9 +82,10 @@ export default {
       var dateTemp
       var flag = 1
       for (var i = 0; i < 7; i++) {
-        dateTemp = (myDate.getMonth() + 1) + '-' + myDate.getDate()
+        dateTemp =myDate.getFullYear() + '-' + (myDate.getMonth() + 1) + '-' + myDate.getDate()
         this.dateArray.push(dateTemp)
-        myDate.setDate(myDate.getDate() + flag)
+        this.is_active.push(0)
+       myDate.setDate(myDate.getDate() + flag)
       }
 
       console.log('123456+', this.dateArray)
@@ -95,19 +96,17 @@ export default {
   },
   methods: {
     changWeek(item, index) {
-      console.log(this.value1.toLocaleDateString());
 
+      console.log(item);
       if(Store.state.username===""){ this.visible = true}
       this.appointForm.date = item;
       this.dateArray.forEach(item => {
         item.is_active = 0;
-
       });
       item.is_active = 1;
     },
     changTime(item, index) {
-      // Implement changTime method logic here
-      // Example:
+      console.log(item);
       if(Store.state.username===""){
 
         this.visible = true}
@@ -132,7 +131,12 @@ export default {
       },
 
     confirm  ()  {
-      this.$http.get('/us')
+      this.$http.post('/addreserve', {
+        "userID": Store.state.username,
+        "reserveDate":this.appointForm.date,
+        "reserveTime": this.appointForm.time,
+
+      })
           .then((response) => {
             console.log(response.data)
             ElMessageBox.alert('Submitted successfully!')
@@ -148,8 +152,12 @@ export default {
       this.dialogFormVisible = false;
     },
 
+    addfacility(item) {
+      console.log(item);
 
+      this.facility.facilityName = item;
 
+    }
   },
 
 
@@ -158,42 +166,6 @@ export default {
 
 
 <template>
-  <el-dialog title="预约"  v-model="isAppoint1" width="40%" :before-close="closeAppoint">
-    <el-form label-width="120px" :model="appointForm1">
-      <div class="calender">
-        <div class="calender_title">
-          <div class="arrow arrow-left" @click="prev()"><</div>
-          <div class="data">{{ currentYear }}-{{ currentMonthChinese }}</div>
-          <div class="arrow arrow-right" @click="next()">></div>
-        </div>
-        <div class="calender_content">
-          <div class="row title">
-            <span class="title_span" v-for="item in title" :key="item">{{item}}</span>
-          </div>
-          <div class="row content">
-            <span style="margin-bottom:5px;width:60px;margin-left:10px;" class="button_no" v-for="(item,index) in prevDays" :key="index+'a'"></span>
-            <el-button class="content_button" v-for="(item,index) in timeArr1" :key="index" @click="changTime1(item,index)" :type="item.status===0?'':item.status===1?'danger':item.status===2?'info':'primary'" :disabled="item.status===1||item.status===2">{{index+1 }}</el-button>
-          </div>
-        </div>
-      </div>
-      <div class="button_wrap">
-        <div style="display:flex;"><div style="background-color:#C8C9CC;width:40px;height:20px;margin-right:10px;"></div><div>不可预约</div></div>
-        <div style="display:flex;"><div style="background-color:#ffa4a4;width:40px;height:20px;margin-right:10px;"></div><div>已有预约</div></div>
-        <div style="display:flex;"><div style="background-color:#3EA7F1;width:40px;height:20px;margin-right:10px;"></div><div>当前预约</div></div>
-      </div>
-      <el-row style="width:500px;margin:0 auto;">
-        <el-col>
-          <el-form-item label="备注：" label-width="60px">
-            <el-input placeholder="请输入" v-model="remark1" clearable></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-    </el-form>
-    <div slot="footer" class="dialog-footer" >
-      <el-button @click="closeAppoint">取消</el-button>
-      <el-button type="primary" @click="saveAppoint" style="margin-left:20px;">确定</el-button>
-    </div>
-  </el-dialog>
 
   <el-dialog v-model="dialogFormVisible" title="请核对你的信息" width="500">
     <h3>请确认你的预约信息</h3>
@@ -217,7 +189,7 @@ export default {
       <el-text class="mx-1" type="primary">场馆名称:  </el-text>
       <el-link :underline="false" v-for="item in facility.length-1"
                v-model:facility="facility[item].facilityName"
-               @click="selectFacility(item,facility[item].facilityName)">{{facility[item].facilityName}}</el-link>
+               @click="addfacility(facility[item].facilityName)">{{facility[item].facilityName}}</el-link>
     </div>
     <div class="m-4">
       <el-text class="mx-1" type="primary">项目名称:  </el-text>
@@ -232,10 +204,7 @@ export default {
                v-model:facility="facility[item].value"
                @click="selectFacility(item,facility[item].value)">{{facility[item].disabled}}</el-link>
     </div>
-
   </div>
-
-
 
   <el-form label-width="120px" :model="appointForm">
     <div style="margin:20px;">
@@ -243,10 +212,10 @@ export default {
       <h1 v-for="(item,index) in aa" :key="index" ></h1>
       <div style="display:flex;justify-content:space-between;">
 
-            <span v-for="(item,index) in dateArray" :key="index" :class="{'top_style':item.is_active===0,'top_active':item.is_active===1}" @click="changWeek(item,index)">
-
-              <div style="height:25px;line-height:20px;">{{item}}</div>
+            <span v-for="(item,index) in dateArray" :key="index" :class="{'top_style':item.is_active===0,'top_active':item.is_active===1}">
+              <el-button style="height:75px;line-height:20px;" @click="changWeek(item,index)">{{item}}</el-button>
             </span>
+
       </div>
 
 
@@ -256,11 +225,9 @@ export default {
         <div style="display:flex;"><div style="background-color:#3EA7F1;width:40px;height:20px;margin-right:10px;"></div><div>当前预约</div></div>
       </div>
 
-
-
-      <div style="margin:20px 50px;height:250px">
+      <div style="margin:20px 50px;height:150px">
         <span v-for="(item,index) in timeArr" :key="index">
-           <span >
+           <span>
         <el-button  @click="changTime(item,index)" :type="item.status===0?'':item.status===1?'danger':item.status===2?'info':'primary'" :disabled="item.status===1||item.status===2" >{{item.time}}
         </el-button>
              </span>
@@ -272,6 +239,8 @@ export default {
 
       </div>
     </div>
+
+    <el-button type="primary" @click="dialogFormVisible = true">预约提交</el-button>
     <el-row :gutter="20">
       <el-col :span="18">
         <el-form-item label="备注：">
