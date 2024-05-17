@@ -77,7 +77,7 @@ export default {
   computed: {
     aa () {
       var myDate = new Date() // 获取今天日期
-      myDate.setDate(myDate.getDate() - 6)
+      myDate.setDate(myDate.getDate())
 
       var dateTemp
       var flag = 1
