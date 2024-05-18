@@ -35,4 +35,10 @@ public class reservecontrol {
     }
 
 
+
+    @DeleteMapping("/deletereserve/{reserveID}")
+    public int  deletereserve(@PathVariable("reserveID") String reserveID) {
+        return reservemapper.deleteById(reserveID);
+    }
+
 }

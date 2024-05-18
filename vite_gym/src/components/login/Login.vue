@@ -46,6 +46,7 @@ export default {
     methods: {
         login() {
           this.$http.get('/getusers').then(response => {
+
           if (response.data.find(user => user.userName === this.name && user.passWord === this.password)) {
             console.log('登陆成功');
             ElMessage({
@@ -56,7 +57,6 @@ export default {
             })
             Store.commit('setUsername', this.name,this.password);
             Store.commit('setLoggedIn', "退出登陆");
-            console.log(Store.state.username);
 
             // 登陆成功提示
             setTimeout(() => {

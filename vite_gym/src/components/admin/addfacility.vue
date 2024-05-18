@@ -81,7 +81,7 @@
                 color="red"
                 size="small"
                 type="danger"
-                @click="dialog = true"
+                @click="deleteFacility(scope.row.gymID)"
             >
               删除
             </el-button>
@@ -147,6 +147,19 @@ const updateFacility = (row) => {
   rowdata.gymName = row.gymName;
   rowdata.gymAddress = row.gymAddress;
 
+}
+const deleteFacility = (gymID) => {
+  console.log(gymID)
+  ElMessageBox.confirm('确认删除该场馆吗？').then(() => {
+    axios.delete("http://localhost:9990/deletegym/"+ gymID
+    ).then((response) => {
+      console.log(response.data);
+      ElMessageBox.alert('删除成功');
+      fetchData();
+    });
+  }).catch(() => {
+    console.log('cancel');
+  });
 }
 const updateFacilityData = () => {
   axios.post("http://localhost:9990/updategym" , {

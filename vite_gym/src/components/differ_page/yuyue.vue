@@ -87,17 +87,12 @@ export default {
         this.is_active.push(0)
        myDate.setDate(myDate.getDate() + flag)
       }
-
-      console.log('123456+', this.dateArray)
-
       return this.dateArray;
     },
 
   },
   methods: {
     changWeek(item, index) {
-
-      console.log(item);
       if(Store.state.username===""){ this.visible = true}
       this.appointForm.date = item;
       this.dateArray.forEach(item => {
@@ -106,7 +101,6 @@ export default {
       item.is_active = 1;
     },
     changTime(item, index) {
-      console.log(item);
       if(Store.state.username===""){
 
         this.visible = true}
@@ -117,7 +111,10 @@ export default {
 
       });
       item.status = 1;
-        this.dialogFormVisible = true;}
+
+
+
+       }
     },
 
     fetchData() {
@@ -125,31 +122,46 @@ export default {
           .then(response => response.json()).then(response => {
 
         this.facility=response;
-        console.log(this.facility);
 
       })
+
       },
 
     confirm  ()  {
-      this.$http.post('/addreserve', {
-        "userID": Store.state.username,
-        "reserveDate":this.appointForm.date,
-        "reserveTime": this.appointForm.time,
+      this.$http.get('/getreserve').then(res => {
 
-      })
-          .then((response) => {
-            console.log(response.data)
-            ElMessageBox.alert('Submitted successfully!')
-          })
-          .catch((error) => {
-            console.log(error)
-            ElMessageBox.alert('Submission failed!')
+      if(res.data.find(reserve=>
+           reserve.reserveTime===this.appointForm.time && reserve.reserveDate===this.appointForm.date)){
 
-            // handle error
+        ElMessageBox.alert('该时间段已有预约，请选择其他时间段预约！')
 
-          })
+        console.log('该时间段已有预约，请选择其他时间段预约！')
+        this.dialogFormVisible = false;
 
-      this.dialogFormVisible = false;
+        this.timeArr.status = 1;
+      }
+      else{
+        this.$http.post('/addreserve', {
+          "userID": Store.state.username,
+          "reserveDate":this.appointForm.date,
+          "reserveTime": this.appointForm.time,
+
+        }).then((response) => {
+              ElMessageBox.alert('Submitted successfully!')
+            })
+            .catch((error) => {
+              console.log(error)
+              ElMessageBox.alert('Submission failed!')
+
+              // handle error
+
+            })
+
+        this.dialogFormVisible = false;
+      }
+
+
+    })
     },
 
     addfacility(item) {
@@ -172,7 +184,7 @@ export default {
     <h3>你选择的场馆为：{{facility.facilityName}}</h3>
     <h3>你选择的日期为：{{appointForm.date}}</h3>
     <h3>你选择的时间为：{{appointForm.time}}</h3>
-    <h3>{{timeArr.time}}</h3>
+    <h3>备注：{{remark}}</h3>
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="dialogFormVisible = false">返回</el-button>
@@ -221,8 +233,8 @@ export default {
 
       <div style="display:flex;margin:20px 50px;font-size:18px;justify-content:space-between;">
         <div style="display:flex;"><div style="background-color:#C8C9CC;width:40px;height:20px;margin-right:10px;"></div><div>不可预约</div></div>
-        <div style="display:flex;"><div style="background-color:#ffa4a4;width:40px;height:20px;margin-right:10px;"></div><div>已有预约</div></div>
-        <div style="display:flex;"><div style="background-color:#3EA7F1;width:40px;height:20px;margin-right:10px;"></div><div>当前预约</div></div>
+        <div style="display:flex;"><div style="background-color:#ffa4a4;width:40px;height:20px;margin-right:10px;"></div><div>当前预约</div></div>
+        <div style="display:flex;"><div style="background-color:#3EA7F1;width:40px;height:20px;margin-right:10px;"></div><div>已有预约</div></div>
       </div>
 
       <div style="margin:20px 50px;height:150px">
