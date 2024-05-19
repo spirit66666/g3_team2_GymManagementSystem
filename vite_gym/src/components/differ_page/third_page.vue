@@ -44,6 +44,7 @@ const pageNumber = ref(1)
 const pageSize = ref(2)
 const total = ref(0)
 const handleDelete = (index) => {
+
   console.log(index)
   const reserveID = alreadyTableData.value[index].reserveID
   console.log(reserveID)

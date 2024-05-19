@@ -3,12 +3,14 @@ import {ElButton, ElDrawer, ElMessageBox} from "element-plus";
 import {CircleCloseFilled} from "@element-plus/icons-vue";
 import { computed, ref ,reactive , onMounted ,onBeforeUpdate,onUpdated ,getCurrentInstance} from 'vue'
 import Store from '../../components/store/store.js'
+import router from "../../components/tools/Router.js";
 
 export default {
   components: {CircleCloseFilled, ElDrawer, ElButton},
   data() {
     return {
 
+      look: false,
       proxy: getCurrentInstance(),
       visible: false,
       value1: '',
@@ -92,6 +94,14 @@ export default {
 
   },
   methods: {
+
+    routerlook() {
+
+      router.push('/AppHome/third_page').then(() => {
+        location.reload();})
+
+
+    },
     changWeek(item, index) {
       if(Store.state.username===""){ this.visible = true}
       this.appointForm.date = item;
@@ -147,7 +157,7 @@ export default {
           "reserveTime": this.appointForm.time,
 
         }).then((response) => {
-              ElMessageBox.alert('Submitted successfully!')
+          this.look=true;
             })
             .catch((error) => {
               console.log(error)
@@ -178,7 +188,15 @@ export default {
 
 
 <template>
-
+<el-dialog v-model="look" title="Submitted successfully!" width="500">
+  <p>Your reservation has been submitted successfully!</p>
+  <p>You can check your reservation status in the "My Reservations" page.</p>
+  <div style="text-align: right;">
+    <el-button type="primary" @click="routerlook()">
+      查看我的预约
+    </el-button>
+  </div>
+</el-dialog>
   <el-dialog v-model="dialogFormVisible" title="请核对你的信息" width="500">
     <h3>请确认你的预约信息</h3>
     <h3>你选择的场馆为：{{facility.facilityName}}</h3>
