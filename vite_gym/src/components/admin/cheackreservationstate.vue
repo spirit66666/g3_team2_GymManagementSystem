@@ -4,6 +4,7 @@
 
     <el-table :data="alreadyTableData">
       <el-table-column prop="reserveID" label="预约ID"></el-table-column>
+      <el-table-column prop="userID" label="用户名"></el-table-column>
       <el-table-column prop="" label="场馆名字"></el-table-column>
       <el-table-column prop="reserveTime" label="预约时间"></el-table-column>
 
@@ -13,8 +14,8 @@
       <el-table-column label="操作"> <template #default="scope">
         <el-button type="text" size="mini" @click="handleDelete(scope.$index)">
 
-        删除预约
-      </el-button>
+          删除预约
+        </el-button>
       </template></el-table-column>
 
     </el-table>
@@ -36,7 +37,6 @@
 <script lang="ts" setup>
 import {ref, onMounted, getCurrentInstance} from 'vue'
 
-import Store from '../../components/store/store.js'
 const { proxy }: any = getCurrentInstance();
 const alreadyTableData = ref([])
 const tableData2 = ref([])
@@ -60,13 +60,13 @@ onMounted(() => {
 })
 const fetchData= () => {
 
-  fetch("http://localhost:9990/getreserve/"+Store.state.username)
+  fetch("http://localhost:9990/getreserve")
 
       .then(response => response.json()).then(response => {
-        console.log(response);
+    console.log(response);
 
-        alreadyTableData.value = response;
-      });
+    alreadyTableData.value = response;
+  });
 
 
   fetch("http://localhost:9990/page?pageNumber=" + pageNumber.value + "&pageSize="+ pageSize.value)

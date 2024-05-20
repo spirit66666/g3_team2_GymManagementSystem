@@ -103,11 +103,8 @@ export default {
 
     },
     changWeek(item, index) {
-      this.timeArr.forEach(item => {
-        item.status = 0;
 
-      });
-      item.status = 1;
+      console.log(item);
       if(Store.state.username===""){ this.visible = true}
       this.appointForm.date = item;
       this.dateArray.forEach(item => {
