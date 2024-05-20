@@ -1,5 +1,8 @@
 import { createStore } from 'vuex'
-
+import VuexPersistence from 'vuex-persist'
+const vuexLocal = new VuexPersistence({
+    storage: window.localStorage
+})
 const store = createStore({
     state () {
     return {
@@ -8,6 +11,7 @@ const store = createStore({
         LoggedIn: "登陆",
 
         warningColor:  true,
+        authInfo: JSON.parse(sessionStorage.getItem("COMPANY_AUTH_INFO")) || {}
     }
 },
     mutations: {
@@ -15,11 +19,17 @@ const store = createStore({
             state.username = username
             state.userPassword = userPassword
 
+
+            sessionStorage.setItem("COMPANY_AUTH_INFO", JSON.stringify(username))
         },
         setLoggedIn(state, loggedIn) {
             state.LoggedIn = loggedIn
         }
-    }
+    },
+    getters : {
+        authInfo: state => state.authInfo,
+    },
+    plugins: [vuexLocal.plugin]
     }
 )
 
