@@ -55,9 +55,9 @@ public class usercontrol {
     }
 
 
-    @DeleteMapping("/deleteuser/{id}")
-    public int deleteUser(@PathVariable("id") Integer id) {
+    @DeleteMapping("/deleteuser/{userID}")
+    public int deleteUser(@PathVariable("userID") Integer userID) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        return getuser.delete(wrapper.eq("id",id));}
+        return getuser.delete(wrapper.eq("userID",userID));}
 
 }

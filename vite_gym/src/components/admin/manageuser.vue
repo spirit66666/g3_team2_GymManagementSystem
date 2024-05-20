@@ -2,13 +2,19 @@
 
 
     <el-config-provider >
-
+<el-button type="primary" @click="userdialogVisible=true">增加用户</el-button>
       <el-table :data="tableData">
         <el-table-column prop="userID" label="ID"></el-table-column>
         <el-table-column prop="userName" label="用户名"></el-table-column>
         <el-table-column prop="passWord" label="密码"></el-table-column>
         <el-table-column prop="email" label="邮箱"></el-table-column>
         <el-table-column prop="mobilePhone" label="手机号"></el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button type="text" @click="editUser(scope.$index)">编辑</el-button>
+            <el-button type="text" @click="deleteUser(scope.$index)">删除</el-button>
+          </template>
+        </el-table-column>
 
       </el-table>
 
@@ -24,6 +30,28 @@
       />
     </el-config-provider>
 
+<el-dialog title="增加用户" :visible.sync="userdialogVisible">
+  <el-form :model="form" ref="form" label-width="80px">
+    <el-form-item label="用户名" prop="userName">
+      <el-input v-model="form.userName"></el-input>
+    </el-form-item>
+    <el-form-item label="密码" prop="passWord">
+
+
+      <el-input type="password" v-model="form.passWord"></el-input>
+    </el-form-item>
+    <el-form-item label="邮箱" prop="email">
+      <el-input v-model="form.email"></el-input>
+    </el-form-item>
+    <el-form-item label="手机号" prop="mobilePhone">
+      <el-input v-model="form.mobilePhone"></el-input>
+    </el-form-item>
+  </el-form>
+  <div slot="footer" class="dialog-footer">
+    <el-button @click="userdialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="addUser">确 定</el-button>
+  </div>
+</el-dialog>
 
 
 </template>
@@ -33,6 +61,8 @@
 export default {
   data() {
     return {
+      form: [],
+      userdialogVisible: false,
       tableData: [],
       pageNumber: 1,
       pageSize: 2,
@@ -49,6 +79,54 @@ export default {
 
   },
   methods: {
+    deleteUser(index) {
+      console.log(index);
+      fetch("http://localhost:9990/deleteuser/" + this.tableData[index].userID, {
+        method: "DELETE"
+
+      }).then(response => response.json()).then(response => {
+            console.log(response);
+            this.$message({
+              message: '用户删除成功',
+              type: 'success'
+
+            });
+            this.fetchData();
+          }
+
+      ).catch(error => {
+        console.log(error);
+        this.$message.error('用户删除失败');
+      });
+    },
+    editUser(index) {
+      console.log(index);
+      this.form = this.tableData[index];
+      this.userdialogVisible = true;
+    },
+    addUser() {
+      console.log(this.form);
+      fetch("http://localhost:9990/postuser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(this.form)
+      }).then(response => response.json()).then(response => {
+            console.log(response);
+            this.$message({
+              message: '用户添加成功',
+              type: 'success'
+            });
+            this.userdialogVisible = false;
+            this.fetchData();
+          }
+
+      ).catch(error => {
+        console.log(error);
+        this.$message.error('用户添加失败');
+      });
+    },
     fetchData() {
       fetch("http://localhost:9990/pageuser?pageNumber=" + this.pageNumber + "&pageSize="+ this.pageSize)
           .then(response => response.json()).then(response => {
@@ -71,6 +149,6 @@ export default {
       this.pageSize = pageSize;
       this.fetchData();}
 
-  }
+  },
 };
 </script>

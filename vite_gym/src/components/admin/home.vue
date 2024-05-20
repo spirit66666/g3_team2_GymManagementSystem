@@ -62,6 +62,8 @@ export default {
             <span>用户管理</span>
           </template>
           <el-menu-item index="/home/manageuser">用户管理</el-menu-item>
+          <el-menu-item index="/home/cheackreservationstate">用户预约管理</el-menu-item>
+
         </el-sub-menu>
         <el-sub-menu index="1" text-color= blue>
           <template #title>

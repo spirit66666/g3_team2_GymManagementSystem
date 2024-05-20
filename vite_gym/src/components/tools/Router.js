@@ -32,7 +32,13 @@ const Router = createRouter({
                     path:'manageuser',
                     component: () => import('../../components/admin/manageuser.vue'),
                     name:"manageuser"
-                }
+                },
+
+                {
+                    path:'cheackreservationstate',
+                    component: () => import('../../components/admin/cheackreservationstate.vue'),
+                    name:"cheackreservationstate"
+                },
             ]
         },
         {

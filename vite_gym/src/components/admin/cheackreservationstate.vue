@@ -60,22 +60,16 @@ onMounted(() => {
 })
 const fetchData= () => {
 
-  fetch("http://localhost:9990/getreserve")
-
-      .then(response => response.json()).then(response => {
-    console.log(response);
-
-    alreadyTableData.value = response;
-  });
 
 
-  fetch("http://localhost:9990/page?pageNumber=" + pageNumber.value + "&pageSize="+ pageSize.value)
+  fetch("http://localhost:9990/pageuserreserve?pageNumber=" + pageNumber.value + "&pageSize="+ pageSize.value)
       .then(response => response.json()).then(response => {
 
-    console.log(response);
+    console.log(response.data);
+    console.log(response.total);
     total.value = response.total;
 
-    tableData2.value = response.data;
+    alreadyTableData.value = response.data;
 
   });
 }
