@@ -2,7 +2,8 @@
 
   <el-config-provider >
 
-    <el-table :data="alreadyTableData">
+    <el-table :data="alreadyTableData"
+    >
       <el-table-column prop="reserveID" label="预约ID"></el-table-column>
       <el-table-column prop="userID" label="用户名"></el-table-column>
       <el-table-column prop="" label="场馆名字"></el-table-column>

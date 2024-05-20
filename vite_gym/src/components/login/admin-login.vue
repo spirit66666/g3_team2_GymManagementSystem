@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     fetchData() {
-      fetch("http://localhost:9990/page?pageNumber=" + this.pageNumber + "&pageSize="+ this.pageSize)
+      this.$http.get("/page?pageNumber=" + this.pageNumber + "&pageSize="+ this.pageSize)
           .then(response => response.json()).then(response => {
 
         console.log(response);

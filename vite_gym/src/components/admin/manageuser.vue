@@ -10,7 +10,7 @@
         <el-table-column prop="email" label="邮箱"></el-table-column>
         <el-table-column prop="mobilePhone" label="手机号"></el-table-column>
         <el-table-column label="操作">
-          <template slot-scope="scope">
+          <template  #default="scope">
             <el-button type="text" @click="editUser(scope.$index)">编辑</el-button>
             <el-button type="text" @click="deleteUser(scope.$index)">删除</el-button>
           </template>
@@ -30,7 +30,7 @@
       />
     </el-config-provider>
 
-<el-dialog title="增加用户" :visible.sync="userdialogVisible">
+<el-dialog title="增加用户" v-model="userdialogVisible">
   <el-form :model="form" ref="form" label-width="80px">
     <el-form-item label="用户名" prop="userName">
       <el-input v-model="form.userName"></el-input>
@@ -81,10 +81,7 @@ export default {
   methods: {
     deleteUser(index) {
       console.log(index);
-      fetch("http://localhost:9990/deleteuser/" + this.tableData[index].userID, {
-        method: "DELETE"
-
-      }).then(response => response.json()).then(response => {
+      this.$http.delete("/deleteuser/" + this.tableData[index].userID).then(response => {
             console.log(response);
             this.$message({
               message: '用户删除成功',
@@ -106,13 +103,13 @@ export default {
     },
     addUser() {
       console.log(this.form);
-      fetch("http://localhost:9990/postuser", {
-        method: "POST",
+      this.$http.post("/postuser", {
+
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(this.form)
-      }).then(response => response.json()).then(response => {
+      }).then(response => {
             console.log(response);
             this.$message({
               message: '用户添加成功',
@@ -128,13 +125,13 @@ export default {
       });
     },
     fetchData() {
-      fetch("http://localhost:9990/pageuser?pageNumber=" + this.pageNumber + "&pageSize="+ this.pageSize)
-          .then(response => response.json()).then(response => {
+      this.$http.get("/pageuser?pageNumber=" + this.pageNumber + "&pageSize="+ this.pageSize)
+          .then(response => {
 
         console.log(response);
-        this.total = response.total;
+        this.total = response.data.total;
 
-        this.tableData = response.data;
+        this.tableData = response.data.list;
 
 
       });

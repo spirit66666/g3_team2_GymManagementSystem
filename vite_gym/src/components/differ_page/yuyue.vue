@@ -131,10 +131,10 @@ export default {
     },
 
     fetchData() {
-      fetch("http://localhost:9990/getfacility" )
-          .then(response => response.json()).then(response => {
+      this.$http.get("/getfacility" )
+          .then(response => {
 
-        this.facility=response;
+        this.facility=response.data;
 
       })
 
