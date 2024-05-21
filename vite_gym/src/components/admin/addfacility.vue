@@ -101,29 +101,23 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script  setup>
 
 import axios from "axios";
 
-interface addFacilityData {
-  gymName: string
-  gymAddress: string
-}
-const addFacilityData = reactive<addFacilityData>({
+import {computed, ref, reactive, watch, onMounted, getCurrentInstance} from 'vue'
+
+const addFacilityData = reactive({
   gymName: '',
   gymAddress: '',
-})
-interface rowdata {
-  gymID: number
-  gymName: string
-  gymAddress: string
-}
-const rowdata = reactive<rowdata>({
+})// 创建一个响应式对象
+const rowdata = reactive({
   gymID: 0,
   gymName: '',
-  gymAddress: '',
-})
-import {computed, ref, reactive, watch, onMounted, getCurrentInstance} from 'vue'
+  gymAddress: ''
+});
+const currentInstance = getCurrentInstance();
+const { $http } = currentInstance.appContext.config.globalProperties;
 import { ElRow, ElCol, ElFormItem, ElSelect, ElOption, ElDatePicker, ElTable, ElTableColumn } from 'element-plus';
 const total = ref(0)
 const pageSize = ref(3)
@@ -143,6 +137,7 @@ const handleSizeChange = (pageSize) => {
 }
 const updateFacility = (row) => {
   dialogFormVisible.value = true;
+
   rowdata.gymID = row.gymID;
   rowdata.gymName = row.gymName;
   rowdata.gymAddress = row.gymAddress;
@@ -151,7 +146,7 @@ const updateFacility = (row) => {
 const deleteFacility = (gymID) => {
   console.log(gymID)
   ElMessageBox.confirm('确认删除该场馆吗？').then(() => {
-    axios.delete("http://localhost:9990/deletegym/"+ gymID
+    $http.delete("/deletegym/"+ gymID
     ).then((response) => {
       console.log(response.data);
       ElMessageBox.alert('删除成功');
@@ -162,7 +157,7 @@ const deleteFacility = (gymID) => {
   });
 }
 const updateFacilityData = () => {
-  axios.post("http://localhost:9990/updategym" , {
+  $http.post("/updategym" , {
     gymID: rowdata.gymID,
     gymName: rowdata.gymName,
     gymAddress: rowdata.gymAddress,
@@ -185,7 +180,7 @@ const data = ref([
 
 const addFacility = () => {
 
-  axios.post("http://localhost:9990/addgym", {
+  $http.post("/addgym", {
     gymName: addFacilityData.gymName,
     gymAddress: addFacilityData.gymAddress,
   }).then((response) => {
@@ -204,11 +199,12 @@ onMounted(() => {
 const fetchData = () => {
   // Simulate API call to fetch schedule data based on selectedDate, venue, and sport
   // Assign fetched data to tableData
-  fetch("http://localhost:9990/pagegym?pageNumber=" + pageNumber.value + "&pageSize="+ pageSize.value)
-      .then(response => response.json()).then(datas => {
+  $http.get("/pagegym?pageNumber=" + pageNumber.value + "&pageSize="+ pageSize.value)
+     .then(datas => {
 
-    data.value=datas.data;
-  total.value = datas.total;
+
+    data.value=datas.data.data;
+  total.value = datas.data.total;
 
   });
 };
@@ -216,28 +212,9 @@ const fetchData = () => {
 const dialogFormVisible = ref(false)
 
 const visible = ref(false)
-interface User {
-  date: string
-  name: string
-  address: string
-}
 
 const search = ref('')
 
-const tableRowClassName = ({
-                             row,
-                             rowIndex,
-                           }: {
-  row: User
-  rowIndex: number
-}) => {
-  if (rowIndex === 1) {
-    return 'warning-row'
-  } else if (rowIndex === 3) {
-    return 'success-row'
-  }
-  return ''
-}
 </script>
 
 <style>

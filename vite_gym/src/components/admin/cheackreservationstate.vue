@@ -35,10 +35,11 @@
 
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import {ref, onMounted, getCurrentInstance} from 'vue'
 
-const { proxy }: any = getCurrentInstance();
+const currentInstance = getCurrentInstance();
+const { $http } = currentInstance.appContext.config.globalProperties;
 const alreadyTableData = ref([])
 const tableData2 = ref([])
 const pageNumber = ref(1)
@@ -49,7 +50,7 @@ const handleDelete = (index) => {
   console.log(index)
   const reserveID = alreadyTableData.value[index].reserveID
   console.log(reserveID)
-  fetch("http://localhost:9990/deletereserve/" + reserveID, {
+  $http.delete("/deletereserve/" + reserveID, {
     method: "DELETE"
   }).then(response => {
     console.log(response)

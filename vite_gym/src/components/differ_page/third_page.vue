@@ -33,11 +33,14 @@
 
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import {ref, onMounted, getCurrentInstance} from 'vue'
 
 import Store from '../../components/store/store.js'
-const { proxy }: any = getCurrentInstance();
+
+
+const currentInstance = getCurrentInstance();
+const { $http } = currentInstance.appContext.config.globalProperties;
 const alreadyTableData = ref([])
 const tableData2 = ref([])
 const pageNumber = ref(1)
@@ -48,9 +51,7 @@ const handleDelete = (index) => {
   console.log(index)
   const reserveID = alreadyTableData.value[index].reserveID
   console.log(reserveID)
-  fetch("http://localhost:9990/deletereserve/" + reserveID, {
-    method: "DELETE"
-  }).then(response => {
+  $http.delete("/deletereserve/" + reserveID).then(response => {
     console.log(response)
     fetchData()
   })
@@ -60,17 +61,17 @@ onMounted(() => {
 })
 const fetchData= () => {
 
-  fetch("http://localhost:9990/getreserve/"+Store.state.username)
+  $http.get("/getreserve/"+Store.state.username)
 
-      .then(response => response.json()).then(response => {
-        console.log(response);
+      .then(response => {
+        console.log(response.data);
 
-        alreadyTableData.value = response;
+        alreadyTableData.value = response.data;
       });
 
 
-  fetch("http://localhost:9990/page?pageNumber=" + pageNumber.value + "&pageSize="+ pageSize.value)
-      .then(response => response.json()).then(response => {
+  $http.get("/page?pageNumber=" + pageNumber.value + "&pageSize="+ pageSize.value)
+      .then(response => {
 
     console.log(response);
     total.value = response.total;
