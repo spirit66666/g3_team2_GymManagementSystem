@@ -131,7 +131,7 @@ export default {
         console.log(response);
         this.total = response.data.total;
 
-        this.tableData = response.data.list;
+        this.tableData = response.data.data;
 
 
       });

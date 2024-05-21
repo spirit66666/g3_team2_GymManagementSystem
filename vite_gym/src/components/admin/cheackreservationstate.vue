@@ -64,14 +64,14 @@ const fetchData= () => {
 
 
 
-  fetch("http://localhost:9990/pageuserreserve?pageNumber=" + pageNumber.value + "&pageSize="+ pageSize.value)
-      .then(response => response.json()).then(response => {
+  $http.get("/pageuserreserve?pageNumber=" + pageNumber.value + "&pageSize="+ pageSize.value)
+     .then(response => {
 
     console.log(response.data);
     console.log(response.total);
-    total.value = response.total;
+    total.value = response.data.total;
 
-    alreadyTableData.value = response.data;
+    alreadyTableData.value = response.data.data;
 
   });
 }

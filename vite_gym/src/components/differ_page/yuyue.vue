@@ -160,9 +160,12 @@ export default {
           "reserveTime": this.appointForm.time,
 
         }).then((response) => {
+          console.log(response.data);
+          ElMessageBox.alert('Submission successful!')
           this.look=true;
             })
             .catch((error) => {
+
               console.log(error)
               ElMessageBox.alert('Submission failed!')
 
