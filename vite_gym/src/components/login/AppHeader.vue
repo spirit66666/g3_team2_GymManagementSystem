@@ -30,7 +30,7 @@
                 <div class="input">
 
                   <el-avatar style="float:right; margin-right: 20px" @click="adminlogin">
-                    <img src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif" alt="Element logo" />
+                    <img src="../../assets/vue.svg" alt="Element logo" />
                   </el-avatar>
                 </div>
               </div>

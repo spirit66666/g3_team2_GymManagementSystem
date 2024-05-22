@@ -1,20 +1,23 @@
-<script>
-export default {
-  name: "first_page",
-  data() {
-    return {
-      items: [
-        { url: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif' },
-      ]
-    }
-  }}
 
+<script setup>
+import { ref } from 'vue'
+import { ElCarousel, ElCarouselItem } from 'element-plus'
+import 'element-plus/dist/index.css'
+
+const items = ref([
+  { src: new URL('../../assets/640.gif', import.meta.url).href },
+  { src: new URL('../../assets/vue.svg', import.meta.url).href },
+  { src: new URL('../../assets/login_bg.jpg', import.meta.url).href },
+  { src: new URL('../../assets/vue.svg', import.meta.url).href }
+])
 </script>
 
+
 <template>
+
   <el-carousel :interval="4000" type="card" height="400px">
-    <el-carousel-item v-for="item in 7" >
-      <img :src="items[0].url" style="width: 100%; height: 100%;" />
+    <el-carousel-item v-for="(item, index) in items"  :key="index">
+      <img :src="item.src" style="width: 100%; height: 100%;"  alt=""/>
     </el-carousel-item>
 
   </el-carousel>
