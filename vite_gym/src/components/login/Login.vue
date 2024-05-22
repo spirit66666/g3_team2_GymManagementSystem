@@ -13,6 +13,10 @@
         <div class="input">
             <el-button @click="login" style="width:500px" type="primary"  >登录</el-button>
         </div>
+
+      <div class="input">
+      <el-link type="primary" @click="$router.push('/adminlogin')">管理员登陆</el-link>
+        </div>
       <div v-if="showError" class="error-message">Invalid username or password</div>
     </div>
 </template>

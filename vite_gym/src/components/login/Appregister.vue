@@ -35,7 +35,7 @@
 
 
         </div>
-        <el-link type="primary" @click="$router.push('/adminlogin')">管理员注册</el-link>
+        <el-link type="primary" @click="$router.push('/admin-register')">管理员注册</el-link>
 
       </div>
       <button @click="registerUser" class="btn">创建账号</button>

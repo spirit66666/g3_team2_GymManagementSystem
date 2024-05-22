@@ -14,6 +14,9 @@
 
 <script>
 
+import {ElMessage} from "element-plus";
+import {h} from "vue";
+
 export default {
   data() {
     return {
@@ -27,9 +30,9 @@ export default {
       loginPassword: ''
     };
   },
-  
+
   created() {
-   this.fetchData();
+    this.fetchData();
 
   },
   methods: {
@@ -56,26 +59,46 @@ export default {
         this.tableData = response.data;
 
         console.log(this.tableData);
-            if (response.data.find(user => user.username === this.loginUsername && user.password === this.loginPassword)) {
+        if (response.data.find(user => user.username === this.loginUsername && user.password === this.loginPassword)) {
 
-              console.log('登陆成功');
-              this.$router.push('/home');
-              // 登陆成功处理逻辑
-            } else {
-              console.log('登陆失败');
-              // 登陆失败处理逻辑
-            }
-          })
+          console.log('登陆成功');
+          this.$router.push('/home');
+          // 登陆成功处理逻辑
+        } else {
+          console.log('登陆失败');
+          // 登陆失败处理逻辑
+        }
+      })
+    },
+    registeradmin() {
+      this.$http.post('/postuser?userName='+this.registerUsername+'&passWord='+this.registerPassword+'&mobilePhone='+this.registerphone+'&email='+this.registeremail).then(response => {
+
+        console.log(response);
+
+
+
+        ElMessage({
+          message: h('p', { style: 'line-height: 1; font-size: 14px' }, [
+            h('span', null, '用户'),
+            h('i', { style: 'color: teal' }, this.registerUsername,'已经注册成功'),
+          ]),
+        })
+
+        setTimeout(() => {
+
+          this.$router.push('/home');
+        }, 400)
+      })
     },
     handleCurrentChange(currentPage) {
       console.log(currentPage);
       this.pageNumber = currentPage;
       this.fetchData();
-  },
-  handleSizeChange(pageSize) {
+    },
+    handleSizeChange(pageSize) {
       console.log(pageSize);
-    this.pageSize = pageSize;
-    this.fetchData();}
+      this.pageSize = pageSize;
+      this.fetchData();}
 
   }
 };

@@ -23,6 +23,7 @@ create table `administrator`
 (
         `adminID` int unsigned auto_increment,
         `adminName` varchar(16) not null,
+        `passWord` varchar(32) not null,
         `mobilePhone` int(11) unique,
         `email` varchar(32) unique,
 

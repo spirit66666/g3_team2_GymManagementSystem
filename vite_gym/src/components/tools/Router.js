@@ -104,6 +104,11 @@ const Router = createRouter({
             name:"Appregister",
 
         },
+        {
+            path:'/admin-register',
+            component: () => import('../../components/login/admin-register.vue'),
+            name:"admin-register"
+        }
 
     ]
 })
