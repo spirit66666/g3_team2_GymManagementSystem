@@ -40,11 +40,12 @@
 
       <el-input type="password" v-model="form.passWord"></el-input>
     </el-form-item>
-    <el-form-item label="邮箱" prop="email">
-      <el-input v-model="form.email"></el-input>
-    </el-form-item>
+
     <el-form-item label="手机号" prop="mobilePhone">
       <el-input v-model="form.mobilePhone"></el-input>
+    </el-form-item>
+    <el-form-item label="邮箱" prop="email">
+      <el-input v-model="form.email"></el-input>
     </el-form-item>
   </el-form>
   <div slot="footer" class="dialog-footer">
@@ -104,11 +105,10 @@ export default {
     addUser() {
       console.log(this.form);
       this.$http.post("/postuser", {
-
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(this.form)
+          "userName": this.form.userName,
+          "passWord": this.form.passWord,
+          "mobilePhone": this.form.mobilePhone,
+          "email": this.form.email
       }).then(response => {
             console.log(response);
             this.$message({

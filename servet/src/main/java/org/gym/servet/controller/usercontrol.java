@@ -3,7 +3,6 @@ package org.gym.servet.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.gym.servet.entity.User;
 import org.gym.servet.getmapper.getuser;
-import org.gym.servet.service.userservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +22,6 @@ public class usercontrol {
     @Autowired
      private getuser getuser;
 
-    @Autowired
-    private userservice userservice;
 
 
     @GetMapping("/pageuser")
@@ -48,10 +45,9 @@ public class usercontrol {
     }
 
     @PostMapping("/postuser")
-    public int addUser(User user) {
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
+    public void addUser(@RequestBody User user) {
 
-        return getuser.insert(user);
+         getuser.insert(user);
     }
 
 
