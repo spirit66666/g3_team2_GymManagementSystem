@@ -6,9 +6,9 @@ import 'element-plus/dist/index.css'
 
 const items = ref([
   { src: new URL('../../assets/640.gif', import.meta.url).href },
-  { src: new URL('../../assets/vue.svg', import.meta.url).href },
-  { src: new URL('../../assets/login_bg.jpg', import.meta.url).href },
-  { src: new URL('../../assets/vue.svg', import.meta.url).href }
+  { src: new URL('../../assets/640.gif', import.meta.url).href },
+  { src: new URL('../../assets/640.gif', import.meta.url).href },
+  { src: new URL('../../assets/640.gif', import.meta.url).href }
 ])
 </script>
 

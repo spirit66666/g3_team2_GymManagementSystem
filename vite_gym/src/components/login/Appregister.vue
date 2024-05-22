@@ -91,7 +91,12 @@ export default {
   },
   methods:{
     registerUser() {
-      this.$http.post('/postuser?userName='+this.registerUsername+'&passWord='+this.registerPassword+'&mobilePhone='+this.registerphone+'&email='+this.registeremail).then(response => {
+      this.$http.post('/postuser', {
+        "userName": this.registerUsername,
+        "passWord": this.registerPassword,
+        "mobilePhone": this.registerphone,
+        "email": this.registeremail
+      }).then(response => {
 
         console.log(response);
 
