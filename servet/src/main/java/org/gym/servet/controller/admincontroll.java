@@ -29,7 +29,7 @@ public class admincontroll {
     }
 
     @PostMapping("/postadmin")
-    public int postadmin(admin admin) {
+    public int postadmin(@RequestBody admin admin) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
 
         return adminmapper.insert(admin);
