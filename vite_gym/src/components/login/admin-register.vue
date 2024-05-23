@@ -50,6 +50,7 @@
 
 import {ElMessage} from "element-plus";
 import {h} from "vue";
+import Store from "../store/store.js";
 
 export default {
   data() {
@@ -103,6 +104,7 @@ export default {
           ]),
         })
 
+        Store.commit('setAdminname', this.registerUsername);
         setTimeout(() => {
 
           this.$router.push('/home');

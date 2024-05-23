@@ -5,6 +5,10 @@ import Store from "../store/store.js";
 export default {
   name: "home",
 
+  data() {
+    return {
+    getadminusername: Store.state.adminname};
+  },
   methods: {
     logout1() {
       router.beforeEach((to, from, next) => {
@@ -86,8 +90,10 @@ export default {
       <!-- 添加一个通用的头部 -->
       <el-header style="margin:0;padding:0;" height="80px">
         <el-container style="background-color:blanchedalmond;margin:0;padding:0;height:80px">
-          <div style="margin: auto;margin-left:100px"><h1>欢迎您登录后台管理系统，管理员用户！</h1></div>
+        <div style="margin: auto;margin-left:100px"><h1>欢迎您登录后台管理系统，管理员用户名：{{ getadminusername }}!</h1></div>
           <div style="margin: auto;margin-right:50px"><el-button type="primary" @click="logout1" v-model="route">{{name}}主页{{ getUsername }}</el-button></div>
+
+          <div style="margin: auto;margin-right:50px"><el-button type="primary" @click="$router.push('/adminlogin')">{{name}}登陆{{ getUsername }}</el-button></div>
           <div style="margin: auto;margin-right:50px"><el-button type="primary" @click="logout" v-model="route">{{name}}注销{{ getUsername }}</el-button></div>
         </el-container>
       </el-header>

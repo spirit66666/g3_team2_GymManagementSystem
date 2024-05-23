@@ -9,6 +9,7 @@ const store = createStore({
         username:"",
         userPassword:"",
         LoggedIn: "登陆",
+        adminname: "",
 
         warningColor:  true,
         authInfo: JSON.parse(sessionStorage.getItem("COMPANY_AUTH_INFO")) || {}
@@ -24,8 +25,12 @@ const store = createStore({
         },
         setLoggedIn(state, loggedIn) {
             state.LoggedIn = loggedIn
+        },
+        setAdminname(state, adminname) {
+            state.adminname = adminname
         }
     },
+
     getters : {
         authInfo: state => state.authInfo,
     },
