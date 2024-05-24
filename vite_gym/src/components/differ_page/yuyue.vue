@@ -154,9 +154,9 @@ export default {
         this.timeArr.status = 1;
       }
       else{
-        console.log(Store.state.username);
+        console.log(Store.state.userID);
         this.$http.post('/addreserve', {
-          "userID": Store.state.username,
+          "userID": Store.state.userID,
           "reserveDate":this.appointForm.date,
           "reserveTime": this.appointForm.time,
 

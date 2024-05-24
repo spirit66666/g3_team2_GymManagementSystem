@@ -6,6 +6,7 @@ const vuexLocal = new VuexPersistence({
 const store = createStore({
     state () {
     return {
+        userID: 1,
         username:"",
         userPassword:"",
         LoggedIn: "登陆",
@@ -16,6 +17,9 @@ const store = createStore({
     }
 },
     mutations: {
+        setUserID (state, userID) {
+            state.userID = userID
+        },
         setUsername(state, username, userPassword) {
             state.username = username
             state.userPassword = userPassword

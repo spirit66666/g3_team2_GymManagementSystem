@@ -56,18 +56,25 @@ export default {
             }).then((response) => {
               if (response.data.code === 200) {
 
-                console.log('登陆成功');
                 ElMessage({
                   message: h('p', { style: 'line-height: 1; font-size: 14px' }, [
                     h('span', null, '用户'),
                     h('i', { style: 'color: teal' }, this.name,'已经登陆成功'),
                   ]),
                 })
+                this.$http.post('/getuserid/'+this.name).then((response) => {
 
+
+                  console.log('获取用户信息id');
+                  console.log(response.data);
+                  Store.commit('setUserID', response.data);
+                })
                 Store.commit('setUsername', this.name,this.password);
                 Store.commit('setLoggedIn', "退出登陆");
+                console.log(Store.state.userID+'登陆成功');
                 // 登陆成功提示
                 setTimeout(() => {
+
                   this.$router.push('/');
                 }, 400)
               }

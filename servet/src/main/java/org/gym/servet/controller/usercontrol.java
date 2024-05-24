@@ -93,4 +93,15 @@ public class usercontrol {
         }
     }
 
+
+
+    @PostMapping( "/getuserid/{userName}")
+    public int getUserID(@PathVariable("userName") String userName) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("userName", userName);
+        User one = userService.getOne(wrapper);
+        return one.getUserID();
+    }
+
+
 }
