@@ -1,13 +1,21 @@
 <template>
 
-  <h2>管理员登陆页面</h2>
-  <form @submit.prevent="loginUser">
-    <label for="loginUsername">用户名:</label>
-    <input type="text" id="loginUsername" v-model="loginUsername">
-    <label for="loginPassword">密码:</label>
-    <input type="password" id="loginPassword" v-model="loginPassword">
-    <button type="submit">登陆</button>
-  </form>
+  <div id="title">
+    <h1>管理员管理系统</h1>
+  </div>
+  <div class="input">
+    <el-input v-model="name" placeholder="请输入用户名"></el-input>
+  </div>
+  <div class="input">
+    <el-input v-model="password" placeholder="请输入密码" auto-complete="new-password" show-password></el-input>
+  </div>
+
+  <div class="input">
+    <el-button @click="login" style="width:500px" type="primary"  >登录</el-button>
+  </div>
+
+  <div v-if="showError" class="error-message">Invalid username or password</div>
+
 
 
 </template>
@@ -45,12 +53,6 @@ export default {
 
       });
     },
-    registerUser() {
-      this.$http.post('/post?username='+this.registerUsername+'&password='+this.registerPassword).then(response => {
-
-        console.log(response);
-      })
-    },
     loginUser() {
       this.$http.put('/fetch').then(response => {
         this.tableData = response.data;
@@ -80,3 +82,33 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+#container {
+  background: black;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+.error-message {
+  color: red;
+  margin-top: 5px;
+}
+
+#title {
+  text-align: center;
+  color: #152ade;
+  margin-top: 200px;
+}
+
+.input {
+  margin: 20px auto;
+  width: 500px;
+}
+#el-icon-user {
+  color: red;
+}
+.el-icon-lock {
+  color: #13c2c2;
+}
+</style>

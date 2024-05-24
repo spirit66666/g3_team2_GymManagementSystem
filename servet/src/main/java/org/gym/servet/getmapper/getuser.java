@@ -7,10 +7,11 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.gym.servet.entity.User;
 import org.gym.servet.entity.facility;
+import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.util.List;
-
+@Repository
 public interface getuser extends BaseMapper<User> {
 
 
