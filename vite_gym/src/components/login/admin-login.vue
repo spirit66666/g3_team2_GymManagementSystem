@@ -1,26 +1,25 @@
 <template>
 
   <div id="title">
-    <h1>管理员管理系统</h1>
+    <h1>管理员GYM管理系统</h1>
   </div>
   <div class="input">
-    <el-input v-model="name" placeholder="请输入用户名"></el-input>
+    <el-input v-model="loginUsername" placeholder="请输入用户名"></el-input>
   </div>
   <div class="input">
-    <el-input v-model="password" placeholder="请输入密码" auto-complete="new-password" show-password></el-input>
+    <el-input v-model="loginPassword" placeholder="请输入密码" auto-complete="new-password" show-password></el-input>
   </div>
 
   <div class="input">
-    <el-button @click="login" style="width:500px" type="primary"  >登录</el-button>
+    <el-button @click="loginadmin" style="width:500px" type="primary"  >登录</el-button>
   </div>
-
-  <div v-if="showError" class="error-message">Invalid username or password</div>
-
 
 
 </template>
 
 <script>
+
+import Store from "../store/store.js";
 
 export default {
   data() {
@@ -35,51 +34,27 @@ export default {
       loginPassword: ''
     };
   },
-  
-  created() {
-   this.fetchData();
 
-  },
   methods: {
-    fetchData() {
-      this.$http.get("/page?pageNumber=" + this.pageNumber + "&pageSize="+ this.pageSize)
-          .then(response => response.json()).then(response => {
+    loginadmin() {
 
-        console.log(response);
-        this.total = response.total;
+          this.$http.post('/adminlogin', {
+            username: this.loginUsername,
+            password: this.loginPassword
+          }).then((response) => {
+            console.log(response.data.code);
+            if (response.data.code === 200) {
 
-        this.tableData = response.data;
 
-
-      });
-    },
-    loginUser() {
-      this.$http.put('/fetch').then(response => {
-        this.tableData = response.data;
-
-        console.log(this.tableData);
-            if (response.data.find(user => user.username === this.loginUsername && user.password === this.loginPassword)) {
-
-              console.log('登陆成功');
-              this.$router.push('/home');
-              // 登陆成功处理逻辑
-            } else {
-              console.log('登陆失败');
-              // 登陆失败处理逻辑
+              Store.commit('setAdminname', this.loginUsername);
+              this.$router.push({path: '/home'})
             }
-          })
-    },
-    handleCurrentChange(currentPage) {
-      console.log(currentPage);
-      this.pageNumber = currentPage;
-      this.fetchData();
-  },
-  handleSizeChange(pageSize) {
-      console.log(pageSize);
-    this.pageSize = pageSize;
-    this.fetchData();}
+          }).catch(() => {
+            console.log("用户名或密码错误！");
+          });
 
-  }
+
+    },}
 };
 </script>
 

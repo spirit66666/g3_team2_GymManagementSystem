@@ -1,6 +1,7 @@
 package org.gym.servet.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.gym.servet.Dao.AdminLoginRequest;
 import org.gym.servet.Result.RestResult;
 import org.gym.servet.Result.ResultGenerator;
 import org.gym.servet.entity.User;
@@ -47,22 +48,27 @@ public class admincontroll {
     private ResultGenerator generator;
 
     @PostMapping( "/adminlogin")
-    public RestResult adminlogin(String username, String password) {
+    public RestResult adminlogin(@RequestBody AdminLoginRequest request) {
+
+
+        String username = request.getUsername();
+        String password = request.getPassword();
         QueryWrapper<admin> wrapper = new QueryWrapper<>();
         wrapper.eq("adminName", username);
         admin one = tbAdminService.getOne(wrapper);
+        System.out.println(username + " " + password);
         if (null != username && null != password) {
             if (one.getAdminName().equalsIgnoreCase(username)) {
-                if (one.getPassword().equalsIgnoreCase(password)) {
+                if (one.getPassWord().equalsIgnoreCase(password)) {
                     return generator.getSuccessResult();
                 } else {
-                    return generator.getFailResult("用户名或密码错误");
+                    return generator.getFailResult("用户名或密码错误1");
                 }
             } else {
-                return generator.getFailResult("用户名或密码错误");
+                return generator.getFailResult("用户名或密码错误2");
             }
         } else {
-            return generator.getFailResult("用户名或密码错误");
+            return generator.getFailResult("用户名或密码错误3");
         }
     }
 

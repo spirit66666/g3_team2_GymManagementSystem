@@ -49,25 +49,31 @@ export default {
     },
     methods: {
         login() {
-          this.$http.get('/getusers').then(response => {
 
-          if (response.data.find(user => user.userName === this.name && user.passWord === this.password)) {
-            console.log('登陆成功');
-            ElMessage({
-              message: h('p', { style: 'line-height: 1; font-size: 14px' }, [
-                h('span', null, '用户'),
-                h('i', { style: 'color: teal' }, this.name,'已经登陆成功'),
-              ]),
-            })
-            Store.commit('setUsername', this.name,this.password);
-            Store.commit('setLoggedIn', "退出登陆");
+            this.$http.post('/userlogin', {
+              username: this.name,
+              password: this.password
+            }).then((response) => {
+              if (response.data.code === 200) {
 
-            // 登陆成功提示
-            setTimeout(() => {
-              this.$router.push('/');
-            }, 400)
-            // 登陆成功处理逻辑
-          } else {
+                console.log('登陆成功');
+                ElMessage({
+                  message: h('p', { style: 'line-height: 1; font-size: 14px' }, [
+                    h('span', null, '用户'),
+                    h('i', { style: 'color: teal' }, this.name,'已经登陆成功'),
+                  ]),
+                })
+
+                Store.commit('setUsername', this.name,this.password);
+                Store.commit('setLoggedIn', "退出登陆");
+                // 登陆成功提示
+                setTimeout(() => {
+                  this.$router.push('/');
+                }, 400)
+              }
+
+
+          else {
             console.log('登陆失败');
             // 登陆失败处理逻辑
             ElMessage({

@@ -1,12 +1,15 @@
 package org.gym.servet.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.gym.servet.Dao.AdminLoginRequest;
+import org.gym.servet.Dao.UserLoginRequest;
 import org.gym.servet.Result.RestResult;
 import org.gym.servet.Result.ResultGenerator;
 import org.gym.servet.entity.User;
 import org.gym.servet.entity.admin;
 import org.gym.servet.getmapper.getuser;
 import org.gym.servet.service.AdminService;
+import org.gym.servet.service.Userservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
@@ -63,17 +66,21 @@ public class usercontrol {
 
 
     @Autowired
-    private AdminService tbAdminService;
+    private Userservice userService;
     @Autowired
     private ResultGenerator generator;
     @PostMapping( "/userlogin")
-    public RestResult adminlogin(String username, String password) {
-        QueryWrapper<admin> wrapper = new QueryWrapper<>();
-        wrapper.eq("adminName", username);
-        admin one = tbAdminService.getOne(wrapper);
+    public RestResult userName(@RequestBody UserLoginRequest request) {
+
+
+        String username = request.getUsername();
+        String password = request.getPassword();
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("userName", username);
+        User one = userService.getOne(wrapper);
         if (null != username && null != password) {
-            if (one.getAdminName().equalsIgnoreCase(username)) {
-                if (one.getPassword().equalsIgnoreCase(password)) {
+            if (one.getUserName().equalsIgnoreCase(username)) {
+                if (one.getPassWord().equalsIgnoreCase(password)) {
                     return generator.getSuccessResult();
                 } else {
                     return generator.getFailResult("用户名或密码错误");

@@ -20,8 +20,8 @@ public class admin {
     @TableField(value = "adminName")
     private String adminName;
 
-    @TableField(value = "password")
-    private String password;
+    @TableField(value = "passWord")
+    private String passWord;
 
 
     @TableField(value = "mobilePhone")
