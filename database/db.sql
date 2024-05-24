@@ -56,8 +56,8 @@ values ('健身房', '北京市海淀区西二旗北三环西路10号'),
 
 
 /*创建 reserve 表*/
-drop table if exists `reserve`;
-create table `reserve`
+drop table if exists `reservations`;
+create table `reservations`
 (
     `reserveID` int unsigned auto_increment,
     `userID` int unsigned not null,
@@ -95,19 +95,3 @@ create table `facility`
         ('游泳馆', '游泳馆', 10, 10, 3),
         ('舞蹈室', '舞蹈室', 10, 10, 4),
         ('健身器材', '健身器材', 10, 10, 5);
-
- /*创建 reservations 表*/
-drop table if exists `reservations`;
-create table `reservations`
-(
-    `reservationID` int unsigned auto_increment,
-    `userID` int unsigned not null,
-    `reserveDate` date not null,
-    `reserveTime` time not null,
-    `reserveStatus` int unsigned not null,
-
-
-    primary key (`reservationID`),
-    foreign key (`userID`) references `user` (`userID`)
-) engine = InnoDB
-  default charset = utf8mb4;

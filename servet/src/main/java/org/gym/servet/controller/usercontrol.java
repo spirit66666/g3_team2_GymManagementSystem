@@ -1,14 +1,11 @@
 package org.gym.servet.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.gym.servet.Dao.AdminLoginRequest;
-import org.gym.servet.Dao.UserLoginRequest;
+import org.gym.servet.DTO.UserLoginRequest;
 import org.gym.servet.Result.RestResult;
 import org.gym.servet.Result.ResultGenerator;
 import org.gym.servet.entity.User;
-import org.gym.servet.entity.admin;
 import org.gym.servet.getmapper.getuser;
-import org.gym.servet.service.AdminService;
 import org.gym.servet.service.Userservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

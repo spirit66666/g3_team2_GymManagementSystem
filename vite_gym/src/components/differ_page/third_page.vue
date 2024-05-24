@@ -61,7 +61,7 @@ onMounted(() => {
 })
 const fetchData= () => {
 
-  $http.get("/getreserve/"+Store.state.username)
+  $http.get("/getreserve/"+Store.state.userID)
 
       .then(response => {
         console.log(response.data);
