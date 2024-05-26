@@ -6,8 +6,8 @@ const vuexLocal = new VuexPersistence({
 const store = createStore({
     state () {
     return {
-        userID: 1,
-        adminID: 1,
+        userID: 0,
+        adminID: 0,
         username:"",
         userPassword:"",
         LoggedIn: "登陆",

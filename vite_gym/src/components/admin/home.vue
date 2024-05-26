@@ -51,7 +51,7 @@ export default {
 
 <template>
   <el-container id="container">
-    <el-aside width="250px">
+    <el-aside width="200px">
       <el-container id="top">
         <img style="width:25px;height:25px;margin:auto;margin-right:0;" src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"/>
 
@@ -61,7 +61,7 @@ export default {
       </el-container>
       <el-menu
           :default-active="$route.path"
-          style="height:100%"
+          style="height:100%;width:100%"
           background-color= pink
           text-color="black"
           active-text-color="red"
@@ -83,14 +83,7 @@ export default {
           </template>
           <el-menu-item index="/home/addfacility">设施管理</el-menu-item>
         </el-sub-menu>
-        <el-sub-menu index="2">
-          <template #title>
-            <i class="el-icon-s-shop"></i>
-            <span>设施添加</span>
-          </template>
-          <el-menu-item index="/home/facility">设施添加</el-menu-item>
 
-        </el-sub-menu>
       </el-menu>
     </el-aside>
     <el-main style="padding:0">
@@ -98,7 +91,7 @@ export default {
       <el-header style="margin:0;padding:0;" height="80px">
         <el-container style="background-color:blanchedalmond;margin:0;padding:0;height:80px">
         <div style="margin: auto;margin-left:100px"><h1>欢迎您登录后台管理系统，管理员用户名：{{ getadminusername }}!</h1></div>
-          <div style="margin: auto;margin-right:50px"><el-button type="primary" @click="logout1" v-model="route">{{name}}主页{{ getUsername }}</el-button>
+          <div style="margin: auto;margin-right:50px"><el-button type="primary" @click="logout1" v-model="route">主页</el-button>
 
          <el-button type="primary" @click="$router.push('/adminlogin')">登陆</el-button>
           <el-button type="primary" @click="deleteUser" >注销</el-button></div>

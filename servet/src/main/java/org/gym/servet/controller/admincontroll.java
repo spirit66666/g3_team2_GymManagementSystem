@@ -24,10 +24,10 @@ public class admincontroll {
     @Autowired
     private adminmapper adminmapper;
 
-    @GetMapping("/getadmin")
-    public List<admin> getadmin() {
+    @GetMapping("/getadmin/{adminName}")
+    public List<admin> getadmin( @PathVariable String adminName) {
 QueryWrapper<admin> qw = new QueryWrapper<>();
-qw.select("adminID");
+qw.eq("adminName", adminName);
 
         return adminmapper.selectList(qw);
 

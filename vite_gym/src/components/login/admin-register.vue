@@ -88,7 +88,7 @@ export default {
 
       this.$http.post('/postadmin', {
         "adminName": this.registerUsername,
-        "password": this.registerPassword,
+        "passWord": this.registerPassword,
         "mobilePhone": this.registerphone,
         "email": this.registeremail
       }).then(response => {

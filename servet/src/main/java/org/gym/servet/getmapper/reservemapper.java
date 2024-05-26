@@ -11,9 +11,9 @@ import java.util.List;
 @Repository
 public interface reservemapper extends BaseMapper<reserve> {
 
-    @Select("SELECT * FROM reserve limit #{pageNumber},#{pageSize}")
+    @Select("SELECT * FROM reservations limit #{pageNumber},#{pageSize}")
     List<reserve> selectPage(Integer pageNumber, Integer pageSize);
 
-    @Select("SELECT COUNT(*) FROM reserve")
+    @Select("SELECT COUNT(*) FROM reservations")
     Integer count();
 }
