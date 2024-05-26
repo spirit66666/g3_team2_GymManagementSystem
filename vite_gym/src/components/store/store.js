@@ -7,6 +7,7 @@ const store = createStore({
     state () {
     return {
         userID: 1,
+        adminID: 1,
         username:"",
         userPassword:"",
         LoggedIn: "登陆",
@@ -17,6 +18,9 @@ const store = createStore({
     }
 },
     mutations: {
+        setAdminID (state, adminID) {
+            state.adminID = adminID
+        },
         setUserID (state, userID) {
             state.userID = userID
         },

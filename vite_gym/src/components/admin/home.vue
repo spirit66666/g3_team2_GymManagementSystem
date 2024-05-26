@@ -7,7 +7,8 @@ export default {
 
   data() {
     return {
-    getadminusername: Store.state.adminname};
+    getadminusername: Store.state.adminname
+    };
   },
   methods: {
     logout1() {
@@ -22,23 +23,29 @@ export default {
       console.log(Store.state.username);
       this.$router.replace('/AppHome/first_page')
     },
-    logout() {
-      router.beforeEach((to, from, next) => {
-        // 在跳转到新页面前执行一些操作
-        // 可以在这里销毁当前页面
 
-        next(); // 确保继续导航
-      })
-
-      this.$router.replace('/login')
-    },
     selectItem(index) {
 
       console.log(index);
       console.log(Store.state.username);
       this.$router.push(index)
     }
+    ,
+
+    deleteUser() {
+      console.log(Store.state.adminID);
+      this.$http.delete("/deleteadmin/" + Store.state.adminID )
+      .then(res => {
+         console.log(res.data.code);
+         if (res.data.code === 200) {
+           this.$message.success("删除成功");
+         } else {
+           this.$message.error("删除失败");
+         }
+      })
+    }
   },
+
 }
 </script>
 
@@ -91,10 +98,10 @@ export default {
       <el-header style="margin:0;padding:0;" height="80px">
         <el-container style="background-color:blanchedalmond;margin:0;padding:0;height:80px">
         <div style="margin: auto;margin-left:100px"><h1>欢迎您登录后台管理系统，管理员用户名：{{ getadminusername }}!</h1></div>
-          <div style="margin: auto;margin-right:50px"><el-button type="primary" @click="logout1" v-model="route">{{name}}主页{{ getUsername }}</el-button></div>
+          <div style="margin: auto;margin-right:50px"><el-button type="primary" @click="logout1" v-model="route">{{name}}主页{{ getUsername }}</el-button>
 
-          <div style="margin: auto;margin-right:50px"><el-button type="primary" @click="$router.push('/adminlogin')">{{name}}登陆{{ getUsername }}</el-button></div>
-          <div style="margin: auto;margin-right:50px"><el-button type="primary" @click="logout" v-model="route">{{name}}注销{{ getUsername }}</el-button></div>
+         <el-button type="primary" @click="$router.push('/adminlogin')">登陆</el-button>
+          <el-button type="primary" @click="deleteUser" >注销</el-button></div>
         </el-container>
       </el-header>
       <!-- 这里用来渲染具体的功能模块 -->

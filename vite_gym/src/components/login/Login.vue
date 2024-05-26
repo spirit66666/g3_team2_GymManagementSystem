@@ -78,8 +78,6 @@ export default {
                   this.$router.push('/');
                 }, 400)
               }
-
-
           else {
             console.log('登陆失败');
             // 登陆失败处理逻辑
@@ -92,7 +90,11 @@ export default {
             Store.commit('setLoggedIn', "登陆");
 
           }
-        })
+        }).catch((error) => {
+              console.log(error);
+              this.$message.error("用户名或密码错误！");
+              this.showError = true;
+            });
 
         },
     }

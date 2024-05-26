@@ -26,8 +26,10 @@ public class admincontroll {
 
     @GetMapping("/getadmin")
     public List<admin> getadmin() {
+QueryWrapper<admin> qw = new QueryWrapper<>();
+qw.select("adminID");
 
-        return adminmapper.selectList(null);
+        return adminmapper.selectList(qw);
 
     }
 
@@ -71,10 +73,10 @@ public class admincontroll {
         }
     }
 
-    @DeleteMapping("/deleteadmin/{id}")
-    public RestResult deleteadmin(@PathVariable("id") Integer id) {
+    @DeleteMapping("/deleteadmin/{adminID}")
+    public RestResult deleteadmin(@PathVariable("adminID") Integer id) {
         QueryWrapper<admin> wrapper = new QueryWrapper<>();
-        wrapper.eq("id", id);
+        wrapper.eq("adminID", id);
         admin one = tbAdminService.getOne(wrapper);
         if (null != one) {
             tbAdminService.remove(wrapper);

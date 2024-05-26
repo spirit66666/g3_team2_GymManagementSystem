@@ -113,6 +113,12 @@ export default {
 
           this.$router.push('/login');
         }, 400)
+      }).catch(error => {
+        console.log(error);
+        ElMessage({
+          message: '注册失败，请检查输入信息',
+          type: 'error'
+        })
       })
     },
   }

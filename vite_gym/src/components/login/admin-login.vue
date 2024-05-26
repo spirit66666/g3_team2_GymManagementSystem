@@ -45,12 +45,16 @@ export default {
             console.log(response.data.code);
             if (response.data.code === 200) {
 
-
+              this.$http.get('/getadmin').then((response) => {
+                console.log(response);
+              Store.commit('setAdminID',response.adminID );
+            });
               Store.commit('setAdminname', this.loginUsername);
               this.$router.push({path: '/home'})
             }
           }).catch(() => {
             console.log("用户名或密码错误！");
+            this.$message.error("用户名或密码错误！");
           });
 
 
