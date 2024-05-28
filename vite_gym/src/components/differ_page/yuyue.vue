@@ -111,7 +111,7 @@ console.log(this.dateArray);
     changWeek(item, index) {
 
       if(Store.state.username===""){ this.visible = true}
-      this.appointForm.date = item;
+      this.appointForm.date = item.date;
       this.dateArray.forEach(item => {
         item.is_active = 0;
       });
