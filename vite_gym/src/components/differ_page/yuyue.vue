@@ -25,6 +25,7 @@ export default {
           facilityName: '音响设备',
           facilityNum: 1,
           remainNum: 1,
+          is_active: 0,
         }
 
       ],
@@ -77,18 +78,25 @@ export default {
     this.fetchData();
   },
   computed: {
-    aa () {
-      var myDate = new Date() // 获取今天日期
-      myDate.setDate(myDate.getDate())
+    aa() {
+      var myDate = new Date(); // 获取今天日期
+      myDate.setDate(myDate.getDate());
 
-      var dateTemp
-      var flag = 1
+      var dateTempObj;
+      var flag = 1;
+
+      this.dateArray = []; // Initialize dateArray
+
       for (var i = 0; i < 7; i++) {
-        dateTemp =myDate.getFullYear() + '-' + (myDate.getMonth() + 1) + '-' + myDate.getDate()
-        this.dateArray.push(dateTemp)
-        this.is_active.push(0)
-       myDate.setDate(myDate.getDate() + flag)
+        dateTempObj = {
+          date: myDate.getFullYear() + '-' + (myDate.getMonth() + 1) + '-' + myDate.getDate(),
+          is_active: 0 // Default state
+        };
+        this.dateArray.push(dateTempObj);
+
+        myDate.setDate(myDate.getDate() + flag);
       }
+console.log(this.dateArray);
       return this.dateArray;
     },
 
@@ -99,18 +107,19 @@ export default {
 
       router.push('/AppHome/third_page').then(() => {
         location.reload();})
-
-
     },
     changWeek(item, index) {
 
-      console.log(item);
       if(Store.state.username===""){ this.visible = true}
       this.appointForm.date = item;
       this.dateArray.forEach(item => {
         item.is_active = 0;
       });
       item.is_active = 1;
+      // Reset `status` state in timeArr
+      this.timeArr.forEach(timeItem => {
+        timeItem.status = 0;
+      });
     },
     changTime(item, index) {
       this.timeArr.forEach(item => {
@@ -123,10 +132,6 @@ export default {
         this.visible = true}
       else{
       this.appointForm.time = item.time;
-
-
-
-
        }
     },
 
@@ -181,12 +186,21 @@ export default {
     })
     },
 
-    addfacility(item) {
-      console.log(item);
+    addfacility(index) {
+      // Reset `is_active` state in facility array
+      this.facility.forEach(facilityItem => {
+        facilityItem.is_active = 0;
+      });
 
-      this.facility.facilityName = item;
+      // Set `is_active` for the selected item
+      this.facility[index].is_active = 1;
 
+      // Assuming `facilityName` is part of the `facility` object or a property elsewhere
+      this.facility.facilityName = this.facility[index].facilityName;
+
+      console.log(this.facility);
     }
+
   },
 
 
@@ -224,9 +238,16 @@ export default {
   <div>
     <div class="m-4">
       <el-text class="mx-1" type="primary">场馆名称:  </el-text>
-      <el-link :underline="false" v-for="item in facility.length-1"
-               v-model:facility="facility[item].facilityName"
-               @click="addfacility(facility[item].facilityName)">{{facility[item].facilityName}}</el-link>
+
+      <el-link
+          :underline="false"
+          v-for="(item, index) in facility"
+          :key="index"
+          @click="addfacility(index)"
+          :class="{'top_style': item.is_active === 0, 'top_active': item.is_active === 1}"
+      >
+        {{ item.facilityName }}
+      </el-link>
     </div>
     <div class="m-4">
       <el-text class="mx-1" type="primary">项目名称:  </el-text>
@@ -249,8 +270,8 @@ export default {
       <h1 v-for="(item,index) in aa" :key="index" ></h1>
       <div style="display:flex;justify-content:space-between;">
 
-            <span v-for="(item,index) in dateArray" :key="index" :class="{'top_style':item.is_active===0,'top_active':item.is_active===1}">
-              <el-button style="height:75px;line-height:20px;" @click="changWeek(item,index)">{{item}}</el-button>
+            <span v-for="(item,index) in dateArray" :key="index">
+              <el-button style="height:75px;line-height:20px;" @click="changWeek(item,index)"  :class="{'top_style':item.is_active===0,'top_active':item.is_active===1}">{{item.date}}</el-button>
             </span>
 
       </div>
@@ -423,8 +444,6 @@ export default {
   height: 50px;
 }
 .top_style,.top_active{
-  border:1px solid #AAA;
-  padding:3px 20px;
   text-align:center;
 }
 .top_active{
