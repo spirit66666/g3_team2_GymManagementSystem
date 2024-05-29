@@ -34,4 +34,8 @@ public class reserve {
     @TableField(value = "reserveNote")
     private String reserveNote;
 
+    @TableField(value = "reserveGym")
+    private String reserveGym;
+
+
 }

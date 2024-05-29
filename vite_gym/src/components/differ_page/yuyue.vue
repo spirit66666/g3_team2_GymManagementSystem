@@ -164,7 +164,7 @@ console.log(this.dateArray);
           "userID": Store.state.userID,
           "reserveDate":this.appointForm.date,
           "reserveTime": this.appointForm.time,
-
+      "reserveGym": this.facility.facilityName,
         }).then((response) => {
           console.log(response.data);
           ElMessageBox.alert('Submission successful!')

@@ -63,12 +63,11 @@ create table `reservations`
     `userID` int unsigned not null,
     `reserveDate` date not null,
     `reserveTime` varchar(32) not null,
+    `reserveGym` varchar(32) not null,
     `reserveNum` int unsigned ,
     `reserveStatus` int unsigned ,
     `reserveNote` varchar(255),
-
-    primary key (`reserveID`),
-    foreign key (`userID`) references `user` (`userID`)
+    primary key (`reserveID`)
 ) engine = InnoDB
   default charset = utf8mb4;
 
