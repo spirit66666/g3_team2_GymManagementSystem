@@ -55,6 +55,9 @@ export default {
               password: this.password
             }).then((response) => {
               if (response.data.code === 200) {
+                console.log('Login response:', response.data); // Check the response data
+                localStorage.setItem('token', response.data.data); // Store the token
+                console.log('Token stored in local storage:', localStorage.getItem('token')); // Check if the token is stored
 
                 ElMessage({
                   message: h('p', { style: 'line-height: 1; font-size: 14px' }, [
@@ -97,7 +100,8 @@ export default {
             });
 
         },
-    }
+
+}
 }
 </script>
 

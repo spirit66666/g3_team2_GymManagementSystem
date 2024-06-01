@@ -8,6 +8,7 @@ import org.gym.servet.entity.User;
 import org.gym.servet.entity.admin;
 import org.gym.servet.getmapper.adminmapper;
 import org.gym.servet.service.AdminService;
+import org.gym.servet.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,10 @@ public class admincontroll {
 
     @Autowired
     private adminmapper adminmapper;
+
+    public admincontroll(org.gym.servet.utils.JwtUtil jwtUtil) {
+        JwtUtil = jwtUtil;
+    }
 
     @GetMapping("/getadmin/{adminName}")
     public List<admin> getadmin( @PathVariable String adminName) {
@@ -47,7 +52,7 @@ qw.eq("adminName", adminName);
 
     @Autowired
     private ResultGenerator generator;
-
+    private final JwtUtil JwtUtil;
     @PostMapping( "/adminlogin")
     public RestResult adminlogin(@RequestBody AdminLoginRequest request) {
 
@@ -61,7 +66,11 @@ qw.eq("adminName", adminName);
         if (null != username && null != password) {
             if (one.getAdminName().equalsIgnoreCase(username)) {
                 if (one.getPassWord().equalsIgnoreCase(password)) {
-                    return generator.getSuccessResult();
+                    String token = JwtUtil.getToken(String.valueOf(one.getAdminID()), one.getPassWord().toString());
+                    System.out.println("UserID" + one.getAdminID());
+                    System.out.println("Password: " + one.getPassWord().toString());
+                    System.out.println("Generated token: " + token);
+                    return generator.getSuccessResult( token );
                 } else {
                     return generator.getFailResult("用户名或密码错误1");
                 }

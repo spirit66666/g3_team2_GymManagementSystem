@@ -10,7 +10,7 @@ import org.gym.servet.service.Userservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
-
+import org.gym.servet.utils.JwtUtil;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +26,9 @@ public class usercontrol {
     @Autowired
      private getuser getuser;
 
+    public usercontrol(org.gym.servet.utils.JwtUtil jwtUtil) {
+        JwtUtil = jwtUtil;
+    }
 
 
     @GetMapping("/pageuser")
@@ -64,6 +67,7 @@ public class usercontrol {
 
     @Autowired
     private Userservice userService;
+    private final JwtUtil JwtUtil;
     @Autowired
     private ResultGenerator generator;
     @PostMapping( "/userlogin")
@@ -78,7 +82,15 @@ public class usercontrol {
         if (null != username && null != password) {
             if (one.getUserName().equalsIgnoreCase(username)) {
                 if (one.getPassWord().equalsIgnoreCase(password)) {
-                    return generator.getSuccessResult();
+
+                    String token = JwtUtil.getToken(String.valueOf(one.getUserID()), one.getPassWord());
+                    System.out.println("UserID" + one.getUserID());
+                    System.out.println("Password: " + one.getPassWord());
+                    System.out.println("Generated token: " + token);
+                    return generator.getSuccessResult( token );
+
+
+
                 } else {
                     return generator.getFailResult("用户名或密码错误");
                 }
