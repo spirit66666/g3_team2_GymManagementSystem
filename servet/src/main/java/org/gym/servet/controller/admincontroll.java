@@ -25,7 +25,8 @@ public class admincontroll {
     @Autowired
     private adminmapper adminmapper;
 
-    public admincontroll(org.gym.servet.utils.JwtUtil jwtUtil) {
+    public admincontroll(org.gym.servet.utils.JwtUtil jwtUtil1, org.gym.servet.utils.JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil1;
         JwtUtil = jwtUtil;
     }
 
@@ -49,7 +50,7 @@ qw.eq("adminName", adminName);
 
     @Autowired
     private AdminService tbAdminService;
-
+    private final JwtUtil jwtUtil;
     @Autowired
     private ResultGenerator generator;
     private final JwtUtil JwtUtil;
@@ -66,9 +67,9 @@ qw.eq("adminName", adminName);
         if (null != username && null != password) {
             if (one.getAdminName().equalsIgnoreCase(username)) {
                 if (one.getPassWord().equalsIgnoreCase(password)) {
-                    String token = JwtUtil.getToken(String.valueOf(one.getAdminID()), one.getPassWord().toString());
-                    System.out.println("UserID" + one.getAdminID());
-                    System.out.println("Password: " + one.getPassWord().toString());
+                    String token = JwtUtil.getAdminToken((String.valueOf(one.getAdminID())), one.getPassWord());
+                    System.out.println("AdminID" + one.getAdminID());
+                    System.out.println("Password: " + one.getPassWord());
                     System.out.println("Generated token: " + token);
                     return generator.getSuccessResult( token );
                 } else {

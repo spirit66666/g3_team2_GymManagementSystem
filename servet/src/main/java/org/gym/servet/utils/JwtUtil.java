@@ -20,11 +20,21 @@ public class JwtUtil {
                 .withExpiresAt(date)
                 .sign(Algorithm.HMAC256(password));
 
-
-
-
-
     }
 
+        public String getAdminToken(String AdminId, String password) {
 
+            Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
+
+            return JWT.create().withAudience(AdminId)
+                    .withExpiresAt(date)
+                    .sign(Algorithm.HMAC256(password));
+
+
+
+
+
+
+
+}
 }
