@@ -26,8 +26,7 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     @Autowired
     private Userservice Userservice;
-    @Autowired
-    private AdminService adminService;
+
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
 
         String token = httpServletRequest.getHeader("Authorization");// 从 http 请求头中取出 token
@@ -41,24 +40,24 @@ public class JwtInterceptor implements HandlerInterceptor {
         }
 // 获取 token 中的 user id
         String userId;
-        String adminId;
+
         try {
             userId = JWT.decode(token).getAudience().get(0);
-            adminId = JWT.decode(token).getAudience().get(0);
+
         } catch (JWTDecodeException j) {
             throw new RuntimeException("401");
         }
         User user = Userservice.getById(userId);
-        admin admin = adminService.getById(adminId);
-        if (user == null && admin == null) {
+
+        if (user == null) {
             throw new RuntimeException("用户不存在，请重新登录");
         }
         // 验证 token
         JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassWord())).build();
-        JWTVerifier jwtVerifierAdmin = JWT.require(Algorithm.HMAC256(admin.getPassWord())).build();
+
         try {
             jwtVerifier.verify(token);
-            jwtVerifierAdmin.verify(token);
+
         } catch (JWTVerificationException e) {
             throw new RuntimeException("402");
         }
