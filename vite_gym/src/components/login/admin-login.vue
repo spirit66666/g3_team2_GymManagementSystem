@@ -45,8 +45,8 @@ export default {
             console.log(response.data.code);
             if (response.data.code === 200) {
               console.log('Login response:', response.data); // Check the response data
-              localStorage.setItem('token', response.data.data); // Store the token
-              console.log('Token stored in local storage:', localStorage.getItem('token')); // Check if the token is stored
+              localStorage.setItem('Adtoken', response.data.data); // Store the token
+              console.log('Token stored in local storage:', localStorage.getItem('Adtoken')); // Check if the token is stored
 
               Store.commit('setAdminname', this.loginUsername);
               this.$router.push({path: '/home'})

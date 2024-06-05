@@ -2,6 +2,8 @@
 
 import router from "../../components/tools/Router.js";
 import Store from "../store/store.js";
+import {ElMessage} from "element-plus";
+import {h} from "vue";
 export default {
   name: "home",
 
@@ -11,6 +13,22 @@ export default {
     };
   },
   methods: {
+    exit() {
+
+        ElMessage({
+          message: h('p', { style: 'line-height: 1; font-size: 14px' }, [
+            h('span', null, '用户'),
+            h('i', { style: 'color: teal' }, Store.state.username,'已经退出登陆'),
+          ]),
+        })
+
+        location.reload();
+        Store.commit('setAdminname', "","");
+
+
+        router.replace('/home')
+
+    },
     logout1() {
       router.beforeEach((to, from, next) => {
         // 在跳转到新页面前执行一些操作
@@ -94,6 +112,7 @@ export default {
           <div style="margin: auto;margin-right:50px"><el-button  class="custom-btn btn" @click="logout1" v-model="route">主页</el-button>
 
          <el-button  class="custom-btn btn" @click="$router.push('/adminlogin')">登陆</el-button>
+            <el-button  class="custom-btn btn" @click="exit">退出登录</el-button>
           <el-button  class="custom-btn btn" @click="deleteUser" >注销</el-button></div>
         </el-container>
       </el-header>

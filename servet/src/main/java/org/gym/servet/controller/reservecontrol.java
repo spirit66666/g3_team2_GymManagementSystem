@@ -33,7 +33,7 @@ public class reservecontrol {
     }
 
 
-    @GetMapping("/getreserve")
+    @GetMapping("/getreserve") //管理员查看所有预约
     public List<reserve> getreservemapper() {
 
         return reservemapper.selectList(null);
