@@ -67,11 +67,11 @@ qw.eq("adminName", adminName);
         if (null != username && null != password) {
             if (one.getAdminName().equalsIgnoreCase(username)) {
                 if (one.getPassWord().equalsIgnoreCase(password)) {
-                    String token = JwtUtil.getAdminToken((String.valueOf(one.getAdminID())), one.getPassWord());
+                    String Adtoken = JwtUtil.getAdminToken((String.valueOf(one.getAdminID())), one.getPassWord());
                     System.out.println("AdminID" + one.getAdminID());
                     System.out.println("Password: " + one.getPassWord());
-                    System.out.println("Generated token: " + token);
-                    return generator.getSuccessResult( token );
+                    System.out.println("Generated Adtoken: " + Adtoken);
+                    return generator.getSuccessResult( Adtoken );
                 } else {
                     return generator.getFailResult("用户名或密码错误1");
                 }

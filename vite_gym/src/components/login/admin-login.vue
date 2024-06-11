@@ -48,6 +48,7 @@ export default {
               localStorage.setItem('Adtoken', response.data.data); // Store the token
               console.log('Token stored in local storage:', localStorage.getItem('Adtoken')); // Check if the token is stored
 
+
               Store.commit('setAdminname', this.loginUsername);
               this.$router.push({path: '/home'})
 

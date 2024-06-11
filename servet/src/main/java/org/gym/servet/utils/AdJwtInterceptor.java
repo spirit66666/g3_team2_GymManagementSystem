@@ -22,46 +22,41 @@ import java.lang.reflect.Method;
 
 
 @Component
-public class JwtInterceptor implements HandlerInterceptor {
+public class AdJwtInterceptor implements HandlerInterceptor {
 
     @Autowired
-    private Userservice Userservice;
+    private AdminService adminservice;
 
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
 
-        String token = httpServletRequest.getHeader("Authorization");// 从 http 请求头中取出 token
-
+        String Adtoken = httpServletRequest.getHeader("Authorization");// 从 http 请求头中取出 token
         // 如果不是映射到方法直接通过
         if(!(object instanceof HandlerMethod)){
             return true;
         }
-
         // 执行认证
-        if (token == null) {
+        if (Adtoken == null) {
             throw new RuntimeException("无token，请重新登录");
         }
-// 获取 token 中的 user id
-        String userId;
+// 获取 token 中的 amin id
+        String adminID;
 
         try {
-            userId = JWT.decode(token).getAudience().get(0);
-System.out.println("userId:"+userId);
+           adminID = JWT.decode(Adtoken).getAudience().get(0);
+
         } catch (JWTDecodeException j) {
             throw new RuntimeException("401");
         }
-        System.out.println(userId);
-        User user = Userservice.getById(userId);
-        System.out.println(user);
+        admin admin = adminservice.getById(adminID);
 
-        if (user == null) {
-
-            throw new RuntimeException("用户不存在，请重新登录"+user);
+        if (admin== null) {
+            throw new RuntimeException("gym管理系统用户不存在，请重新登录"+admin);
         }
         // 验证 token
-        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassWord())).build();
+        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(admin.getPassWord())).build();
 
         try {
-            jwtVerifier.verify(token);
+            jwtVerifier.verify(Adtoken);
 
         } catch (JWTVerificationException e) {
             throw new RuntimeException("402");
