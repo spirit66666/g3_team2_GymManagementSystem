@@ -1,6 +1,7 @@
 package org.gym.servet.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import jakarta.servlet.http.HttpServletResponse;
 import org.gym.servet.DTO.UserLoginRequest;
 import org.gym.servet.Result.RestResult;
 import org.gym.servet.Result.ResultGenerator;
@@ -65,6 +66,10 @@ public class usercontrol {
         return getuser.delete(wrapper.eq("userID",userID));}
 
 
+    @GetMapping("/")
+    public void redirect(HttpServletResponse response) throws Exception {
+        response.sendRedirect("/index.html");
+    }
     @Autowired
     private Userservice userService;
     private final JwtUtil JwtUtil;

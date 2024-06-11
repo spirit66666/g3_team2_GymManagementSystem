@@ -9,6 +9,7 @@ export default {
 
   data() {
     return {
+      look: false,
     getadminusername: Store.state.adminname
     };
   },
@@ -61,6 +62,7 @@ export default {
            this.$message.error("删除失败");
          }
       })
+      this.look = false;
     }
   },
 
@@ -68,6 +70,15 @@ export default {
 </script>
 
 <template>
+
+
+  <el-dialog v-model="look" title="真的注销账号吗？" width="500">
+    <div style="text-align: right;">
+      <el-button type="primary" @click="deleteUser()">
+        注销
+      </el-button>
+    </div>
+  </el-dialog>
   <el-container id="container">
     <el-aside width="200px">
       <el-container id="top">
@@ -113,7 +124,7 @@ export default {
 
          <el-button  class="custom-btn btn" @click="$router.push('/adminlogin')">登陆</el-button>
             <el-button  class="custom-btn btn" @click="exit">退出登录</el-button>
-          <el-button  class="custom-btn btn" @click="deleteUser" >注销</el-button></div>
+          <el-button  class="custom-btn btn" @click="this.look = true" >注销</el-button></div>
         </el-container>
       </el-header>
       <!-- 这里用来渲染具体的功能模块 -->

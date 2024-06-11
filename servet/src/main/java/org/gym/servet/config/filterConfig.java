@@ -18,7 +18,7 @@ public class filterConfig {
     public FilterRegistrationBean Filter() {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(webVisitFilter);
-        registrationBean.addUrlPatterns("/*");
+        registrationBean.addUrlPatterns("/**");
         return  registrationBean;
     }
 }

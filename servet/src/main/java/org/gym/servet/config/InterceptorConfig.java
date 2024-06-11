@@ -18,13 +18,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // Register JwtInterceptor
         registry.addInterceptor(jwtInterceptor())
-                .addPathPatterns("/addreserve", "/getreserve/{userID}", "/getreserve");
+                .addPathPatterns("/addreserve", "/getreserve/{userID}", "/getreserve").excludePathPatterns("/index.html");
             //
 
-        // Register AdjwtInterceptor
-        registry.addInterceptor(AdJwtInterceptor())
-                .addPathPatterns("/postuser", "/getreserve","/getreserve/{userID}", "/deleteuser/"
-               ,"/pageuserreserve" ) ;
     }
 
     @Bean
@@ -32,9 +28,5 @@ public class InterceptorConfig implements WebMvcConfigurer {
         return new JwtInterceptor();
     }
 
-    @Bean
-    public AdJwtInterceptor AdJwtInterceptor() {
-        return new AdJwtInterceptor();
-    }
 
 }
