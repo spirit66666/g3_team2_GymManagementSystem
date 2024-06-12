@@ -2,15 +2,34 @@
 
 import router from "../../components/tools/Router.js";
 import Store from "../store/store.js";
+import {ElMessage} from "element-plus";
+import {h} from "vue";
 export default {
   name: "home",
 
   data() {
     return {
+      look: false,
     getadminusername: Store.state.adminname
     };
   },
   methods: {
+    exit() {
+
+        ElMessage({
+          message: h('p', { style: 'line-height: 1; font-size: 14px' }, [
+            h('span', null, '用户'),
+            h('i', { style: 'color: teal' }, Store.state.username,'已经退出登陆'),
+          ]),
+        })
+
+        location.reload();
+        Store.commit('setAdminname', "","");
+
+
+        router.replace('/home')
+
+    },
     logout1() {
       router.beforeEach((to, from, next) => {
         // 在跳转到新页面前执行一些操作
@@ -43,6 +62,7 @@ export default {
            this.$message.error("删除失败");
          }
       })
+      this.look = false;
     }
   },
 
@@ -50,6 +70,15 @@ export default {
 </script>
 
 <template>
+
+
+  <el-dialog v-model="look" title="真的注销账号吗？" width="500">
+    <div style="text-align: right;">
+      <el-button type="primary" @click="deleteUser()">
+        注销
+      </el-button>
+    </div>
+  </el-dialog>
   <el-container id="container">
     <el-aside width="200px">
       <el-container id="top">
@@ -94,7 +123,8 @@ export default {
           <div style="margin: auto;margin-right:50px"><el-button  class="custom-btn btn" @click="logout1" v-model="route">主页</el-button>
 
          <el-button  class="custom-btn btn" @click="$router.push('/adminlogin')">登陆</el-button>
-          <el-button  class="custom-btn btn" @click="deleteUser" >注销</el-button></div>
+            <el-button  class="custom-btn btn" @click="exit">退出登录</el-button>
+          <el-button  class="custom-btn btn" @click="this.look = true" >注销</el-button></div>
         </el-container>
       </el-header>
       <!-- 这里用来渲染具体的功能模块 -->

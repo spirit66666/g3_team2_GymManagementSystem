@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 //allow frontend to access backend,controll<mapper<service
 @CrossOrigin
 @MapperScan("org.gym.servet.getmapper")
-@ServletComponentScan("org.gym.servet.service")
+@ServletComponentScan
 public class ServetApplication {
 
     public static void main(String[] args) {

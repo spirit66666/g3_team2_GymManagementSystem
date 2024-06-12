@@ -1,25 +1,32 @@
 package org.gym.servet.config;
 
-
 import org.gym.servet.utils.JwtInterceptor;
+import org.gym.servet.utils.AdJwtInterceptor;
+import org.gym.servet.service.WebVisitFilter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-
 @Configuration
-public class InterceptorConfig implements WebMvcConfigurer{
+public class InterceptorConfig implements WebMvcConfigurer {
+
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        // Register JwtInterceptor
         registry.addInterceptor(jwtInterceptor())
-                .addPathPatterns("/**")
-        .excludePathPatterns("/userlogin", "/adminlogin", "/postuser", "/postadmin", "/error");    // 排除登录、注册、登出、错误页面
-
+                .addPathPatterns("/addreserve", "/getreserve/{userID}", "/getreserve").excludePathPatterns("/index.html");
+            //
 
     }
+
     @Bean
     public JwtInterceptor jwtInterceptor() {
         return new JwtInterceptor();
     }
+
+
 }
