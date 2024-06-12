@@ -24,15 +24,6 @@
               <el-menu-item index="/AppHome/third_page">我的预约</el-menu-item>
               <el-menu-item index="/AppHome/second_page">更多信息</el-menu-item>
 
-              <div >
-
-                <div class="input">
-
-                  <el-avatar style="float:right; margin-right: 20px" @click="adminlogin">
-                    <img src="../../assets/vue.svg" alt="Element logo" />
-                  </el-avatar>
-                </div>
-              </div>
 
             </el-menu>
           <el-sub-menu index="2"
@@ -108,9 +99,7 @@
       adminlogin() {
         router.replace('/adminlogin')
       },
-      regist1() {
-        router.replace('/Appregister')
-      },
+
       selectItem(index) {
             this.$emit(index)
         },

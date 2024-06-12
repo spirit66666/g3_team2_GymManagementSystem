@@ -39,7 +39,7 @@
 
       </div>
       <button @click="registeradmin" class="btn">创建账号</button>
-
+      <button @click="back2" class="btn">返回</button>
     </div>
   </div>
 
@@ -119,9 +119,16 @@ export default {
     handleSizeChange(pageSize) {
       console.log(pageSize);
       this.pageSize = pageSize;
-      this.fetchData();}
+      this.fetchData();},
+
+    back2() {
+      this.$router.push('/');
+    }
+
+
 
   }
+
 };
 </script>
 

@@ -39,7 +39,7 @@
 
       </div>
       <button @click="registerUser" class="btn">创建账号</button>
-
+      <button @click="back1" class="btn">返回</button>
     </div>
   </div>
 
@@ -121,6 +121,10 @@ export default {
         })
       })
     },
+
+    back1() {
+      this.$router.push('/');
+    }
   }
 
 }

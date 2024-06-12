@@ -222,7 +222,7 @@ console.log(this.dateArray);
     <h3>你选择的场馆为：{{facility.facilityName}}</h3>
     <h3>你选择的日期为：{{appointForm.date}}</h3>
     <h3>你选择的时间为：{{appointForm.time}}</h3>
-    <h3>备注：{{remark}}</h3>
+
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="dialogFormVisible = false">返回</el-button>
@@ -301,9 +301,6 @@ console.log(this.dateArray);
     <el-row :gutter="20">
       <el-col :span="18">
 
-        <el-form-item label="备注：">
-          <el-input placeholder="请输入" v-model="remark" clearable></el-input>
-        </el-form-item>
       </el-col>
     </el-row>
   </el-form>
@@ -467,11 +464,7 @@ console.log(this.dateArray);
   background: transparent;
   cursor: pointer;
   transition: all 0.3s ease;
-
   position: absolute;
-  top:80%;
-  left: 50%;
-  transform: translateX(-50%);
 
   display: inline-block;
   box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
