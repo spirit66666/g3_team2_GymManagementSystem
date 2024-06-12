@@ -32,13 +32,15 @@
                        @select="selectItem1">
 
             <template #title>
-              {{this.username}}个人信息</template>
+              <h1 style="height: 100%; margin: 0; padding: 0;font-size: 25px;">
+              {{this.username}}个人信息
+              </h1></template>
 
-            <el-menu-item  @click="login"
+            <el-menu-item style="margin-right: 0px"  @click="login"
 
                            v-model="tuichu"
             >{{tuichu}}</el-menu-item>
-            <el-menu-item @click="regist1" >注册</el-menu-item>
+            <el-menu-item style="margin-right: 0px"@click="regist1" >注册</el-menu-item>
           </el-sub-menu>
 
         </el-menu>
@@ -184,6 +186,10 @@
     margin-bottom: 30px; /* 设置菜单项之间的垂直间隙 */
     margin-right: 60px; /* 设置菜单项之间的水平间隙 */
     font-size: 25px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+
   }
 
 
