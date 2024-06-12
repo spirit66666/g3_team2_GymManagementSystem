@@ -5,10 +5,10 @@ import { ElCarousel, ElCarouselItem } from 'element-plus'
 import 'element-plus/dist/index.css'
 
 const items = ref([
-  { src: new URL('../../assets/640.gif', import.meta.url).href },
-  { src: new URL('../../assets/640.gif', import.meta.url).href },
-  { src: new URL('../../assets/640.gif', import.meta.url).href },
-  { src: new URL('../../assets/640.gif', import.meta.url).href }
+  { src: new URL('../../assets/picture1.jpg', import.meta.url).href },
+  { src: new URL('../../assets/picture2.jpeg', import.meta.url).href },
+  { src: new URL('../../assets/picture3.jpg', import.meta.url).href },
+  { src: new URL('../../assets/picture4.png', import.meta.url).href }
 ])
 </script>
 

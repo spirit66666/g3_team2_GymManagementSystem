@@ -9,8 +9,8 @@
         >
           <el-menu-item index="0">
             <img
-                style="width: 80px ; height: 60px; margin-right: 20px"
-                src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
+                style="width: 60px ; height: 60px; margin-right: 20px"
+                src="../../assets/SchoolLogo.jpg"
                 alt="Element logo"
             />
           </el-menu-item>
@@ -21,7 +21,6 @@
             >
               <el-menu-item index="/AppHome/first_page">首页</el-menu-item>
               <el-menu-item index="/AppHome/yuyue">预约</el-menu-item>
-
               <el-menu-item index="/AppHome/third_page">我的预约</el-menu-item>
               <el-menu-item index="/AppHome/second_page">更多信息</el-menu-item>
 
@@ -40,8 +39,10 @@
                        v-model="username"
                        class="flex-grow"
                        @select="selectItem1">
+
             <template #title>
               {{this.username}}个人信息</template>
+
             <el-menu-item  @click="login"
 
                            v-model="tuichu"
@@ -55,6 +56,8 @@
   </template>
   
   <script>
+
+
 
   import Store from '../../components/store/store.js'
   import router from "../../components/tools/Router.js";
@@ -139,10 +142,14 @@
   </script>
   <style scoped>
   #title {
-    color: black;
-    font-size: 40px;
+    color: green;
+    font-size: 50px;
     font-weight: bold;
     font-family: Georgia, "Times New Roman", Times, serif;
+
+    position: relative; /* 设置菜单容器为相对定位 */
+    right: 50px; /* 向右移动 */
+    top: -10px;/* 向上移动 */
   }
   .flex-grow {
     flex-grow: 5;
@@ -183,4 +190,14 @@
     border-radius: 50%;
     margin-left: 10px;
   }
+
+  .el-menu-item {
+    margin-bottom: 30px; /* 设置菜单项之间的垂直间隙 */
+    margin-right: 60px; /* 设置菜单项之间的水平间隙 */
+    font-size: 25px;
+  }
+
+
+
+
   </style>

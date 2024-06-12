@@ -49,7 +49,6 @@ export default {
         // Define timeArr array elements here
         // Example: // 0: Available, 1: Booked, 2: Current
         { time: '09:00 AM', status: 0 },
-
         { time: '10:00 AM', status: 0 },
         { time: '11:00 AM', status: 0 },
         { time: '12:00 PM', status: 0 },
@@ -175,7 +174,7 @@ console.log(this.dateArray);
               console.log(error)
               ElMessageBox.alert('Submission failed!')
 
-              // handle error
+              // 处理错误
 
             })
 
@@ -301,6 +300,7 @@ console.log(this.dateArray);
     <el-button class="custom-btn btn" @click="dialogFormVisible = true">预约提交</el-button>
     <el-row :gutter="20">
       <el-col :span="18">
+
         <el-form-item label="备注：">
           <el-input placeholder="请输入" v-model="remark" clearable></el-input>
         </el-form-item>
@@ -467,7 +467,12 @@ console.log(this.dateArray);
   background: transparent;
   cursor: pointer;
   transition: all 0.3s ease;
-  position: relative;
+
+  position: absolute;
+  top:80%;
+  left: 50%;
+  transform: translateX(-50%);
+
   display: inline-block;
   box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
   7px 7px 20px 0px rgba(0, 0, 0, .1),
@@ -556,5 +561,14 @@ console.log(this.dateArray);
 
 .btn span:hover:after {
   width: 100%;
+
+ .m-4{
+   font-family: "Times New Roman";
+   font-size: 20px;
+ }
+
+
+
+
 }
 </style>

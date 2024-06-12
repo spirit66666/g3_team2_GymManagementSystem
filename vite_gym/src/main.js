@@ -2,6 +2,7 @@
 import { createApp } from 'vue'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import BaiduMap from 'vue-baidu-map'//百度地图
 
 import Store from './components/store/store.js'
 import App from './App.vue'
@@ -9,9 +10,10 @@ import App from './App.vue'
 
 import axios from 'axios'
 import router from "./components/tools/Router.js";
-axios.defaults.baseURL = 'http://localhost:9990'
+axios.defaults.baseURL = 'http://localhost:9991'
 
 const app = createApp(App)
+
 
 
 app.config.globalProperties.$http = axios
