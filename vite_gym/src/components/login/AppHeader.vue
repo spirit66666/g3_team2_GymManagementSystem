@@ -40,7 +40,7 @@
 
                            v-model="tuichu"
             >{{tuichu}}</el-menu-item>
-            <el-menu-item style="margin-right: 0px"@click="regist1" >注册</el-menu-item>
+            <el-menu-item style="margin-right: 0px"@click="$router.push('/Appregister')" >注册</el-menu-item>
           </el-sub-menu>
 
         </el-menu>
