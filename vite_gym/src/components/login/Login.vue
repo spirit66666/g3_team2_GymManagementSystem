@@ -11,7 +11,9 @@
         </div>
 
         <div class="input">
-            <el-button @click="login" style="width:500px" type="primary"  >登录</el-button>
+            <el-button @click="login" class="btn3" style="width:500px" type="primary"  >登录</el-button>
+
+            <el-button @click="backOut1" class="btn3" style="width:500px" type="primary"  >返回主页</el-button>
         </div>
 
       <div class="input">
@@ -48,6 +50,10 @@ export default {
         }
     },
     methods: {
+
+      backOut1() {
+        this.$router.push('/');
+      },
 
         login() {
 
@@ -102,6 +108,8 @@ export default {
 
         },
 
+
+
 }
 }
 </script>
@@ -125,7 +133,7 @@ export default {
 }
 
 .input {
-    margin: 20px auto;
+    margin: 30px auto;
     width: 500px;
 }
 #el-icon-user {
@@ -134,4 +142,17 @@ export default {
 .el-icon-lock {
     color: #13c2c2;
 }
+.btn3 {
+  border-radius: 10px;
+  height: 40px;
+  width: 500px;
+  background-color: deepskyblue;
+  border-color: blue;
+  color: white;
+  display: block;
+  margin: 5px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
 </style>

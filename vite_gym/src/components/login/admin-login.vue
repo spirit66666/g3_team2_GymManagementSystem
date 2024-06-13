@@ -11,7 +11,8 @@
   </div>
 
   <div class="input">
-    <el-button @click="loginadmin" style="width:500px" type="primary"  >登录</el-button>
+    <el-button @click="loginadmin" class="btn2"   >登录</el-button>
+    <el-button @click="backOut2"   class="btn2"   >返回</el-button>
   </div>
 
 
@@ -36,6 +37,12 @@ export default {
   },
 
   methods: {
+
+
+
+    backOut2() {
+      this.$router.push('/');},//返回按钮
+
     loginadmin() {
 
           this.$http.post('/adminlogin', {
@@ -74,6 +81,7 @@ export default {
   width: 100%;
   position: absolute;
 }
+
 .error-message {
   color: red;
   margin-top: 5px;
@@ -95,4 +103,19 @@ export default {
 .el-icon-lock {
   color: #13c2c2;
 }
+
+
+.btn2 {
+  border-radius: 10px;
+  height: 40px;
+  width: 500px;
+  background-color: deepskyblue;
+  border-color: blue;
+  color: white;
+  display: block;
+  margin: 5px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
 </style>
