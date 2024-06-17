@@ -99,6 +99,18 @@ export default {
   width: 150px;
   font-size: 18px;
   cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+/* 悬停效果 */
+.box:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.1);
+}
+
+/* 点击效果 */
+.box:active {
+  transform: scale(0.95);
 }
 
 .content {
@@ -108,8 +120,8 @@ export default {
 
   display: none; /* 初始隐藏 */
   position: absolute; /* 绝对定位 */
-  top: 160px; /* 从顶部向下偏移 50px */
-  left: 500px; /* 从左侧向右偏移 50px */
+  top: 160px; /* 从顶部向下偏移 16px */
+  left: 500px; /* 从左侧向右偏移 500px */
   padding: 20px;
   border: 4px solid #000;
 }
@@ -123,6 +135,8 @@ export default {
   display: block; /* 设置图片为块级元素，使其垂直排列 */
   margin-bottom: 5px; /* 图片之间的间距 */
 }
+
+
 
 </style>
 

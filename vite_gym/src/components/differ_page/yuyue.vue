@@ -1,3 +1,5 @@
+
+
 <script>
 import {ElButton, ElDrawer, ElMessageBox} from "element-plus";
 import {CircleCloseFilled} from "@element-plus/icons-vue";
@@ -7,6 +9,8 @@ import router from "../../components/tools/Router.js";
 
 export default {
   components: {CircleCloseFilled, ElDrawer, ElButton},
+
+
   data() {
     return {
 
@@ -48,7 +52,6 @@ export default {
       timeArr: [
         // Define timeArr array elements here
         // Example: // 0: Available, 1: Booked, 2: Current
-        { time: '09:00 AM', status: 0 },
         { time: '10:00 AM', status: 0 },
         { time: '11:00 AM', status: 0 },
         { time: '12:00 PM', status: 0 },
@@ -72,7 +75,14 @@ export default {
        is_active: []
     };
   },
-  created() {
+
+
+
+
+
+
+
+created() {
     console.log('created');
     this.fetchData();
   },
@@ -282,14 +292,16 @@ console.log(this.dateArray);
         <div style="display:flex;"><div style="background-color:#3EA7F1;width:40px;height:20px;margin-right:10px;"></div><div>已有预约</div></div>
       </div>
 
-      <div style="margin:20px 50px;height:150px">
+      <div class="time-buttons-container">
         <span v-for="(item,index) in timeArr" :key="index">
            <span>
-        <el-button  @click="changTime(item,index)" :type="item.status===0?'':item.status===1?'danger':item.status===2?'info':'primary'" :disabled="item.status===1||item.status===2" >{{item.time}}
+        <el-button  @click="changTime(item,index)"
+                    :type="item.status===0?'':item.status===1?'danger':item.status===2?'info':'primary'"
+                    :disabled="item.status===1||item.status===2" >
+          {{item.time}}
         </el-button>
              </span>
           <span v-if="(index+1)%5===0">
-
             <br>
           </span>
         </span>
@@ -321,6 +333,22 @@ console.log(this.dateArray);
 </template>
 
 <style scoped>
+
+.time-buttons-container {
+  margin: 20px 50px; /* 上下边距 */
+  height: 150px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 60px; /* 按钮之间的间距 */
+}
+
+.time-buttons-container .el-button {
+
+  margin-bottom: 10px; /* 按钮之间的下边距 */
+  border: 3px solid #ccc; /* 按钮的边框样式 */
+}
+
+
 .button_wrap{
   margin: 0 auto;
   width: 480px;
@@ -559,6 +587,9 @@ console.log(this.dateArray);
    font-family: "Times New Roman";
    font-size: 20px;
  }
+
+
+
 
 
 
