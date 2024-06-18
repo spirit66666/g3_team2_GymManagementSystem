@@ -80,10 +80,10 @@ create table `facility`
     `facilityDescription` varchar(255) not null,
     `facilityNum` int unsigned not null,
     `remainNum` int unsigned not null,
-    `gymID` int unsigned not null,
 
-    primary key (`facilityID`),
-    foreign key (`gymID`) references `gym` (`gymID`)
+
+    primary key (`facilityID`)
+
  ) engine = InnoDB
    default charset = utf8mb4;
 
