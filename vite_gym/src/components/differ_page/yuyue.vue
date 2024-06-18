@@ -1,5 +1,3 @@
-
-
 <script>
 import {ElButton, ElDrawer, ElMessageBox} from "element-plus";
 import {CircleCloseFilled} from "@element-plus/icons-vue";
@@ -9,8 +7,6 @@ import router from "../../components/tools/Router.js";
 
 export default {
   components: {CircleCloseFilled, ElDrawer, ElButton},
-
-
   data() {
     return {
 
@@ -52,6 +48,7 @@ export default {
       timeArr: [
         // Define timeArr array elements here
         // Example: // 0: Available, 1: Booked, 2: Current
+        { time: '09:00 AM', status: 0 },
         { time: '10:00 AM', status: 0 },
         { time: '11:00 AM', status: 0 },
         { time: '12:00 PM', status: 0 },
@@ -71,18 +68,11 @@ export default {
       remark: '',
       timeList: [],
 
-       dateArray :[] ,
-       is_active: []
+      dateArray :[] ,
+      is_active: []
     };
   },
-
-
-
-
-
-
-
-created() {
+  created() {
     console.log('created');
     this.fetchData();
   },
@@ -105,7 +95,7 @@ created() {
 
         myDate.setDate(myDate.getDate() + flag);
       }
-console.log(this.dateArray);
+      console.log(this.dateArray);
       return this.dateArray;
     },
 
@@ -140,64 +130,59 @@ console.log(this.dateArray);
 
         this.visible = true}
       else{
-      this.appointForm.time = item.time;
-       }
+        this.appointForm.time = item.time;
+      }
     },
 
     fetchData() {
       this.$http.get("/getfacility" )
           .then(response => {
 
-        this.facility=response.data;
-
-      })
-      this.$http.get("/getgym" )
-          .then(response => {
-
-            this.gym=response.data;
+            this.facility=response.data;
 
           })
-      },
+
+    },
 
     confirm  ()  {
       this.$http.get('/getreserve').then(res => {
 
-      if(res.data.find(reserve=>
-           reserve.reserveTime===this.appointForm.time && reserve.reserveDate===this.appointForm.date)){
+        if(res.data.find(reserve=>
+            reserve.reserveTime===this.appointForm.time && reserve.reserveDate===this.appointForm.date)){
 
-        ElMessageBox.alert('该时间段已有预约，请选择其他时间段预约！')
+          ElMessageBox.alert('该时间段已有预约，请选择其他时间段预约！')
 
-        console.log('该时间段已有预约，请选择其他时间段预约！')
-        this.dialogFormVisible = false;
+          console.log('该时间段已有预约，请选择其他时间段预约！')
+          this.dialogFormVisible = false;
 
-        this.timeArr.status = 1;
-      }
-      else{
-        console.log(Store.state.userID);
-        this.$http.post('/addreserve', {
-          "userID": Store.state.userID,
-          "reserveDate":this.appointForm.date,
-          "reserveTime": this.appointForm.time,
-      "reserveGym": this.facility.facilityName,
-        }).then((response) => {
-          console.log(response.data);
-          ElMessageBox.alert('Submission successful!')
-          this.look=true;
-            })
-            .catch((error) => {
+          this.timeArr.status = 1;
+        }
+        else{
+          console.log(Store.state.userID);
+          this.$http.post('/addreserve', {
+            "userID": Store.state.userID,
+            "reserveDate":this.appointForm.date,
+            "reserveTime": this.appointForm.time,
+            "reserveGym": this.facility.facilityName,
+          }).then((response) => {
+            console.log(response.data);
+            ElMessageBox.alert('Submission successful!')
+            this.look=true;
+          })
+              .catch((error) => {
 
-              console.log(error)
-              ElMessageBox.alert('Submission failed!')
+                console.log(error)
+                ElMessageBox.alert('Submission failed!')
 
-              // 处理错误
+                // 处理错误
 
-            })
+              })
 
-        this.dialogFormVisible = false;
-      }
+          this.dialogFormVisible = false;
+        }
 
 
-    })
+      })
     },
 
     addfacility(index) {
@@ -223,15 +208,15 @@ console.log(this.dateArray);
 
 
 <template>
-<el-dialog v-model="look" title="Submitted successfully!" width="500">
-  <p>Your reservation has been submitted successfully!</p>
-  <p>You can check your reservation status in the "My Reservations" page.</p>
-  <div style="text-align: right;">
-    <el-button type="primary" @click="routerlook()">
-      查看我的预约
-    </el-button>
-  </div>
-</el-dialog>
+  <el-dialog v-model="look" title="Submitted successfully!" width="500">
+    <p>Your reservation has been submitted successfully!</p>
+    <p>You can check your reservation status in the "My Reservations" page.</p>
+    <div style="text-align: right;">
+      <el-button type="primary" @click="routerlook()">
+        查看我的预约
+      </el-button>
+    </div>
+  </el-dialog>
   <el-dialog v-model="dialogFormVisible" title="请核对你的信息" width="500">
     <h3>请确认你的预约信息</h3>
     <h3>你选择的场馆为：{{facility.facilityName}}</h3>
@@ -252,36 +237,26 @@ console.log(this.dateArray);
   <div>
     <div class="m-4">
       <el-text class="mx-1" type="primary">场馆名称:  </el-text>
-      <el-link
-          :underline="false"
-          v-for="(item, index) in g"
-          :key="index"
-          @click="add(index)"
-          :class="{'my-custom-link': true, 'top_style': item.is_active === 0, 'top_active': item.is_active === 1}"
-      >
-        {{ item.facilityName }}
-      </el-link>
-
-    </div>
-    <div class="m-4">
-      <el-text class="mx-1" type="primary">项目名称:  </el-text>
 
       <el-link
           :underline="false"
           v-for="(item, index) in facility"
           :key="index"
           @click="addfacility(index)"
-          :class="{'my-custom-link': true, 'top_style': item.is_active === 0, 'top_active': item.is_active === 1}"
+          :class="{'top_style': item.is_active === 0, 'top_active': item.is_active === 1}"
       >
         {{ item.facilityName }}
       </el-link>
     </div>
     <div class="m-4">
-
-     
+      <el-text class="mx-1" type="primary">项目名称:  </el-text>
+      <el-link :underline="false" v-for="item in facility.length-1"
+               v-model="facility[item].facilityName"
+               @click="selectFacility(item,facility[item].facilityName)"
+      >{{facility[item].name}}</el-link>
     </div>
     <div class="m-4">
-
+      <el-text class="mx-1" type="primary">场馆:  </el-text>
       <el-link :underline="false" v-for="item in facility.length-1"
                v-model:facility="facility[item].value"
                @click="selectFacility(item,facility[item].value)">{{facility[item].disabled}}</el-link>
@@ -307,16 +282,14 @@ console.log(this.dateArray);
         <div style="display:flex;"><div style="background-color:#3EA7F1;width:40px;height:20px;margin-right:10px;"></div><div>已有预约</div></div>
       </div>
 
-      <div class="time-buttons-container">
+      <div style="margin:20px 50px;height:150px">
         <span v-for="(item,index) in timeArr" :key="index">
            <span>
-        <el-button  @click="changTime(item,index)"
-                    :type="item.status===0?'':item.status===1?'danger':item.status===2?'info':'primary'"
-                    :disabled="item.status===1||item.status===2" >
-          {{item.time}}
+        <el-button  @click="changTime(item,index)" :type="item.status===0?'':item.status===1?'danger':item.status===2?'info':'primary'" :disabled="item.status===1||item.status===2" >{{item.time}}
         </el-button>
              </span>
           <span v-if="(index+1)%5===0">
+
             <br>
           </span>
         </span>
@@ -348,41 +321,6 @@ console.log(this.dateArray);
 </template>
 
 <style scoped>
-
-.my-custom-link {
-  /* 自定义链接样式 */
-  color: #333; /* 文本颜色 */
-  text-decoration: none; /* 取消下划线 */
-  padding: 5px 10px; /* 内边距 */
-  border: 1px solid #ccc; /* 边框 */
-  border-radius: 4px; /* 圆角 */
-  margin-right: 10px; /* 右边距 */
-}
-
-.my-custom-link:hover {
-  /* 鼠标悬停时的样式 */
-  background-color: #f0f0f0; /* 背景色 */
-}
-
-
-
-
-
-.time-buttons-container {
-  margin: 20px 50px; /* 上下边距 */
-  height: 150px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 60px; /* 按钮之间的间距 */
-}
-
-.time-buttons-container .el-button {
-
-  margin-bottom: 10px; /* 按钮之间的下边距 */
-  border: 3px solid #ccc; /* 按钮的边框样式 */
-}
-
-
 .button_wrap{
   margin: 0 auto;
   width: 480px;
@@ -617,13 +555,10 @@ console.log(this.dateArray);
 .btn span:hover:after {
   width: 100%;
 
- .m-4{
-   font-family: "Times New Roman";
-   font-size: 20px;
- }
-
-
-
+  .m-4{
+    font-family: "Times New Roman";
+    font-size: 20px;
+  }
 
 
 
