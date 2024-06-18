@@ -63,10 +63,11 @@ create table `reservations`
     `reserveDate` date not null,
     `reserveTime` varchar(32) not null,
     `reserveGym` varchar(32) not null,
+
+    `reserveFacility` varchar(32) not null,
     `reserveNum` int unsigned ,
     `reserveStatus` int unsigned ,
     `reserveNote` varchar(255),
-    `reserveFacility` varchar(32) not null,
     primary key (`reserveID`)
 ) engine = InnoDB
   default charset = utf8mb4;
@@ -88,10 +89,9 @@ create table `facility`
  ) engine = InnoDB
    default charset = utf8mb4;
 
- insert into `facility` (`facilityName`, `facilityDescription`, `facilityNum`, `remainNum`, `gymID`)
- values ('瑜伽', '瑜伽', 10, 10, 1),
-        ('哑铃', '哑铃', 10, 10, 2),
-        ('游泳', '游泳', 10, 10, 3),
-        ('跑步机', '跑步机', 10, 10, 2),
-        ('羽毛球', '羽毛球', 10, 10, 1),
-        ('篮球', '篮球', 10, 10, 1);
+ insert into `facility` (`facilityName`, `facilityDescription`, `facilityNum`, `remainNum`)
+ values ('瑜伽', '瑜伽', 10, 10),
+        ('游泳', '游泳', 10, 10),
+        ('跑步机', '跑步机', 10, 10),
+        ('羽毛球', '羽毛球', 10, 10),
+        ('篮球', '篮球', 10, 10);
