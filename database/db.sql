@@ -66,6 +66,7 @@ create table `reservations`
     `reserveNum` int unsigned ,
     `reserveStatus` int unsigned ,
     `reserveNote` varchar(255),
+    `reserveFacility` varchar(32) not null,
     primary key (`reserveID`)
 ) engine = InnoDB
   default charset = utf8mb4;

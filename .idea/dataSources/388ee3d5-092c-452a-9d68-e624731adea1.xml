@@ -93,7 +93,7 @@
 |root||root|localhost|grant option|G
 performance_schema|schema||mysql.session|localhost|SELECT|G
 sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
-      <ServerVersion>8.0.36</ServerVersion>
+      <ServerVersion>8.0.37</ServerVersion>
     </root>
     <collation id="2" parent="1" name="armscii8_general_ci">
       <Charset>armscii8</Charset>
@@ -1006,286 +1006,262 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     <schema id="291" parent="1" name="sys">
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="292" parent="1" name="sakila">
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </schema>
-    <schema id="293" parent="1" name="world">
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </schema>
-    <schema id="294" parent="1" name="dreamhome">
-      <CollationName>utf8mb4_bin</CollationName>
-    </schema>
-    <schema id="295" parent="1" name="demo">
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </schema>
-    <schema id="296" parent="1" name="db_gym">
+    <schema id="292" parent="1" name="db_gym">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-06-18.07:49:57</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-06-18.08:21:01</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <schema id="297" parent="1" name="hotel">
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </schema>
-    <user id="298" parent="1" name="mysql.infoschema">
+    <user id="293" parent="1" name="mysql.infoschema">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <user id="299" parent="1" name="mysql.session">
+    <user id="294" parent="1" name="mysql.session">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <user id="300" parent="1" name="mysql.sys">
+    <user id="295" parent="1" name="mysql.sys">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <user id="301" parent="1" name="root">
+    <user id="296" parent="1" name="root">
       <Host>localhost</Host>
     </user>
-    <table id="302" parent="296" name="administrator">
+    <table id="297" parent="292" name="administrator">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="303" parent="296" name="facility">
+    <table id="298" parent="292" name="facility">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="304" parent="296" name="gym">
+    <table id="299" parent="292" name="gym">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="305" parent="296" name="reservations">
+    <table id="300" parent="292" name="reservations">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="306" parent="296" name="user">
+    <table id="301" parent="292" name="user">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <column id="307" parent="302" name="adminID">
+    <column id="302" parent="297" name="adminID">
       <AutoIncrement>1</AutoIncrement>
       <DasType>int unsigned|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="308" parent="302" name="adminName">
+    <column id="303" parent="297" name="adminName">
       <DasType>varchar(16)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="309" parent="302" name="passWord">
+    <column id="304" parent="297" name="passWord">
       <DasType>varchar(32)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="310" parent="302" name="mobilePhone">
+    <column id="305" parent="297" name="mobilePhone">
       <DasType>int|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="311" parent="302" name="email">
+    <column id="306" parent="297" name="email">
       <DasType>varchar(32)|0s</DasType>
       <Position>5</Position>
     </column>
-    <index id="312" parent="302" name="PRIMARY">
+    <index id="307" parent="297" name="PRIMARY">
       <ColNames>adminID</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="313" parent="302" name="mobilePhone">
+    <index id="308" parent="297" name="mobilePhone">
       <ColNames>mobilePhone</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="314" parent="302" name="email">
+    <index id="309" parent="297" name="email">
       <ColNames>email</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="315" parent="302" name="PRIMARY">
+    <key id="310" parent="297" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="316" parent="302" name="mobilePhone">
+    <key id="311" parent="297" name="mobilePhone">
       <UnderlyingIndexName>mobilePhone</UnderlyingIndexName>
     </key>
-    <key id="317" parent="302" name="email">
+    <key id="312" parent="297" name="email">
       <UnderlyingIndexName>email</UnderlyingIndexName>
     </key>
-    <column id="318" parent="303" name="facilityID">
+    <column id="313" parent="298" name="facilityID">
       <AutoIncrement>7</AutoIncrement>
       <DasType>int unsigned|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="319" parent="303" name="facilityName">
+    <column id="314" parent="298" name="facilityName">
       <DasType>varchar(32)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="320" parent="303" name="facilityDescription">
+    <column id="315" parent="298" name="facilityDescription">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="321" parent="303" name="facilityNum">
+    <column id="316" parent="298" name="facilityNum">
       <DasType>int unsigned|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="322" parent="303" name="remainNum">
+    <column id="317" parent="298" name="remainNum">
       <DasType>int unsigned|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="323" parent="303" name="gymID">
-      <DasType>int unsigned|0s</DasType>
+    <column id="318" parent="298" name="gymID">
+      <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <foreign-key id="324" parent="303" name="facility_ibfk_1">
-      <ColNames>gymID</ColNames>
-      <RefColNames>gymID</RefColNames>
-      <RefTableName>gym</RefTableName>
-    </foreign-key>
-    <index id="325" parent="303" name="PRIMARY">
+    <index id="319" parent="298" name="PRIMARY">
       <ColNames>facilityID</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="326" parent="303" name="gymID">
-      <ColNames>gymID</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="327" parent="303" name="PRIMARY">
+    <key id="320" parent="298" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="328" parent="304" name="gymID">
+    <column id="321" parent="299" name="gymID">
       <AutoIncrement>4</AutoIncrement>
       <DasType>int unsigned|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="329" parent="304" name="gymName">
+    <column id="322" parent="299" name="gymName">
       <DasType>varchar(32)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="330" parent="304" name="gymAddress">
+    <column id="323" parent="299" name="gymAddress">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <index id="331" parent="304" name="PRIMARY">
+    <index id="324" parent="299" name="PRIMARY">
       <ColNames>gymID</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="332" parent="304" name="PRIMARY">
+    <key id="325" parent="299" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="333" parent="305" name="reserveID">
+    <column id="326" parent="300" name="reserveID">
       <AutoIncrement>1</AutoIncrement>
       <DasType>int unsigned|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="334" parent="305" name="userID">
+    <column id="327" parent="300" name="userID">
       <DasType>int unsigned|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="335" parent="305" name="reserveDate">
+    <column id="328" parent="300" name="reserveDate">
       <DasType>date|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="336" parent="305" name="reserveTime">
+    <column id="329" parent="300" name="reserveTime">
       <DasType>varchar(32)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="337" parent="305" name="reserveGym">
+    <column id="330" parent="300" name="reserveGym">
       <DasType>varchar(32)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="338" parent="305" name="reserveNum">
+    <column id="331" parent="300" name="reserveNum">
       <DasType>int unsigned|0s</DasType>
       <Position>6</Position>
     </column>
-    <column id="339" parent="305" name="reserveStatus">
+    <column id="332" parent="300" name="reserveStatus">
       <DasType>int unsigned|0s</DasType>
       <Position>7</Position>
     </column>
-    <column id="340" parent="305" name="reserveNote">
+    <column id="333" parent="300" name="reserveNote">
       <DasType>varchar(255)|0s</DasType>
       <Position>8</Position>
     </column>
-    <index id="341" parent="305" name="PRIMARY">
+    <index id="334" parent="300" name="PRIMARY">
       <ColNames>reserveID</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="342" parent="305" name="PRIMARY">
+    <key id="335" parent="300" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="343" parent="306" name="userID">
-      <AutoIncrement>3</AutoIncrement>
+    <column id="336" parent="301" name="userID">
+      <AutoIncrement>10</AutoIncrement>
       <DasType>int unsigned|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="344" parent="306" name="userName">
+    <column id="337" parent="301" name="userName">
       <DasType>varchar(16)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="345" parent="306" name="passWord">
+    <column id="338" parent="301" name="passWord">
       <DasType>varchar(32)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="346" parent="306" name="mobilePhone">
+    <column id="339" parent="301" name="mobilePhone">
       <DasType>int|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="347" parent="306" name="email">
+    <column id="340" parent="301" name="email">
       <DasType>varchar(32)|0s</DasType>
       <Position>5</Position>
     </column>
-    <index id="348" parent="306" name="PRIMARY">
+    <index id="341" parent="301" name="PRIMARY">
       <ColNames>userID</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="349" parent="306" name="mobilePhone">
+    <index id="342" parent="301" name="mobilePhone">
       <ColNames>mobilePhone</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="350" parent="306" name="email">
+    <index id="343" parent="301" name="email">
       <ColNames>email</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="351" parent="306" name="PRIMARY">
+    <key id="344" parent="301" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="352" parent="306" name="mobilePhone">
+    <key id="345" parent="301" name="mobilePhone">
       <UnderlyingIndexName>mobilePhone</UnderlyingIndexName>
     </key>
-    <key id="353" parent="306" name="email">
+    <key id="346" parent="301" name="email">
       <UnderlyingIndexName>email</UnderlyingIndexName>
     </key>
   </database-model>

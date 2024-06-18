@@ -5,8 +5,8 @@
     <el-table :data="alreadyTableData">
       <el-table-column prop="reserveID" label="预约ID"></el-table-column>
       <el-table-column prop="reserveGym" label="场馆名字"></el-table-column>
+      <el-table-column prop="reserveFacility" label="预约设施"></el-table-column>
       <el-table-column prop="reserveTime" label="预约时间"></el-table-column>
-
       <el-table-column prop="reserveDate" label="预约日期"></el-table-column>
       <el-table-column prop="reserveStatus" label="预约状态"></el-table-column>
 

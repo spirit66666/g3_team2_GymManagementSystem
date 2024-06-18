@@ -181,7 +181,8 @@ console.log(this.dateArray);
           "userID": Store.state.userID,
           "reserveDate":this.appointForm.date,
           "reserveTime": this.appointForm.time,
-      "reserveGym": this.facility.facilityName,
+          "reserveGym": this.gym.gymName,
+          "reserveFacility": this.facility.facilityName,
         }).then((response) => {
           console.log(response.data);
           ElMessageBox.alert('Submission successful!')
@@ -253,7 +254,7 @@ console.log(this.dateArray);
   <el-dialog v-model="dialogFormVisible" title="请核对你的信息" width="500">
     <h3>请确认你的预约信息</h3>
     <h3>你选择的场馆为：{{gym.gymName}}</h3>
-    <h3>你选择的场馆为：{{facility.facilityName}}</h3>
+    <h3>你选择的设施为：{{facility.facilityName}}</h3>
     <h3>你选择的日期为：{{appointForm.date}}</h3>
     <h3>你选择的时间为：{{appointForm.time}}</h3>
 
