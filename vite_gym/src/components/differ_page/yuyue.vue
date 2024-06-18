@@ -33,6 +33,8 @@ export default {
         }
 
       ],
+      gym:  [
+    ],
       isAppoint: false,
       appointForm: {
         date: '',
@@ -254,12 +256,12 @@ console.log(this.dateArray);
       <el-text class="mx-1" type="primary">场馆名称:  </el-text>
       <el-link
           :underline="false"
-          v-for="(item, index) in g"
+          v-for="(item, index) in gym"
           :key="index"
           @click="add(index)"
           :class="{'my-custom-link': true, 'top_style': item.is_active === 0, 'top_active': item.is_active === 1}"
       >
-        {{ item.facilityName }}
+        {{ item.gymName }}
       </el-link>
 
     </div>
