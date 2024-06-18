@@ -33,7 +33,8 @@ export default {
         }
 
       ],
-      gym:  [
+      gym:  [{is_active: 0, gymName: '健', gymNum: 1, remainNum: 1}
+
     ],
       isAppoint: false,
       appointForm: {
@@ -215,8 +216,23 @@ console.log(this.dateArray);
       this.facility.facilityName = this.facility[index].facilityName;
 
       console.log(this.facility);
-    }
+    },
 
+    addgym(index) {
+      // Reset `is_active` state in gym array
+      this.gym.forEach(gymItem => {
+        gymItem.is_active = 0;
+      });
+
+      // Set `is_active` for the selected item
+      this.gym[index].is_active = 1;
+
+      // Assuming `gymName` is part of the `gym` object or a property elsewhere
+      this.gym.gymName = this.gym[index].gymName;
+
+      console.log(this.gym);
+
+    }
   },
 
 
@@ -236,6 +252,7 @@ console.log(this.dateArray);
 </el-dialog>
   <el-dialog v-model="dialogFormVisible" title="请核对你的信息" width="500">
     <h3>请确认你的预约信息</h3>
+    <h3>你选择的场馆为：{{gym.gymName}}</h3>
     <h3>你选择的场馆为：{{facility.facilityName}}</h3>
     <h3>你选择的日期为：{{appointForm.date}}</h3>
     <h3>你选择的时间为：{{appointForm.time}}</h3>
@@ -258,7 +275,7 @@ console.log(this.dateArray);
           :underline="false"
           v-for="(item, index) in gym"
           :key="index"
-          @click="add(index)"
+          @click="addgym(index)"
           :class="{'my-custom-link': true, 'top_style': item.is_active === 0, 'top_active': item.is_active === 1}"
       >
         {{ item.gymName }}
