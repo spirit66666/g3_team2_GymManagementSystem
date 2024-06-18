@@ -151,7 +151,12 @@ console.log(this.dateArray);
         this.facility=response.data;
 
       })
+      this.$http.get("/getgym" )
+          .then(response => {
 
+            this.gym=response.data;
+
+          })
       },
 
     confirm  ()  {
@@ -247,6 +252,19 @@ console.log(this.dateArray);
   <div>
     <div class="m-4">
       <el-text class="mx-1" type="primary">场馆名称:  </el-text>
+      <el-link
+          :underline="false"
+          v-for="(item, index) in g"
+          :key="index"
+          @click="add(index)"
+          :class="{'my-custom-link': true, 'top_style': item.is_active === 0, 'top_active': item.is_active === 1}"
+      >
+        {{ item.facilityName }}
+      </el-link>
+
+    </div>
+    <div class="m-4">
+      <el-text class="mx-1" type="primary">项目名称:  </el-text>
 
       <el-link
           :underline="false"
@@ -257,13 +275,6 @@ console.log(this.dateArray);
       >
         {{ item.facilityName }}
       </el-link>
-    </div>
-    <div class="m-4">
-      <el-text class="mx-1" type="primary">项目名称:  </el-text>
-      <el-link :underline="false" v-for="item in facility.length-1"
-               v-model="facility[item].facilityName"
-               @click="selectFacility(item,facility[item].facilityName)"
-      >{{facility[item].name}}</el-link>
     </div>
     <div class="m-4">
      
