@@ -277,7 +277,18 @@ console.log(this.dateArray);
       </el-link>
     </div>
     <div class="m-4">
+<<<<<<< HEAD
      
+=======
+      <el-text class="mx-1" type="primary">项目名称:  </el-text>
+      <el-link :underline="false" v-for="item in facility.length-1"
+               v-model="facility[item].facilityName"
+               @click="selectFacility(item,facility[item].facilityName)"
+      >{{facility[item].name}}</el-link>
+    </div>
+    <div class="m-4">
+
+>>>>>>> ceea4f116bba1fb72b7cf7ec71499504c84d6287
       <el-link :underline="false" v-for="item in facility.length-1"
                v-model:facility="facility[item].value"
                @click="selectFacility(item,facility[item].value)">{{facility[item].disabled}}</el-link>
