@@ -253,7 +253,7 @@ console.log(this.dateArray);
           v-for="(item, index) in facility"
           :key="index"
           @click="addfacility(index)"
-          :class="{'top_style': item.is_active === 0, 'top_active': item.is_active === 1}"
+          :class="{'my-custom-link': true, 'top_style': item.is_active === 0, 'top_active': item.is_active === 1}"
       >
         {{ item.facilityName }}
       </el-link>
@@ -266,7 +266,7 @@ console.log(this.dateArray);
       >{{facility[item].name}}</el-link>
     </div>
     <div class="m-4">
-      <el-text class="mx-1" type="primary">场馆:  </el-text>
+     
       <el-link :underline="false" v-for="item in facility.length-1"
                v-model:facility="facility[item].value"
                @click="selectFacility(item,facility[item].value)">{{facility[item].disabled}}</el-link>
@@ -333,6 +333,25 @@ console.log(this.dateArray);
 </template>
 
 <style scoped>
+
+.my-custom-link {
+  /* 自定义链接样式 */
+  color: #333; /* 文本颜色 */
+  text-decoration: none; /* 取消下划线 */
+  padding: 5px 10px; /* 内边距 */
+  border: 1px solid #ccc; /* 边框 */
+  border-radius: 4px; /* 圆角 */
+  margin-right: 10px; /* 右边距 */
+}
+
+.my-custom-link:hover {
+  /* 鼠标悬停时的样式 */
+  background-color: #f0f0f0; /* 背景色 */
+}
+
+
+
+
 
 .time-buttons-container {
   margin: 20px 50px; /* 上下边距 */
