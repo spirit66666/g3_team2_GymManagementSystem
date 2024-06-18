@@ -266,7 +266,7 @@ console.log(this.dateArray);
       >{{facility[item].name}}</el-link>
     </div>
     <div class="m-4">
-     
+
       <el-link :underline="false" v-for="item in facility.length-1"
                v-model:facility="facility[item].value"
                @click="selectFacility(item,facility[item].value)">{{facility[item].disabled}}</el-link>
