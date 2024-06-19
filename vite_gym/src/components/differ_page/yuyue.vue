@@ -271,7 +271,7 @@ console.log(this.dateArray);
 
   <div>
     <div class="m-4">
-      <el-text class="mx-1" type="primary">场馆名称:  </el-text>
+      <el-text class="mx-1 large-text"  type="primary">场馆名称:  </el-text>
       <el-link
           :underline="false"
           v-for="(item, index) in gym"
@@ -284,7 +284,7 @@ console.log(this.dateArray);
 
     </div>
     <div class="m-4">
-      <el-text class="mx-1" type="primary">项目名称:  </el-text>
+      <el-text class="mx-1 large-text" type="primary">项目名称:  </el-text>
 
       <el-link
           :underline="false"
@@ -296,16 +296,10 @@ console.log(this.dateArray);
         {{ item.facilityName }}
       </el-link>
     </div>
-    <div class="m-4">
-
-     
-    </div>
-    <div class="m-4">
 
       <el-link :underline="false" v-for="item in facility.length-1"
                v-model:facility="facility[item].value"
                @click="selectFacility(item,facility[item].value)">{{facility[item].disabled}}</el-link>
-    </div>
   </div>
 
   <el-form label-width="120px" :model="appointForm">
@@ -369,22 +363,21 @@ console.log(this.dateArray);
 
 <style scoped>
 
-.my-custom-link {
-  /* 自定义链接样式 */
+.my-custom-link {    /* 场馆名称的按钮样式 */
   color: #333; /* 文本颜色 */
-  text-decoration: none; /* 取消下划线 */
   padding: 5px 10px; /* 内边距 */
-  border: 1px solid #ccc; /* 边框 */
-  border-radius: 4px; /* 圆角 */
-  margin-right: 10px; /* 右边距 */
+  border: 2px solid #ccc; /* 边框 */
+  border-radius: 50px; /* 圆角 */
+  font-size: 20px;/*字体大小*/
 }
 
-.my-custom-link:hover {
-  /* 鼠标悬停时的样式 */
+.my-custom-link:hover {  /* 鼠标悬停时的样式 */
   background-color: #f0f0f0; /* 背景色 */
 }
 
-
+.large-text {   /* 场馆名称和项目名称的字体大小 */
+  font-size: 20px; /* 适当调整大小 */
+}
 
 
 
@@ -392,7 +385,7 @@ console.log(this.dateArray);
   margin: 20px 50px; /* 上下边距 */
   height: 150px;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /*允许自动换行*/
   gap: 60px; /* 按钮之间的间距 */
 }
 
@@ -497,8 +490,8 @@ console.log(this.dateArray);
   justify-content: space-between;
   gap: 16px;
 }
-.el-link {
-  margin-right: 8px;
+.el-link {  /* 场馆和项目的间距 */
+  margin-right: 10px;
 }
 .el-table .warning-row {
   --el-table-tr-bg-color: var(--el-color-warning-light-9);
