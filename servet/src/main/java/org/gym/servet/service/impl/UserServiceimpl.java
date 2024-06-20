@@ -6,7 +6,9 @@ import org.gym.servet.entity.User;
 import org.gym.servet.getmapper.getuser;
 import org.gym.servet.service.Userservice;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @Service
 public class UserServiceimpl  extends ServiceImpl<getuser, User> implements Userservice {
 }

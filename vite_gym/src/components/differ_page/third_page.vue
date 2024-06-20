@@ -36,6 +36,7 @@
 import {ref, onMounted, getCurrentInstance} from 'vue'
 
 import Store from '../../components/store/store.js'
+import {ElMessage} from "element-plus";
 
 
 const currentInstance = getCurrentInstance();
@@ -52,6 +53,7 @@ const handleDelete = (index) => {
   console.log(reserveID)
   $http.delete("/deletereserve/" + reserveID).then(response => {
     console.log(response)
+    ElMessage.success("删除成功")
     fetchData()
   })
 }

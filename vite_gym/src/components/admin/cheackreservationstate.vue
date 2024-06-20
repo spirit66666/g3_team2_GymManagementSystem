@@ -7,7 +7,8 @@
       <el-table-column prop="reserveID" label="预约ID"></el-table-column>
       <el-table-column prop="userID" label="用户ID"></el-table-column>
 
-      <el-table-column prop="" label="场馆名字"></el-table-column>
+      <el-table-column prop="reserveGym" label="场馆名字"></el-table-column>
+      <el-table-column prop="reserveFacility" label="预约设施"></el-table-column>
       <el-table-column prop="reserveTime" label="预约时间"></el-table-column>
 
       <el-table-column prop="reserveDate" label="预约日期"></el-table-column>
