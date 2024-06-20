@@ -5,8 +5,11 @@ import org.apache.ibatis.annotations.Select;
 import org.gym.servet.entity.User;
 import org.gym.servet.entity.gym;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+@Transactional
 @Repository
 public interface gymrmapper extends BaseMapper<gym> {
 

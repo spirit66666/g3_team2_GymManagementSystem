@@ -6,6 +6,7 @@ import org.gym.servet.entity.gym;
 import org.gym.servet.entity.reserve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.gym.servet.getmapper.reservemapper;
 
@@ -18,6 +19,8 @@ import java.util.Map;
 @RestController
 //allow frontend to access backend
 @CrossOrigin
+@Transactional
+
 public class reservecontrol {
 
 

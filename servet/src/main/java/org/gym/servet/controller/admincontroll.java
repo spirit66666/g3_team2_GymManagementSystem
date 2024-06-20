@@ -11,6 +11,7 @@ import org.gym.servet.service.AdminService;
 import org.gym.servet.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,8 @@ import java.util.List;
 @RestController
 //allow frontend to access backend
 @CrossOrigin
+
+@Transactional
 public class admincontroll {
 
     @Autowired

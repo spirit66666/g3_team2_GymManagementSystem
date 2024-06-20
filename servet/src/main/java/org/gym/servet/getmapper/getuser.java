@@ -8,9 +8,12 @@ import org.apache.ibatis.annotations.Update;
 import org.gym.servet.entity.User;
 import org.gym.servet.entity.facility;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
+
+@Transactional
 @Repository
 public interface getuser extends BaseMapper<User> {
 

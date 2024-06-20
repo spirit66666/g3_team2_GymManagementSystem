@@ -119,7 +119,7 @@
           Store.commit('setLoggedIn', "登陆");
 
 
-          router.replace('/')}
+          router.replace('/login')}
         else{
         router.replace('/login')}
       },

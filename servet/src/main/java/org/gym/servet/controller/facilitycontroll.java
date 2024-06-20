@@ -5,6 +5,7 @@ import org.gym.servet.entity.gym;
 import org.gym.servet.getmapper.facilitymapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +18,8 @@ import java.util.List;
 @RestController
 //allow frontend to access backend
 @CrossOrigin
+
+@Transactional
 public class facilitycontroll {
     @Autowired
     private facilitymapper facilitymapper;
