@@ -54,7 +54,7 @@ values ('体育馆1', '北京市海淀区西二旗北三环西路10号'),
 
 
 
-/*创建 reserve 表*/
+/*创建 reservations 表*/
 drop table if exists `reservations`;
 create table `reservations`
 (
